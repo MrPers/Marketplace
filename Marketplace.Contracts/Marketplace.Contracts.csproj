@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Marketplace.DB\Marketplace.DB.csproj" />
+    <ProjectReference Include="..\Marketplace.DTO\Marketplace.DTO.csproj" />
+  </ItemGroup>
+
 </Project>

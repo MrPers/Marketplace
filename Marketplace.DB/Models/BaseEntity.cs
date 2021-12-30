@@ -1,4 +1,4 @@
-﻿using Marketplace.Contracts.Models;
+﻿using Marketplace.DTO.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

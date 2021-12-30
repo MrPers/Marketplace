@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Marketplace.Contracts.Models
+﻿namespace Marketplace.DTO.Models
 {
     public interface IBaseEntity<T>
     {
