@@ -7,9 +7,13 @@ Update-Database -Context ConfigurationDbContext
 
 Drop-Database -Context DataContext
 
-Update-Database -Context DataContext
-Update-Database -Context PersistedGrantDbContext
-Update-Database -Context ConfigurationDbContext
-
 //Test1@gmail.com
 //12qw!Q
+
+
+Add-Migration PersistedGrantDbMigration -StartupProject Marketplace.Web -Context PersistedGrantDbContext -OutputDir Marketplace.DB/Data/PersistedGrantDb
+
+dotnet ef --project Marketplace.DB --startup-project Marketplace.Web migrations add PersistedGrantDbMigration -c PersistedGrantDbContext
+
+dotnet ef -r Marketplace.DB --startup-project Marketplace.Web migrations add PersistedGrantDbMigration -c PersistedGrantDbContext
+

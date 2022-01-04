@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marketplace.DB.Data.DataDb
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211230130223_Initial")]
+    [Migration("20220104172058_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,7 +69,7 @@ namespace Marketplace.DB.Data.DataDb
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("varchar(30)");
 
                     b.HasKey("Id");
 
@@ -145,6 +145,7 @@ namespace Marketplace.DB.Data.DataDb
                         .HasColumnType("varchar(20)");
 
                     b.Property<string>("Photo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("ProductGroupId")

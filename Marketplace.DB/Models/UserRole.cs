@@ -1,4 +1,4 @@
-﻿using Marketplace.Contracts.Models;
+﻿using Marketplace.DTO.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +10,5 @@ namespace Marketplace.DB.Models
         [Key]
         public long Id { get; set; }
         public ICollection<RoleShop> RoleShops { get; set; } = new List<RoleShop>();
-        //public long ShopId { get; set; }
-        //public Shop Shop { get; set; }
     }
 }

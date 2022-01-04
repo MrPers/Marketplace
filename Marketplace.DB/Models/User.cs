@@ -1,10 +1,10 @@
-﻿using Marketplace.Contracts.Models;
+﻿using Marketplace.DTO.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Marketplace.DB.Models
+namespace Marketplace.DB.Models 
 {
     public class User : IdentityUser<long>, IBaseEntity<long>
     {

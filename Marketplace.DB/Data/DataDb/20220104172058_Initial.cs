@@ -52,7 +52,7 @@ namespace Marketplace.DB.Data.DataDb
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar(10)", nullable: true)
+                    Name = table.Column<string>(type: "varchar(30)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -224,7 +224,7 @@ namespace Marketplace.DB.Data.DataDb
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(20)", nullable: false),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductGroupId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>

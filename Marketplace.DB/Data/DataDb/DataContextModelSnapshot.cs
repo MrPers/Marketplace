@@ -67,7 +67,7 @@ namespace Marketplace.DB.Data.DataDb
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("varchar(30)");
 
                     b.HasKey("Id");
 
@@ -143,6 +143,7 @@ namespace Marketplace.DB.Data.DataDb
                         .HasColumnType("varchar(20)");
 
                     b.Property<string>("Photo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("ProductGroupId")

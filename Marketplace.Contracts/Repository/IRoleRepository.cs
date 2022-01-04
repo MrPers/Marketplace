@@ -3,7 +3,7 @@ using Marketplace.DTO.Models;
 
 namespace Marketplace.Contracts.Repository
 {
-    public interface IUserRepository : IBaseRepository<User, UserDto, long>
+    public interface IRoleRepository : IBaseRepository<Role, RoleDto, long>
     {
         //Task<ICollection<long>> GetUsersIdOnGroupAsync(long groupId);
         //Task SubscriptionToGroupsAsync(long groupId, long userId);
