@@ -55,8 +55,6 @@ namespace Marketplace.DB
                 var roleManager = scopeServiceProvider.GetService<RoleManager<Role>>();
 
                 Claim[] claims = new Claim[] {
-                    //new Claim{Name = "DeletingAllUsers"},
-                    //new Claim{Name = "DeletingAllStores"},
                     new Claim{Name = "EditingAllUsers"},
                     new Claim{Name = "EditingAllStores"},
                     new Claim{Name = "EditingStore"},
@@ -66,12 +64,10 @@ namespace Marketplace.DB
                 dataContext.Claims.AddRange(claims);
 
                 Role[] roles = new Role[] {
-                    new Role{Name = "Owner"},
-                    new Role{Name = "StoreAdministrator"},
-                    new Role{Name = "PlatformAdministrator"},
+                    new Role("Owner"),
+                    new Role("StoreAdministrator"),
+                    new Role("PlatformAdministrator"),
                 };
-
-                //dataContext.SaveChanges();
 
                 roleManager.CreateAsync(roles[0]).GetAwaiter().GetResult();
                 roleManager.CreateAsync(roles[1]).GetAwaiter().GetResult();
@@ -89,20 +85,21 @@ namespace Marketplace.DB
                     new User("AdmShop1OwnerShop3"){Email = "Adm1@ukr.net"},
                     new User("AdmShop2"){Email = "Adm2@ukr.net"},
                     new User("AdmShop3"){Email = "Adm2@ukr.net"},
-                    //new User("User"){Email = "User@ukr.net"},
+                    new User("User"){Email = "User@ukr.net"},
                 };
 
-                userManager.CreateAsync(users[0], "12qw!Q").GetAwaiter().GetResult();
-                userManager.CreateAsync(users[1], "12qw!Q").GetAwaiter().GetResult();
-                userManager.CreateAsync(users[2], "12qw!Q").GetAwaiter().GetResult();
-                userManager.CreateAsync(users[3], "12qw!Q").GetAwaiter().GetResult();
-                userManager.CreateAsync(users[4], "12qw!Q").GetAwaiter().GetResult();
-                userManager.AddToRoleAsync(users[0], "PlatformAdministrator").GetAwaiter().GetResult();
-                userManager.AddToRoleAsync(users[1], "Owner").GetAwaiter().GetResult();
-                userManager.AddToRoleAsync(users[2], "Owner").GetAwaiter().GetResult();
-                userManager.AddToRoleAsync(users[2], "StoreAdministrator").GetAwaiter().GetResult();
-                userManager.AddToRoleAsync(users[3], "StoreAdministrator").GetAwaiter().GetResult();
-                userManager.AddToRoleAsync(users[4], "StoreAdministrator").GetAwaiter().GetResult();
+                var statusUser = userManager.CreateAsync(users[0], "12qw!Q").GetAwaiter().GetResult();
+                statusUser = userManager.CreateAsync(users[1], "12qw!Q").GetAwaiter().GetResult();
+                statusUser = userManager.CreateAsync(users[2], "12qw!Q").GetAwaiter().GetResult();
+                statusUser = userManager.CreateAsync(users[3], "12qw!Q").GetAwaiter().GetResult();
+                statusUser = userManager.CreateAsync(users[4], "12qw!Q").GetAwaiter().GetResult();
+
+                var statusAddToRole = userManager.AddToRoleAsync(users[0], "PlatformAdministrator").GetAwaiter().GetResult();
+                statusAddToRole = userManager.AddToRoleAsync(users[1], "Owner").GetAwaiter().GetResult();
+                statusAddToRole = userManager.AddToRoleAsync(users[2], "Owner").GetAwaiter().GetResult();
+                statusAddToRole = userManager.AddToRoleAsync(users[2], "StoreAdministrator").GetAwaiter().GetResult();
+                statusAddToRole = userManager.AddToRoleAsync(users[3], "StoreAdministrator").GetAwaiter().GetResult();
+                statusAddToRole = userManager.AddToRoleAsync(users[4], "StoreAdministrator").GetAwaiter().GetResult();
 
                 Shop[] shops = new Shop[] {
                     new Shop {Name = "Shop1"},
@@ -125,37 +122,24 @@ namespace Marketplace.DB
 
                 RoleShop[] roleShops = new RoleShop[] {
                     new RoleShop {UserRole = userRoles[0], UserShop = userShops[0]},
-                    new RoleShop {UserRole = userRoles[0], UserShop = userShops[1]},
-                    new RoleShop {UserRole = userRoles[0], UserShop = userShops[2]},
+                    new RoleShop {UserRole = userRoles[1], UserShop = userShops[1]},
+                    new RoleShop {UserRole = userRoles[1], UserShop = userShops[0]},
+                    new RoleShop {UserRole = userRoles[2], UserShop = userShops[2]},
+                    new RoleShop {UserRole = userRoles[3], UserShop = userShops[0]},
+                    new RoleShop {UserRole = userRoles[4], UserShop = userShops[1]},
+                    new RoleShop {UserRole = userRoles[5], UserShop = userShops[2]},
                 };
 
                 dataContext.RoleShops.AddRange(roleShops);
 
+                Product[] products = new Product[] {
+                     new Product{ Name = "TestName1", Photo = ""},
+                     new Product{ Name = "TestName2", Photo = ""},
+                };
+
+                dataContext.Products.AddRange(products);
+
                 dataContext.SaveChanges();
-
-                //shops[0].UserShops.Add(claims[2]);
-                //roles[0].Claims.Add(claims[3]);
-                //roles[1].Claims.Add(claims[2]);
-
-                //Photo
-                //Product[] products = new Product[] {
-                //     new Product{ Name = "TestName1", },
-                //     new Product{ Name = "TestName2", Surname = "TestSurname2", Email = "iamanton@ukr.net" },
-                //};
-                //userManager.AddClaimAsync(users[1], claims[0]).GetAwaiter().GetResult();
-                //userManager.AddClaimAsync(users[2], claims[1]).GetAwaiter().GetResult();
-                //userManager.AddClaimAsync(users[0], claims[0]).GetAwaiter().GetResult();
-                //userManager.AddClaimAsync(users[0], claims[2]).GetAwaiter().GetResult();
-                //userManager.AddClaimAsync(users[0], claims[1]).GetAwaiter().GetResult();
-
-
-
-                //bdContext.Groups.AddRange(groups);
-                //bdContext.Users.AddRange(users);
-
-                //users[0].Groups.Add(groups[0]);
-
-                //dataContext.SaveChanges();
             }
         }
     }

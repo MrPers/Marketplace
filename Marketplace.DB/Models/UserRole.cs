@@ -9,6 +9,9 @@ namespace Marketplace.DB.Models
     {
         [Key]
         public long Id { get; set; }
+        //[Key]
+        //public long ShopId { get; set; }
+        //public Shop Shop { get; set; }
         public ICollection<RoleShop> RoleShops { get; set; } = new List<RoleShop>();
     }
 }

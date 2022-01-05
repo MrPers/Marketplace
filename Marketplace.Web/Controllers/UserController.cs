@@ -50,7 +50,8 @@ namespace Marketplace.WebApi.Controllers
             }
 
             var users = await _userService.GetByIdAsync(id);
-            IActionResult result = users == null ? NotFound() : Ok(_mapper.Map<List<UserVM>>(users));
+            var usersResult = _mapper.Map<UserVM>(users);
+            IActionResult result = users == null ? NotFound() : Ok(usersResult);
 
             return result;
         }

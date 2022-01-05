@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marketplace.DB.Data.DataDb
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220104172058_Initial")]
+    [Migration("20220105141441_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -331,7 +331,9 @@ namespace Marketplace.DB.Data.DataDb
                         .HasColumnType("bigint");
 
                     b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.HasKey("UserId", "RoleId");
 

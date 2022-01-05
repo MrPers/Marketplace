@@ -14,7 +14,7 @@ namespace Marketplace.DB.Models
         public User()
         {
         }
-
+        [Required]
         [Column(TypeName = "varchar(30)")]
         public override string UserName { get; set; }
         [Column(TypeName = "varchar(30)")]

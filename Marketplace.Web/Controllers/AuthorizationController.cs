@@ -1,10 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using IdentityServer4.Services;
-using Marketplace.DB.Models;
 
 namespace Marketplace.Web.Controllers
 {

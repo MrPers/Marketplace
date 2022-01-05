@@ -14,7 +14,8 @@ namespace Marketplace.DB
     IdentityUserLogin<long>, // TUserLogin
     IdentityRoleClaim<long>, // TRoleClaim
     IdentityUserToken<long> // TUserToken
-    >{
+    >
+    {
         public DbSet<Product> Products { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Claim> Claims { get; set; }
@@ -34,6 +35,15 @@ namespace Marketplace.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<UserRole>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+            //modelBuilder.Entity<UserRole>()
+            //    .HasKey(hk => new { hk.UserId, hk.RoleId, hk.Id });
+            //    .HasKey(hk => new { hk.Id });
+
             modelBuilder.Entity<RoleShop>()
                 .HasOne(sc => sc.UserRole)
                 .WithMany(c => c.RoleShops)
@@ -49,18 +59,6 @@ namespace Marketplace.DB
                 .HasPrincipalKey(sc => sc.Id)
                 //.OnDelete(DeleteBehavior.SetNull);
                 .OnDelete(DeleteBehavior.Restrict);
-
-            //modelBuilder.Entity<UserShop>()
-            //    .HasOne(e => e.RoleShops)
-            //    .WithMany()
-            //    .OnDelete(DeleteBehavior.SetNull);
-            //    //.OnDelete(DeleteBehavior.Restrict);
-
-            //modelBuilder.Entity<UserRole>()
-            //    .HasOne(e => e.RoleShops)
-            //    .WithMany()
-            //    .OnDelete(DeleteBehavior.SetNull);
-            //    //.OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<UserShop>()
                 .HasOne(sc => sc.Shop)

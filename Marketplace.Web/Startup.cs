@@ -36,6 +36,16 @@ namespace Marketplace.Web
             services.AddCors();
             services.AddControllers(); // используем контроллеры без представлений
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Test API",
+                    Description = "ASP.NET Core Web API"
+                });
+            });
+
             services.AddDbContext<PersistedGrantDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DataContext"), b => b.MigrationsAssembly("Marketplace.DB"));
@@ -92,6 +102,12 @@ namespace Marketplace.Web
             app.UseAuthorization();
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test API V1");
+            });
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }

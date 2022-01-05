@@ -329,7 +329,9 @@ namespace Marketplace.DB.Data.DataDb
                         .HasColumnType("bigint");
 
                     b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.HasKey("UserId", "RoleId");
 

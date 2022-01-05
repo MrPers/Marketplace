@@ -1,7 +1,7 @@
 ﻿
 namespace Marketplace.DTO.Models
 {
-    public class BaseEntityDto<T> : IBaseEntity<T>
+    public abstract class BaseEntityDto<T> : IBaseEntity<T>
     {
         public T Id { get; set; }
     }
