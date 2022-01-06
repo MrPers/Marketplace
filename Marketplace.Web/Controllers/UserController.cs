@@ -42,13 +42,8 @@ namespace Marketplace.WebApi.Controllers
         }
 
         [HttpGet("get-user-by-id/{id}")]
-        public async Task<IActionResult> GetUserById([Range(1, long.MaxValue)] long id)
+        public async Task<IActionResult> GetUserById(Guid id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             var users = await _userService.GetByIdAsync(id);
             var usersResult = _mapper.Map<UserVM>(users);
             IActionResult result = users == null ? NotFound() : Ok(usersResult);
@@ -73,13 +68,8 @@ namespace Marketplace.WebApi.Controllers
         }
 
         [HttpDelete("delete-user/{id}")]
-        public async Task<IActionResult> DeleteUser([Range(1, long.MaxValue)] long id)
+        public async Task<IActionResult> DeleteUser(Guid id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             await _userService.DeleteAsync(id);
 
             return Ok(true);

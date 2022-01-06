@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Marketplace.Contracts.Repository;
 using Marketplace.DB;
+using Marketplace.DB.Models;
 using Marketplace.DTO.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,27 +13,34 @@ namespace Marketplace.Repository
 {
     public abstract class BaseRepository<TTable, TDto, TId> : IBaseRepository<TTable, TDto, TId> where TTable : class, IBaseEntity<TId>
     {
+        protected readonly UserManager<User> _userManager;
+        protected readonly RoleManager<Role> _roleManager;
         protected readonly DataContext _context;
         protected readonly IMapper _mapper;
-        public BaseRepository(DataContext context, IMapper mapper)
+        public BaseRepository(DataContext context, 
+            IMapper mapper,
+            UserManager<User> userManager,
+            RoleManager<Role> roleManager)
         {
             _context = context;
             _mapper = mapper;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
 
-        public async Task<ICollection<TDto>> GetAllAsync()
+        public virtual async Task<ICollection<TDto>> GetAllAsync()
         {
             var dbItems = await _context.Set<TTable>().ToListAsync();
             return _mapper.Map<List<TDto>>(dbItems);
         }
 
-        public async Task<TDto> GetByIdAsync(TId id)
+        public virtual async Task<TDto> GetByIdAsync(TId id)
         {
             var dbItem = await _context.Set<TTable>().FindAsync(id);
             return _mapper.Map<TDto>(dbItem);
         }
 
-        public async Task<TId> AddAsync(IEnumerable<TDto> Dto)
+        public virtual async Task<TId> AddAsync(IEnumerable<TDto> Dto)
         {
             if (Dto == null)
             {
@@ -52,7 +61,7 @@ namespace Marketplace.Repository
             return (time as List<TTable>)[0].Id;
         }
 
-        public async Task<TId> AddAsync(TDto Dto)
+        public virtual async Task<TId> AddAsync(TDto Dto)
         {
             if (Dto == null)
             {
@@ -73,7 +82,7 @@ namespace Marketplace.Repository
             return time.Id;
         }
 
-        public async Task UpdateAsync(TId id, TDto meaning)
+        public virtual async Task UpdateAsync(TId id, TDto meaning)
         {
             if (meaning == null)
             {
@@ -94,7 +103,7 @@ namespace Marketplace.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(TId id)
+        public virtual async Task DeleteAsync(TId id)
         {
             var obj = _context.Set<TTable>().Find(id);
             if (obj != null)
@@ -105,7 +114,7 @@ namespace Marketplace.Repository
 
         }
 
-        public async Task SaveChangesAsync()
+        public virtual async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }

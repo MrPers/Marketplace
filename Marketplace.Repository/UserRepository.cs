@@ -3,60 +3,70 @@ using Marketplace.Contracts.Repository;
 using Marketplace.DB;
 using Marketplace.DB.Models;
 using Marketplace.DTO.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Marketplace.Repository
 {
-    public class UserRepository : BaseRepository<User, UserDto, long>, IUserRepository
+    public class UserRepository : BaseRepository<User, UserDto, Guid>, IUserRepository
     {
-        public UserRepository(DataContext context, IMapper mapper) : base(context, mapper)
+        public UserRepository(
+            DataContext context, 
+            IMapper mapper,
+            UserManager<User> userManager,
+            RoleManager<Role> roleManager) : base(context, mapper, userManager, roleManager)
         {
-
         }
 
-        //public async Task<ICollection<long>> GetUsersIdOnGroupAsync([Range(1, long.MaxValue)] long groupId)
-        //{
-        //    var usersId = await _context.Users
-        //       .Where(p => p.Groups.Any(y => y.id == groupId))
-        //       .Select(p => p.id)
-        //       .ToListAsync();
+        public override async Task<Guid> AddAsync(UserDto user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
 
-        //    return usersId;
-        //}
+            var result = _userManager
+                .CreateAsync(_mapper.Map<User>(user), user.Password)
+                .GetAwaiter()
+                .GetResult();
 
-        //public async Task SubscriptionToGroupsAsync([Range(1, long.MaxValue)] long groupId, [Range(1, long.MaxValue)] long userId)
-        //{
-        //    var user = await _context.Users
-        //        .Include(p => p.Groups)
-        //        .FirstOrDefaultAsync(p => p.id == userId);
+            if (result.Succeeded)
+            {
+                return await _context.Users.MaxAsync(p => p.Id);
+            }
 
-        //    if (user == null)
-        //    {
-        //        throw new ArgumentException(nameof(user));
-        //    }
+            throw new Exception(result.Succeeded.ToString());
+        }
 
-        //    user.Groups.Add(
-        //        _context.Groups
-        //        .FirstOrDefault(p => p.id == groupId)
-        //    );
+        public override async Task UpdateAsync(Guid id, UserDto user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
 
-        //}
+            var findId = _context.Users.Find(id);
 
-        //public async Task UnsubscriptionToGroupsAsync([Range(1, long.MaxValue)] long groupId, [Range(1, long.MaxValue)] long userId)
-        //{
-        //    var user = await _context.Users
-        //        .Include(p => p.Groups)
-        //        .FirstOrDefaultAsync(p => p.id == userId);
+            if (findId == null)
+            {
+                throw new ArgumentNullException(nameof(findId));
+            }
 
-        //    if (user == null)
-        //    {
-        //        throw new ArgumentException(nameof(user));
-        //    }
+            var result = _userManager
+                .UpdateAsync(_mapper.Map<User>(user))
+                .GetAwaiter()
+                .GetResult();
 
-        //    user.Groups.Remove(
-        //        _context.Groups
-        //        .FirstOrDefault(p => p.id == groupId)
-        //    );
+            if (result.Succeeded)
+            {
+                return;
+            }
 
-        //}
+            throw new Exception(result.Succeeded.ToString());
+        }
+
     }
 }

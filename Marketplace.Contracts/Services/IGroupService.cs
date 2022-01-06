@@ -11,7 +11,7 @@ namespace Marketplace.Contracts.Services
     {
         //Task RegisterAsync(GroupDto group);
         //Task<ICollection<GroupDto>> GetAllAsync();
-        //Task DeleteAsync(long id);
-        //Task UpdateAsync(long id, GroupDto group);
+        //Task DeleteAsync(Guid id);
+        //Task UpdateAsync(Guid id, GroupDto group);
     }
 }

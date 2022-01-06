@@ -2,18 +2,19 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Marketplace.DB
 {
     public class DataContext : IdentityDbContext<
     User, // TUser
     Role, // TRole
-    long, // TKey
-    IdentityUserClaim<long>, // TUserClaim
-    UserRole, // TUserRole,
-    IdentityUserLogin<long>, // TUserLogin
-    IdentityRoleClaim<long>, // TRoleClaim
-    IdentityUserToken<long> // TUserToken
+    Guid, // TKey
+    IdentityUserClaim<Guid>, // TUserClaim
+    UserRolePlatform, // TUserRole,
+    IdentityUserLogin<Guid>, // TUserLogin
+    IdentityRoleClaim<Guid>, // TRoleClaim
+    IdentityUserToken<Guid> // TUserToken
     >
     {
         public DbSet<Product> Products { get; set; }
@@ -24,8 +25,7 @@ namespace Marketplace.DB
         public DbSet<ProductGroup> ProductGroups { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<StatusCart> StatusCarts { get; set; }
-        public DbSet<UserShop> UserShops { get; set; }
-        public DbSet<RoleShop> RoleShops { get; set; }
+        public DbSet<UserRoleShop> UserRoleShops { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
@@ -35,44 +35,32 @@ namespace Marketplace.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<UserRole>()
-                .Property(e => e.Id)
-                .ValueGeneratedOnAdd();
+            modelBuilder.Entity<UserRoleShop>()
+                .HasKey(ur => new { ur.UserId, ur.RoleId, ur.ShopId });
 
-            //modelBuilder.Entity<UserRole>()
-            //    .HasKey(hk => new { hk.UserId, hk.RoleId, hk.Id });
-            //    .HasKey(hk => new { hk.Id });
+            //modelBuilder.Entity<UserRole>()   //допустить значение null
+            //    .Property(m => m.ShopId)
+            //    .IsRequired(false);
 
-            modelBuilder.Entity<RoleShop>()
-                .HasOne(sc => sc.UserRole)
-                .WithMany(c => c.RoleShops)
-                .HasForeignKey(sc => sc.UserRoleId)
-                .HasPrincipalKey(sc => sc.Id)
-                //.OnDelete(DeleteBehavior.SetNull);
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<RoleShop>()
-                .HasOne(sc => sc.UserShop)
-                .WithMany(c => c.RoleShops)
-                .HasForeignKey(sc => sc.UserShopId)
-                .HasPrincipalKey(sc => sc.Id)
-                //.OnDelete(DeleteBehavior.SetNull);
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<UserShop>()
+            modelBuilder.Entity<UserRoleShop>()
                 .HasOne(sc => sc.Shop)
-                .WithMany(c => c.UserShops)
+                .WithMany(c => c.UserRoles)
                 .HasForeignKey(sc => sc.ShopId)
-                .HasPrincipalKey(sc => sc.Id)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasPrincipalKey(sc => sc.Id);
 
-            modelBuilder.Entity<UserShop>()
+            modelBuilder.Entity<UserRoleShop>()
                 .HasOne(sc => sc.User)
-                .WithMany(c => c.UserShops)
+                .WithMany(c => c.UserRoleShops)
                 .HasForeignKey(sc => sc.UserId)
-                .HasPrincipalKey(sc => sc.Id)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasPrincipalKey(sc => sc.Id);
+
+            modelBuilder.Entity<UserRoleShop>()
+                .HasOne(sc => sc.Role)
+                .WithMany(c => c.UserRoleShops)
+                .HasForeignKey(sc => sc.RoleId)
+                .HasPrincipalKey(sc => sc.Id);
 
             modelBuilder.Entity<Cart>()
                 .HasOne(sc => sc.User)
@@ -124,7 +112,7 @@ namespace Marketplace.DB
             //    .Property(b => b.Surname)
             //    .HasDefaultValue("RT");
 
-            base.OnModelCreating(modelBuilder);
+            //base.OnModelCreating(modelBuilder);
         }
     }
 }

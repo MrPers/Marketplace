@@ -21,11 +21,11 @@ namespace Marketplace.DB.Data.DataDb
 
             modelBuilder.Entity("ClaimRole", b =>
                 {
-                    b.Property<long>("ClaimsId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("ClaimsId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("RolesId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("RolesId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ClaimsId", "RolesId");
 
@@ -36,19 +36,18 @@ namespace Marketplace.DB.Data.DataDb
 
             modelBuilder.Entity("Marketplace.DB.Models.Cart", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("NumberProduct")
                         .HasColumnType("int");
 
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -61,10 +60,9 @@ namespace Marketplace.DB.Data.DataDb
 
             modelBuilder.Entity("Marketplace.DB.Models.Claim", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("varchar(30)");
@@ -76,23 +74,22 @@ namespace Marketplace.DB.Data.DataDb
 
             modelBuilder.Entity("Marketplace.DB.Models.CommentProduct", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DepartureDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -105,10 +102,9 @@ namespace Marketplace.DB.Data.DataDb
 
             modelBuilder.Entity("Marketplace.DB.Models.Price", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("NetPrice")
                         .HasColumnType("decimal(18,2)");
@@ -116,11 +112,11 @@ namespace Marketplace.DB.Data.DataDb
                     b.Property<int>("NumberProduct")
                         .HasColumnType("int");
 
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("ShopId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("ShopId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -133,10 +129,9 @@ namespace Marketplace.DB.Data.DataDb
 
             modelBuilder.Entity("Marketplace.DB.Models.Product", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -146,8 +141,8 @@ namespace Marketplace.DB.Data.DataDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("ProductGroupId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid?>("ProductGroupId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -158,10 +153,9 @@ namespace Marketplace.DB.Data.DataDb
 
             modelBuilder.Entity("Marketplace.DB.Models.ProductGroup", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("varchar(10)");
@@ -173,10 +167,9 @@ namespace Marketplace.DB.Data.DataDb
 
             modelBuilder.Entity("Marketplace.DB.Models.Role", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -200,34 +193,11 @@ namespace Marketplace.DB.Data.DataDb
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Marketplace.DB.Models.RoleShop", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("UserRoleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UserShopId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserRoleId");
-
-                    b.HasIndex("UserShopId");
-
-                    b.ToTable("RoleShops");
-                });
-
             modelBuilder.Entity("Marketplace.DB.Models.Shop", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -240,13 +210,12 @@ namespace Marketplace.DB.Data.DataDb
 
             modelBuilder.Entity("Marketplace.DB.Models.StatusCart", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<long?>("CartId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid?>("CartId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("varchar(10)");
@@ -260,10 +229,9 @@ namespace Marketplace.DB.Data.DataDb
 
             modelBuilder.Entity("Marketplace.DB.Models.User", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -304,6 +272,7 @@ namespace Marketplace.DB.Data.DataDb
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
@@ -320,18 +289,13 @@ namespace Marketplace.DB.Data.DataDb
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Marketplace.DB.Models.UserRole", b =>
+            modelBuilder.Entity("Marketplace.DB.Models.UserRolePlatform", b =>
                 {
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -340,29 +304,27 @@ namespace Marketplace.DB.Data.DataDb
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Marketplace.DB.Models.UserShop", b =>
+            modelBuilder.Entity("Marketplace.DB.Models.UserRoleShop", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("ShopId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("ShopId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "RoleId", "ShopId");
+
+                    b.HasIndex("RoleId");
 
                     b.HasIndex("ShopId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserShops");
+                    b.ToTable("UserRoleShops");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -375,8 +337,8 @@ namespace Marketplace.DB.Data.DataDb
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -385,7 +347,7 @@ namespace Marketplace.DB.Data.DataDb
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -398,8 +360,8 @@ namespace Marketplace.DB.Data.DataDb
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -408,7 +370,7 @@ namespace Marketplace.DB.Data.DataDb
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -419,8 +381,8 @@ namespace Marketplace.DB.Data.DataDb
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -429,10 +391,10 @@ namespace Marketplace.DB.Data.DataDb
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -527,26 +489,6 @@ namespace Marketplace.DB.Data.DataDb
                         .HasForeignKey("ProductGroupId");
                 });
 
-            modelBuilder.Entity("Marketplace.DB.Models.RoleShop", b =>
-                {
-                    b.HasOne("Marketplace.DB.Models.UserRole", "UserRole")
-                        .WithMany("RoleShops")
-                        .HasForeignKey("UserRoleId")
-                        .HasPrincipalKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Marketplace.DB.Models.UserShop", "UserShop")
-                        .WithMany("RoleShops")
-                        .HasForeignKey("UserShopId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("UserRole");
-
-                    b.Navigation("UserShop");
-                });
-
             modelBuilder.Entity("Marketplace.DB.Models.StatusCart", b =>
                 {
                     b.HasOne("Marketplace.DB.Models.Cart", null)
@@ -554,7 +496,7 @@ namespace Marketplace.DB.Data.DataDb
                         .HasForeignKey("CartId");
                 });
 
-            modelBuilder.Entity("Marketplace.DB.Models.UserRole", b =>
+            modelBuilder.Entity("Marketplace.DB.Models.UserRolePlatform", b =>
                 {
                     b.HasOne("Marketplace.DB.Models.Role", null)
                         .WithMany()
@@ -569,26 +511,34 @@ namespace Marketplace.DB.Data.DataDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Marketplace.DB.Models.UserShop", b =>
+            modelBuilder.Entity("Marketplace.DB.Models.UserRoleShop", b =>
                 {
+                    b.HasOne("Marketplace.DB.Models.Role", "Role")
+                        .WithMany("UserRoleShops")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Marketplace.DB.Models.Shop", "Shop")
-                        .WithMany("UserShops")
+                        .WithMany("UserRoles")
                         .HasForeignKey("ShopId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Marketplace.DB.Models.User", "User")
-                        .WithMany("UserShops")
+                        .WithMany("UserRoleShops")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Role");
 
                     b.Navigation("Shop");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Marketplace.DB.Models.Role", null)
                         .WithMany()
@@ -597,7 +547,7 @@ namespace Marketplace.DB.Data.DataDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("Marketplace.DB.Models.User", null)
                         .WithMany()
@@ -606,7 +556,7 @@ namespace Marketplace.DB.Data.DataDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("Marketplace.DB.Models.User", null)
                         .WithMany()
@@ -615,7 +565,7 @@ namespace Marketplace.DB.Data.DataDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("Marketplace.DB.Models.User", null)
                         .WithMany()
@@ -643,11 +593,16 @@ namespace Marketplace.DB.Data.DataDb
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("Marketplace.DB.Models.Role", b =>
+                {
+                    b.Navigation("UserRoleShops");
+                });
+
             modelBuilder.Entity("Marketplace.DB.Models.Shop", b =>
                 {
                     b.Navigation("Prices");
 
-                    b.Navigation("UserShops");
+                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("Marketplace.DB.Models.User", b =>
@@ -656,17 +611,7 @@ namespace Marketplace.DB.Data.DataDb
 
                     b.Navigation("CommentProducts");
 
-                    b.Navigation("UserShops");
-                });
-
-            modelBuilder.Entity("Marketplace.DB.Models.UserRole", b =>
-                {
-                    b.Navigation("RoleShops");
-                });
-
-            modelBuilder.Entity("Marketplace.DB.Models.UserShop", b =>
-                {
-                    b.Navigation("RoleShops");
+                    b.Navigation("UserRoleShops");
                 });
 #pragma warning restore 612, 618
         }

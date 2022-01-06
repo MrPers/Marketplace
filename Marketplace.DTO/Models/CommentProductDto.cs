@@ -2,12 +2,12 @@
 
 namespace Marketplace.DTO.Models
 {
-    public class CommentProductDto : BaseEntityDto<long>
+    public class CommentProductDto : BaseEntityDto<Guid>
     {
         public string Text { get; set; }
-        public long ProductId { get; set; }
+        public Guid ProductId { get; set; }
         public ProductDto Product { get; set; }
-        public long UserId { get; set; }
+        public Guid UserId { get; set; }
         public UserDto User { get; set; }
         public DateTime DepartureDate { get; set; }
     }

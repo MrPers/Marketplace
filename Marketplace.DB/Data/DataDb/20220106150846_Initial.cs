@@ -11,8 +11,7 @@ namespace Marketplace.DB.Data.DataDb
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -26,9 +25,8 @@ namespace Marketplace.DB.Data.DataDb
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
                     Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -50,8 +48,7 @@ namespace Marketplace.DB.Data.DataDb
                 name: "Claims",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(30)", nullable: true)
                 },
                 constraints: table =>
@@ -63,8 +60,7 @@ namespace Marketplace.DB.Data.DataDb
                 name: "ProductGroups",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(10)", nullable: true)
                 },
                 constraints: table =>
@@ -76,8 +72,7 @@ namespace Marketplace.DB.Data.DataDb
                 name: "Shops",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(20)", nullable: false)
                 },
                 constraints: table =>
@@ -91,7 +86,7 @@ namespace Marketplace.DB.Data.DataDb
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<long>(type: "bigint", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -112,7 +107,7 @@ namespace Marketplace.DB.Data.DataDb
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -134,7 +129,7 @@ namespace Marketplace.DB.Data.DataDb
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -151,15 +146,12 @@ namespace Marketplace.DB.Data.DataDb
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    RoleId = table.Column<long>(type: "bigint", nullable: false),
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.UniqueConstraint("AK_AspNetUserRoles_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
                         column: x => x.RoleId,
@@ -178,7 +170,7 @@ namespace Marketplace.DB.Data.DataDb
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -198,8 +190,8 @@ namespace Marketplace.DB.Data.DataDb
                 name: "ClaimRole",
                 columns: table => new
                 {
-                    ClaimsId = table.Column<long>(type: "bigint", nullable: false),
-                    RolesId = table.Column<long>(type: "bigint", nullable: false)
+                    ClaimsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RolesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -222,11 +214,10 @@ namespace Marketplace.DB.Data.DataDb
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(20)", nullable: false),
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductGroupId = table.Column<long>(type: "bigint", nullable: true)
+                    ProductGroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -240,25 +231,30 @@ namespace Marketplace.DB.Data.DataDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserShops",
+                name: "UserRoleShops",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ShopId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ShopId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserShops", x => x.Id);
+                    table.PrimaryKey("PK_UserRoleShops", x => new { x.UserId, x.RoleId, x.ShopId });
                     table.ForeignKey(
-                        name: "FK_UserShops_AspNetUsers_UserId",
+                        name: "FK_UserRoleShops_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRoleShops_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserShops_Shops_ShopId",
+                        name: "FK_UserRoleShops_Shops_ShopId",
                         column: x => x.ShopId,
                         principalTable: "Shops",
                         principalColumn: "Id",
@@ -269,11 +265,10 @@ namespace Marketplace.DB.Data.DataDb
                 name: "Carts",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NumberProduct = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -296,11 +291,10 @@ namespace Marketplace.DB.Data.DataDb
                 name: "CommentProducts",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Text = table.Column<string>(type: "varchar(20)", nullable: false),
-                    ProductId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DepartureDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -324,12 +318,11 @@ namespace Marketplace.DB.Data.DataDb
                 name: "Prices",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NetPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     NumberProduct = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<long>(type: "bigint", nullable: false),
-                    ShopId = table.Column<long>(type: "bigint", nullable: false)
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ShopId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -349,39 +342,12 @@ namespace Marketplace.DB.Data.DataDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoleShops",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserRoleId = table.Column<long>(type: "bigint", nullable: false),
-                    UserShopId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleShops", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RoleShops_AspNetUserRoles_UserRoleId",
-                        column: x => x.UserRoleId,
-                        principalTable: "AspNetUserRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_RoleShops_UserShops_UserShopId",
-                        column: x => x.UserShopId,
-                        principalTable: "UserShops",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "StatusCarts",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(10)", nullable: true),
-                    CartId = table.Column<long>(type: "bigint", nullable: true)
+                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -474,29 +440,19 @@ namespace Marketplace.DB.Data.DataDb
                 column: "ProductGroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleShops_UserRoleId",
-                table: "RoleShops",
-                column: "UserRoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RoleShops_UserShopId",
-                table: "RoleShops",
-                column: "UserShopId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_StatusCarts_CartId",
                 table: "StatusCarts",
                 column: "CartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserShops_ShopId",
-                table: "UserShops",
-                column: "ShopId");
+                name: "IX_UserRoleShops_RoleId",
+                table: "UserRoleShops",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserShops_UserId",
-                table: "UserShops",
-                column: "UserId");
+                name: "IX_UserRoleShops_ShopId",
+                table: "UserRoleShops",
+                column: "ShopId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -511,6 +467,9 @@ namespace Marketplace.DB.Data.DataDb
                 name: "AspNetUserLogins");
 
             migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
@@ -523,19 +482,13 @@ namespace Marketplace.DB.Data.DataDb
                 name: "Prices");
 
             migrationBuilder.DropTable(
-                name: "RoleShops");
-
-            migrationBuilder.DropTable(
                 name: "StatusCarts");
 
             migrationBuilder.DropTable(
+                name: "UserRoleShops");
+
+            migrationBuilder.DropTable(
                 name: "Claims");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUserRoles");
-
-            migrationBuilder.DropTable(
-                name: "UserShops");
 
             migrationBuilder.DropTable(
                 name: "Carts");

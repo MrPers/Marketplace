@@ -1,12 +1,16 @@
 ﻿using Marketplace.DB.Models;
 using Marketplace.DTO.Models;
+using Microsoft.AspNetCore.Identity;
+using System;
+using System.Threading.Tasks;
 
 namespace Marketplace.Contracts.Repository
 {
-    public interface IUserRepository : IBaseRepository<User, UserDto, long>
+    public interface IUserRepository : IBaseRepository<User, UserDto, Guid>
     {
-        //Task<ICollection<long>> GetUsersIdOnGroupAsync(long groupId);
-        //Task SubscriptionToGroupsAsync(long groupId, long userId);
-        //Task UnsubscriptionToGroupsAsync(long groupId, long userId);
+        //override async Task<Guid> AddAsync(User user);
+        //Task<IdentityResult> Registration(User user);
+        //Task SubscriptionToGroupsAsync(Guid groupId, Guid userId);
+        //Task UnsubscriptionToGroupsAsync(Guid groupId, Guid userId);
     }
 }

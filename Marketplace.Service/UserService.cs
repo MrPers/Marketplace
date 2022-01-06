@@ -23,7 +23,7 @@ namespace Marketplace.Service
             return users;
         }
 
-        public async Task<UserDto> GetByIdAsync(long id)
+        public async Task<UserDto> GetByIdAsync(Guid id)
         {
             var user = await _userRepository.GetByIdAsync(id);
 
@@ -40,13 +40,13 @@ namespace Marketplace.Service
             await _userRepository.AddAsync(user);
         }
 
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(Guid id)
         {
 
             await _userRepository.DeleteAsync(id);
         }
 
-        public async Task UpdateAsync(long id, UserDto user)
+        public async Task UpdateAsync(Guid id, UserDto user)
         {
             if (user == null)
             {

@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Marketplace.DTO.Models
 {
-    public class ProductDto : BaseEntityDto<long>
+    public class ProductDto : BaseEntityDto<Guid>
     {
         public string Name { get; set; }
         public string Photo { get; set; }

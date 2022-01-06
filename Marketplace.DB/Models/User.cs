@@ -1,12 +1,13 @@
 ﻿using Marketplace.DTO.Models;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Marketplace.DB.Models 
 {
-    public class User : IdentityUser<long>, IBaseEntity<long>
+    public class User : IdentityUser<Guid>, IBaseEntity<Guid>
     {
         public User(string userName) : base(userName)
         {
@@ -25,8 +26,8 @@ namespace Marketplace.DB.Models
         public override string PhoneNumber { get; set; }
         [NotMapped]
         public override bool PhoneNumberConfirmed { get; set; }
-        public virtual ICollection<UserShop> UserShops { get; set; } = new List<UserShop>();
         public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
+        public virtual ICollection<UserRoleShop> UserRoleShops { get; set; } = new List<UserRoleShop>();
         public virtual ICollection<CommentProduct> CommentProducts { get; set; } = new List<CommentProduct>();
     }
 }

@@ -13,10 +13,11 @@ Drop-Database -Context DataContext
 
 //Test1@gmail.com
 //12qw!Q
+
 {
-  "id": 55,
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   "userName": "Test1",
-  "password": 12qw!Q,
+  "password": "12qw!Q",
   "email": "Test@ukr.net"
 }
 
