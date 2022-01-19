@@ -217,6 +217,7 @@ namespace Marketplace.DB.Data.DataDb
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(20)", nullable: false),
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProductGroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -266,13 +267,13 @@ namespace Marketplace.DB.Data.DataDb
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NumberProduct = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NumberProduct = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Carts", x => x.Id);
+                    table.PrimaryKey("PK_Carts", x => new { x.Id, x.ProductId, x.UserId });
                     table.ForeignKey(
                         name: "FK_Carts_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -292,14 +293,14 @@ namespace Marketplace.DB.Data.DataDb
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Text = table.Column<string>(type: "varchar(20)", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Text = table.Column<string>(type: "varchar(20)", nullable: false),
                     DepartureDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CommentProducts", x => x.Id);
+                    table.PrimaryKey("PK_CommentProducts", x => new { x.Id, x.ProductId, x.UserId });
                     table.ForeignKey(
                         name: "FK_CommentProducts_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -319,14 +320,14 @@ namespace Marketplace.DB.Data.DataDb
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NetPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    NumberProduct = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ShopId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ShopId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NetPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    NumberProduct = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Prices", x => x.Id);
+                    table.PrimaryKey("PK_Prices", x => new { x.Id, x.ProductId, x.ShopId });
                     table.ForeignKey(
                         name: "FK_Prices_Products_ProductId",
                         column: x => x.ProductId,
@@ -347,16 +348,18 @@ namespace Marketplace.DB.Data.DataDb
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(10)", nullable: true),
-                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CartProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CartUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StatusCarts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StatusCarts_Carts_CartId",
-                        column: x => x.CartId,
+                        name: "FK_StatusCarts_Carts_CartId_CartProductId_CartUserId",
+                        columns: x => new { x.CartId, x.CartProductId, x.CartUserId },
                         principalTable: "Carts",
-                        principalColumn: "Id",
+                        principalColumns: new[] { "Id", "ProductId", "UserId" },
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -440,9 +443,9 @@ namespace Marketplace.DB.Data.DataDb
                 column: "ProductGroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StatusCarts_CartId",
+                name: "IX_StatusCarts_CartId_CartProductId_CartUserId",
                 table: "StatusCarts",
-                column: "CartId");
+                columns: new[] { "CartId", "CartProductId", "CartUserId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoleShops_RoleId",

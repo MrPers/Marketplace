@@ -25,8 +25,17 @@ namespace Marketplace.Web
             Configuration = configuration;
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)  //при работе с базой добавмить процедуру, пока выгружаем все сразу
         {
+            services.AddScoped(typeof(ICartRepository), typeof(CartRepository));
+            services.AddScoped(typeof(IClaimRepository), typeof(ClaimRepository));
+            services.AddScoped(typeof(ICommentProductRepository), typeof(CommentProductRepository));
+            services.AddScoped(typeof(IPriceRepository), typeof(PriceRepository));
+            services.AddScoped(typeof(IProductGroupRepository), typeof(ProductGroupRepository));
+            services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
+            services.AddScoped(typeof(IRoleRepository), typeof(RoleRepository));
+            services.AddScoped(typeof(IShopRepository), typeof(ShopRepository));
+            services.AddScoped(typeof(IStatusCartRepository), typeof(StatusCartRepository));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 
             services.AddAutoMapper(typeof(Mapper));

@@ -8,5 +8,6 @@ namespace Marketplace.DTO.Models
     {
         public override string Name { get; set; }
         public ICollection<ClaimDto> Claims { get; set; }
+        public ICollection<string> ClaimNames { get; set; }
     }
 }

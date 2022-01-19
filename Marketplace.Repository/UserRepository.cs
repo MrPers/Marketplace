@@ -3,6 +3,7 @@ using Marketplace.Contracts.Repository;
 using Marketplace.DB;
 using Marketplace.DB.Models;
 using Marketplace.DTO.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,13 +14,8 @@ namespace Marketplace.Repository
 {
     public class UserRepository : BaseRepository<User, UserDto, Guid>, IUserRepository
     {
-        public UserRepository(
-            DataContext context, 
-            IMapper mapper,
-            UserManager<User> userManager,
-            RoleManager<Role> roleManager) : base(context, mapper, userManager, roleManager)
-        {
-        }
+        public UserRepository(DataContext context, IMapper mapper) : base(context, mapper)
+        { }
 
         public override async Task<Guid> AddAsync(UserDto user)
         {
@@ -41,31 +37,39 @@ namespace Marketplace.Repository
             throw new Exception(result.Succeeded.ToString());
         }
 
-        public override async Task UpdateAsync(Guid id, UserDto user)
+        public async Task UpdatePasswordAsync(Guid id, string oldPassword, string newPassword)
         {
-            if (user == null)
+            //if (user == null)
+            //{
+            //    throw new ArgumentNullException(nameof(user));
+            //}
+
+            //var findId = await _context.Users.FindAsync(id);
+
+            //if (findId == null)
+            //{
+            //    throw new ArgumentNullException(nameof(findId));
+            //}
+
+            User user = await _userManager.FindByIdAsync($"{id}");
+            if (user != null)
             {
-                throw new ArgumentNullException(nameof(user));
+                IdentityResult result =
+                    await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+
+                if (result.Succeeded)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new Exception("Не верный старый пароль");
+                }
             }
-
-            var findId = _context.Users.Find(id);
-
-            if (findId == null)
+            else
             {
-                throw new ArgumentNullException(nameof(findId));
+                throw new Exception("Пользователь не найден");
             }
-
-            var result = _userManager
-                .UpdateAsync(_mapper.Map<User>(user))
-                .GetAwaiter()
-                .GetResult();
-
-            if (result.Succeeded)
-            {
-                return;
-            }
-
-            throw new Exception(result.Succeeded.ToString());
         }
 
     }

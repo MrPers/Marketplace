@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marketplace.DB.Data.DataDb
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220106150846_Initial")]
+    [Migration("20220119135154_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,11 +39,7 @@ namespace Marketplace.DB.Data.DataDb
             modelBuilder.Entity("Marketplace.DB.Models.Cart", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("NumberProduct")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
@@ -51,7 +47,10 @@ namespace Marketplace.DB.Data.DataDb
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.Property<int>("NumberProduct")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id", "ProductId", "UserId");
 
                     b.HasIndex("ProductId");
 
@@ -77,23 +76,22 @@ namespace Marketplace.DB.Data.DataDb
             modelBuilder.Entity("Marketplace.DB.Models.CommentProduct", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DepartureDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
+                    b.HasKey("Id", "ProductId", "UserId");
 
                     b.HasIndex("ProductId");
 
@@ -105,7 +103,12 @@ namespace Marketplace.DB.Data.DataDb
             modelBuilder.Entity("Marketplace.DB.Models.Price", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ShopId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("NetPrice")
@@ -114,13 +117,7 @@ namespace Marketplace.DB.Data.DataDb
                     b.Property<int>("NumberProduct")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ShopId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
+                    b.HasKey("Id", "ProductId", "ShopId");
 
                     b.HasIndex("ProductId");
 
@@ -134,6 +131,9 @@ namespace Marketplace.DB.Data.DataDb
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -219,12 +219,18 @@ namespace Marketplace.DB.Data.DataDb
                     b.Property<Guid?>("CartId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CartProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CartUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .HasColumnType("varchar(10)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartId");
+                    b.HasIndex("CartId", "CartProductId", "CartUserId");
 
                     b.ToTable("StatusCarts");
                 });
@@ -486,16 +492,18 @@ namespace Marketplace.DB.Data.DataDb
 
             modelBuilder.Entity("Marketplace.DB.Models.Product", b =>
                 {
-                    b.HasOne("Marketplace.DB.Models.ProductGroup", null)
+                    b.HasOne("Marketplace.DB.Models.ProductGroup", "ProductGroup")
                         .WithMany("Products")
                         .HasForeignKey("ProductGroupId");
+
+                    b.Navigation("ProductGroup");
                 });
 
             modelBuilder.Entity("Marketplace.DB.Models.StatusCart", b =>
                 {
                     b.HasOne("Marketplace.DB.Models.Cart", null)
                         .WithMany("StatusCarts")
-                        .HasForeignKey("CartId");
+                        .HasForeignKey("CartId", "CartProductId", "CartUserId");
                 });
 
             modelBuilder.Entity("Marketplace.DB.Models.UserRolePlatform", b =>

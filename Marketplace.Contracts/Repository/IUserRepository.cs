@@ -8,7 +8,7 @@ namespace Marketplace.Contracts.Repository
 {
     public interface IUserRepository : IBaseRepository<User, UserDto, Guid>
     {
-        //override async Task<Guid> AddAsync(User user);
+        Task UpdatePasswordAsync(Guid id, string oldPassword, string newPassword);
         //Task<IdentityResult> Registration(User user);
         //Task SubscriptionToGroupsAsync(Guid groupId, Guid userId);
         //Task UnsubscriptionToGroupsAsync(Guid groupId, Guid userId);

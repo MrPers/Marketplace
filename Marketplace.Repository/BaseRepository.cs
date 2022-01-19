@@ -18,14 +18,10 @@ namespace Marketplace.Repository
         protected readonly DataContext _context;
         protected readonly IMapper _mapper;
         public BaseRepository(DataContext context, 
-            IMapper mapper,
-            UserManager<User> userManager,
-            RoleManager<Role> roleManager)
-        {
+            IMapper mapper)
+        { 
             _context = context;
             _mapper = mapper;
-            _roleManager = roleManager;
-            _userManager = userManager;
         }
 
         public virtual async Task<ICollection<TDto>> GetAllAsync()

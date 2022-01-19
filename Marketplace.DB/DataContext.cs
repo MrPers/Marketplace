@@ -40,10 +40,6 @@ namespace Marketplace.DB
             modelBuilder.Entity<UserRoleShop>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId, ur.ShopId });
 
-            //modelBuilder.Entity<UserRole>()   //допустить значение null
-            //    .Property(m => m.ShopId)
-            //    .IsRequired(false);
-
             modelBuilder.Entity<UserRoleShop>()
                 .HasOne(sc => sc.Shop)
                 .WithMany(c => c.UserRoles)
@@ -63,6 +59,9 @@ namespace Marketplace.DB
                 .HasPrincipalKey(sc => sc.Id);
 
             modelBuilder.Entity<Cart>()
+                .HasKey(ur => new { ur.Id, ur.ProductId, ur.UserId });
+
+            modelBuilder.Entity<Cart>()
                 .HasOne(sc => sc.User)
                 .WithMany(s => s.Carts)
                 .HasForeignKey(sc => sc.UserId)
@@ -77,6 +76,9 @@ namespace Marketplace.DB
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<CommentProduct>()
+                .HasKey(ur => new { ur.Id, ur.ProductId, ur.UserId });
+
+            modelBuilder.Entity<CommentProduct>()
                 .HasOne(sc => sc.User)
                 .WithMany(s => s.CommentProducts)
                 .HasForeignKey(sc => sc.UserId)
@@ -89,6 +91,9 @@ namespace Marketplace.DB
                 .HasForeignKey(sc => sc.ProductId)
                 .HasPrincipalKey(sc => sc.Id)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Price>()
+                .HasKey(ur => new { ur.Id, ur.ProductId, ur.ShopId});
 
             modelBuilder.Entity<Price>()
                 .HasOne(sc => sc.Shop)

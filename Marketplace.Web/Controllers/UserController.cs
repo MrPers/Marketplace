@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Marketplace.Contracts.Services;
+using Marketplace.DB.Models;
 using Marketplace.DTO.Models;
 using Marketplace.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Marketplace.WebApi.Controllers
 {
-    [Route("api/")]
+    [Route("")]
     [ApiController]
     public class UserController : Controller
     {
@@ -22,14 +24,13 @@ namespace Marketplace.WebApi.Controllers
 
         public UserController(
             IUserService userService,
-            ILogger<UserController> logger,
-            IMapper mapper
+            IMapper mapper,
+            ILogger<UserController> logger
         )
         {
             _userService = userService;
             _mapper = mapper;
             _logger = logger;
-            //_logger.LogInformation("Initialization");
         }
 
         [HttpGet("get-users-all")]
@@ -59,10 +60,10 @@ namespace Marketplace.WebApi.Controllers
             return Ok(true);
         }
 
-        [HttpPut("update-user")]
-        public async Task<IActionResult> UpdateUser(UserVM user)
+        [HttpPut("update-user-password")]
+        public async Task<IActionResult> UpdatePasswordAsync(Guid id, string oldPassword, string newPassword)
         {
-            await _userService.UpdateAsync(user.Id, _mapper.Map<UserDto>(user));
+            await _userService.UpdatePasswordAsync(id, oldPassword, newPassword);
 
             return Ok(true);
         }

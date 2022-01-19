@@ -10,5 +10,7 @@ namespace Marketplace.DTO.Models
         public Guid UserId { get; set; }
         public UserDto User { get; set; }
         public DateTime DepartureDate { get; set; }
+        public string ProductName { get; set; }
+        public string UserName { get; set; }
     }
 }

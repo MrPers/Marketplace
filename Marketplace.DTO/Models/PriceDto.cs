@@ -10,5 +10,7 @@ namespace Marketplace.DTO.Models
         public ProductDto Product { get; set; }
         public Guid ShopId { get; set; }
         public ShopDto Shop { get; set; }
+        public string ProductName { get; set; }
+        public string ShopName { get; set; }
     }
 }

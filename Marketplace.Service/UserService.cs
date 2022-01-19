@@ -46,14 +46,10 @@ namespace Marketplace.Service
             await _userRepository.DeleteAsync(id);
         }
 
-        public async Task UpdateAsync(Guid id, UserDto user)
+        public async Task UpdatePasswordAsync(Guid id, string oldPassword, string newPassword)
         {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
 
-            await _userRepository.UpdateAsync(id, user);
+            await _userRepository.UpdatePasswordAsync(id, oldPassword, newPassword);
         }
 
     }

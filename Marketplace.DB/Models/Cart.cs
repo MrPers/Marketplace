@@ -6,7 +6,7 @@ namespace Marketplace.DB.Models
 {
     public class Cart : BaseEntity<Guid>
     {
-        public int NumberProduct { get; set; }        
+        public int NumberProduct { get; set; }         
         public virtual ICollection<StatusCart> StatusCarts { get; set; } = new List<StatusCart>();
         public Guid ProductId { get; set; }
         public Product Product { get; set; }

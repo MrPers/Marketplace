@@ -10,7 +10,7 @@ namespace Marketplace.Contracts.Services
         Task<ICollection<UserDto>> GetAllAsync();
         Task<UserDto> GetByIdAsync(Guid id);
         Task AddAsync(UserDto user);
-        Task UpdateAsync(Guid id, UserDto user);
+        Task UpdatePasswordAsync(Guid id, string oldPassword, string newPassword);
         Task DeleteAsync(Guid id);
     }
 }
