@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Marketplace.Service
 {
-    class ProductService : IProductService
+    public class ProductService : IProductService
     {
         private IProductRepository _productRepository;
 

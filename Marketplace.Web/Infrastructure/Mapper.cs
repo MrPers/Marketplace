@@ -22,7 +22,7 @@ namespace Marketplace.Web.Infrastructure
             //CreateMap<ClaimVM, ClaimDto>().ReverseMap();
             CreateMap<Claim, ClaimDto>().ReverseMap();
 
-            //CreateMap<PriceVM, PriceDto>().ReverseMap();
+            CreateMap<PriceVM, PriceDto>().ReverseMap();
             CreateMap<Price, PriceDto>().ReverseMap();
 
             CreateMap<ProductVM, ProductDto>().ReverseMap();

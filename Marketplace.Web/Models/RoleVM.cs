@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Marketplace.Web.Models
 {
-    public class RoleVM : IdentityRole<Guid>, IBaseEntity<Guid>
+    public class RoleVM
     {
-        public override string Name { get; set; }
-        public ICollection<ClaimDto> Claims { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
     }
 }

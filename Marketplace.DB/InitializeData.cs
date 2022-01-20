@@ -149,6 +149,8 @@ namespace Marketplace.DB
                      new Price{ NetPrice = 600, Shop = shops[2], Product = products[3], NumberProduct = 5},
                 };
 
+                dataContext.Prices.AddRange(prices);
+
                 StatusCart[] statusCart = new StatusCart[]{
                      new StatusCart{ Name = "added"},
                      new StatusCart{ Name = "ordered"},

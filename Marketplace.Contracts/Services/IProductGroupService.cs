@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Marketplace.Contracts.Services
 {
-    public interface IProductGroupGroupService
+    public interface IProductGroupService
     {
         Task<ICollection<ProductGroupDto>> GetAllAsync();
         Task<ProductGroupDto> GetByIdAsync(Guid id);

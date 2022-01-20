@@ -10,6 +10,6 @@ namespace Marketplace.Web.Models
         [Required]
         public string Name { get; set; }
         public string Photo { get; set; }
-        public string ProductGroupName { get; set; }
+        public Guid ProductGroupID { get; set; }
     }
 }

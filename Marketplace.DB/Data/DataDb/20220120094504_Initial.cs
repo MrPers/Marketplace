@@ -218,7 +218,7 @@ namespace Marketplace.DB.Data.DataDb
                     Name = table.Column<string>(type: "varchar(20)", nullable: false),
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProductGroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ProductGroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -228,7 +228,7 @@ namespace Marketplace.DB.Data.DataDb
                         column: x => x.ProductGroupId,
                         principalTable: "ProductGroups",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

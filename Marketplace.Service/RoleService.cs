@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Marketplace.Service
 {
-    class RoleService : IRoleService
+    public class RoleService : IRoleService
     {
         private IRoleRepository _roleRepository;
 

@@ -40,6 +40,15 @@ namespace Marketplace.Web
 
             services.AddAutoMapper(typeof(Mapper));
 
+            //services.AddScoped<ICartService, CartService>();
+            //services.AddScoped<IClaimService, ClaimService>();
+            //services.AddScoped<ICommentProductService, CommentProductService>();
+            services.AddScoped<IPriceService, PriceService>();
+            //services.AddScoped<IProductGroupService, ProductGroupService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IShopService, ShopService>();
+            //services.AddScoped<IStatusCartService, StatusCartService>();
             services.AddScoped<IUserService, UserService>();
 
             services.AddCors();

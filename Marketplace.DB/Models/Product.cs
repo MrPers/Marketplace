@@ -13,10 +13,9 @@ namespace Marketplace.DB.Models
         [Required]
         public string Photo { get; set; }
         public string Description { get; set; }
-        public ICollection<Price> Prices { get; set; } = new List<Price>();
         public ProductGroup ProductGroup { get; set; }
-        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        //public string ProductGroupName { get; set; }
+        public Guid ProductGroupId { get; set; }
+        public ICollection<Price> Prices { get; set; } = new List<Price>();
         public ICollection<Cart> Carts { get; set; } = new List<Cart>();
         public ICollection<CommentProduct> CommentProducts { get; set; } = new List<CommentProduct>();
     }

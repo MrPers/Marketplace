@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Marketplace.DB
 {
@@ -60,6 +61,7 @@ namespace Marketplace.DB
 
             modelBuilder.Entity<Cart>()
                 .HasKey(ur => new { ur.Id, ur.ProductId, ur.UserId });
+            //.HasKey(ur => new {ur.ProductId, ur.UserId });
 
             modelBuilder.Entity<Cart>()
                 .HasOne(sc => sc.User)
@@ -77,6 +79,7 @@ namespace Marketplace.DB
 
             modelBuilder.Entity<CommentProduct>()
                 .HasKey(ur => new { ur.Id, ur.ProductId, ur.UserId });
+                //.HasKey(ur => new {ur.ProductId, ur.UserId });
 
             modelBuilder.Entity<CommentProduct>()
                 .HasOne(sc => sc.User)
@@ -93,7 +96,8 @@ namespace Marketplace.DB
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Price>()
-                .HasKey(ur => new { ur.Id, ur.ProductId, ur.ShopId});
+                .HasKey(ur => new { ur.Id, ur.ProductId, ur.ShopId });
+                //.HasKey(ur => new {ur.ProductId, ur.ShopId });
 
             modelBuilder.Entity<Price>()
                 .HasOne(sc => sc.Shop)

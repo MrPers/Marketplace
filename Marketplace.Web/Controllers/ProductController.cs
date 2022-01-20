@@ -14,17 +14,41 @@ namespace Marketplace.Web.Controllers
     [ApiController]
     public class ProductController : Controller
     {
+        private readonly IShopService _shopService;
+        private readonly IPriceService _priceService;
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
 
-        public ProductController(
-            IProductService productService,
-            IMapper mapper
-        )
+        //public ProductController(IProductService productService, IMapper mapper)
+        //{
+        //    _productService = productService;
+        //    _mapper = mapper;
+        //}
+        public ProductController(IProductService productService, IPriceService priceService, IShopService shopService, IMapper mapper)
         {
             _productService = productService;
+            _shopService = shopService;
+            _priceService = priceService;
             _mapper = mapper;
         }
+
+        [HttpGet("get-all-product-price-shop")]
+        public async Task<IActionResult> GetAllProductPriceShop()
+        {
+            var products = await _productService.GetAllAsync();
+            var shops = await _shopService.GetAllAsync();
+            var prices = await _priceService.GetAllAsync();
+
+            var productsResult = _mapper.Map<List<ProductVM>>(products);
+            var shopsResult = _mapper.Map<List<ShopVM>>(shops);
+            var pricesResult = _mapper.Map<List<PriceVM>>(prices);
+            var t = new { productsResult, shopsResult, pricesResult };
+            //IActionResult result = products == null ? NotFound() : Ok();
+            IActionResult result = Ok(t);
+
+            return result;
+        }
+
 
         [HttpGet("get-product-all")]
         public async Task<IActionResult> GetProductsAll()
@@ -68,5 +92,7 @@ namespace Marketplace.Web.Controllers
 
             return Ok(true);
         }
+        
+
     }
 }

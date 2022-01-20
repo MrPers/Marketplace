@@ -9,7 +9,7 @@ using Marketplace.Contracts.Services;
 
 namespace Marketplace.Service
 {
-    class ShopService : IShopService
+    public class ShopService : IShopService
     {
         private IShopRepository _shopRepository;
 

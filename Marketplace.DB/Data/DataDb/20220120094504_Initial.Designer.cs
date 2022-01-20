@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marketplace.DB.Data.DataDb
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220119135154_Initial")]
+    [Migration("20220120094504_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,7 @@ namespace Marketplace.DB.Data.DataDb
             modelBuilder.Entity("Marketplace.DB.Models.Cart", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProductId")
@@ -76,6 +77,7 @@ namespace Marketplace.DB.Data.DataDb
             modelBuilder.Entity("Marketplace.DB.Models.CommentProduct", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProductId")
@@ -103,6 +105,7 @@ namespace Marketplace.DB.Data.DataDb
             modelBuilder.Entity("Marketplace.DB.Models.Price", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProductId")
@@ -143,7 +146,7 @@ namespace Marketplace.DB.Data.DataDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProductGroupId")
+                    b.Property<Guid>("ProductGroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -494,7 +497,9 @@ namespace Marketplace.DB.Data.DataDb
                 {
                     b.HasOne("Marketplace.DB.Models.ProductGroup", "ProductGroup")
                         .WithMany("Products")
-                        .HasForeignKey("ProductGroupId");
+                        .HasForeignKey("ProductGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ProductGroup");
                 });

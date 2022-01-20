@@ -1,72 +1,72 @@
-﻿using AutoMapper;
-using Marketplace.Contracts.Services;
-using Marketplace.DTO.Models;
-using Marketplace.Web.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿//using AutoMapper;
+//using Marketplace.Contracts.Services;
+//using Marketplace.DTO.Models;
+//using Marketplace.Web.Models;
+//using Microsoft.AspNetCore.Mvc;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
 
-namespace Marketplace.Web.Controllers
-{
-    [Route("")]
-    [ApiController]
-    public class RoleController : Controller
-    {
-        private readonly IRoleService _roleService;
-        private readonly IMapper _mapper;
+//namespace Marketplace.Web.Controllers
+//{
+//    [Route("")]
+//    [ApiController]
+//    public class RoleController : Controller
+//    {
+//        private readonly IRoleService _roleService;
+//        private readonly IMapper _mapper;
 
-        public RoleController(
-            IRoleService roleService,
-            IMapper mapper
-        )
-        {
-            _roleService = roleService;
-            _mapper = mapper;
-        }
+//        public RoleController(
+//            IRoleService roleService,
+//            IMapper mapper
+//        )
+//        {
+//            _roleService = roleService;
+//            _mapper = mapper;
+//        }
 
-        [HttpGet("get-role-all")]
-        public async Task<IActionResult> GetRolesAll()
-        {
-            var roles = await _roleService.GetAllAsync();
-            IActionResult result = roles == null ? NotFound() : Ok(_mapper.Map<List<RoleVM>>(roles));
+//        [HttpGet("get-role-all")]
+//        public async Task<IActionResult> GetRolesAll()
+//        {
+//            var roles = await _roleService.GetAllAsync();
+//            IActionResult result = roles == null ? NotFound() : Ok(_mapper.Map<List<RoleVM>>(roles));
 
-            return result;
-        }
+//            return result;
+//        }
 
-        [HttpGet("get-role-by-id/{id}")]
-        public async Task<IActionResult> GetRoleById(Guid id)
-        {
-            var roles = await _roleService.GetByIdAsync(id);
-            var rolesResult = _mapper.Map<RoleVM>(roles);
-            IActionResult result = roles == null ? NotFound() : Ok(rolesResult);
+//        [HttpGet("get-role-by-id/{id}")]
+//        public async Task<IActionResult> GetRoleById(Guid id)
+//        {
+//            var roles = await _roleService.GetByIdAsync(id);
+//            var rolesResult = _mapper.Map<RoleVM>(roles);
+//            IActionResult result = roles == null ? NotFound() : Ok(rolesResult);
 
-            return result;
-        }
+//            return result;
+//        }
 
-        [HttpPost("add-role")]
-        public async Task<IActionResult> AddAsync(RoleVM role)
-        {
-            await _roleService.AddAsync(_mapper.Map<RoleDto>(role));
+//        [HttpPost("add-role")]
+//        public async Task<IActionResult> AddAsync(RoleVM role)
+//        {
+//            await _roleService.AddAsync(_mapper.Map<RoleDto>(role));
 
-            return Ok(true);
-        }
+//            return Ok(true);
+//        }
 
-        [HttpPut("update-role")]
-        public async Task<IActionResult> UpdateAsync(RoleVM role)
-        {
-            await _roleService.UpdateAsync(_mapper.Map<RoleDto>(role));
+//        [HttpPut("update-role")]
+//        public async Task<IActionResult> UpdateAsync(RoleVM role)
+//        {
+//            await _roleService.UpdateAsync(_mapper.Map<RoleDto>(role));
 
-            return Ok(true);
-        }
+//            return Ok(true);
+//        }
 
-        [HttpDelete("delete-role/{id}")]
-        public async Task<IActionResult> DeleteRole(Guid id)
-        {
-            await _roleService.DeleteAsync(id);
+//        [HttpDelete("delete-role/{id}")]
+//        public async Task<IActionResult> DeleteRole(Guid id)
+//        {
+//            await _roleService.DeleteAsync(id);
 
-            return Ok(true);
-        }
-    }
-}
+//            return Ok(true);
+//        }
+//    }
+//}
