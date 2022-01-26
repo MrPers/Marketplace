@@ -14,7 +14,8 @@ namespace Marketplace.Repository
 {
     public class UserRepository : BaseRepository<User, UserDto, Guid>, IUserRepository
     {
-        public UserRepository(DataContext context, IMapper mapper) : base(context, mapper)
+        public UserRepository(DataContext context, IMapper mapper,
+            UserManager<User> userManager, RoleManager<Role> roleManager) : base(context, mapper, userManager,roleManager)
         { }
 
         public override async Task<Guid> AddAsync(UserDto user)
@@ -28,6 +29,8 @@ namespace Marketplace.Repository
                 .CreateAsync(_mapper.Map<User>(user), user.Password)
                 .GetAwaiter()
                 .GetResult();
+            //var result = new User(user.UserName) { Email = user.Email };
+            //var statusUser = _userManager.CreateAsync(result, user.Password).GetAwaiter().GetResult();
 
             if (result.Succeeded)
             {

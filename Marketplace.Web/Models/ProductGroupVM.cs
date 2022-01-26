@@ -1,12 +1,9 @@
-﻿using Marketplace.DTO.Models;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Marketplace.Web.Models
 {
-    public class RoleVM
+    public class ProductGroupVM
     {
         public Guid Id { get; set; }
         [Required]

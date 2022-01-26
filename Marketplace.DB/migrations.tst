@@ -27,3 +27,13 @@ dotnet ef --project Marketplace.DB --startup-project Marketplace.Web migrations 
 
 dotnet ef -r Marketplace.DB --startup-project Marketplace.Web migrations add PersistedGrantDbMigration -c PersistedGrantDbContext
 
+Успех:
+
+return Ok() ← Код статуса HTTP 200
+return Created() ← Код статуса HTTP 201
+return NoContent(); ← Код статуса HTTP 204
+Ошибка клиента:
+
+return BadRequest(); ← Код статуса HTTP 400
+return Unauthorized(); ← Код статуса HTTP 401
+return NotFound(); ← Код статуса HTTP 404

@@ -14,18 +14,26 @@ namespace Marketplace.Web.Controllers
     [ApiController]
     public class ProductController : Controller
     {
+        private readonly IUserService _userService;
         private readonly IShopService _shopService;
         private readonly IPriceService _priceService;
         private readonly IProductService _productService;
+        private readonly IProductGroupService _productGroupService;
+        private readonly ICommentProductService _commentProductService;
         private readonly IMapper _mapper;
 
-        //public ProductController(IProductService productService, IMapper mapper)
-        //{
-        //    _productService = productService;
-        //    _mapper = mapper;
-        //}
-        public ProductController(IProductService productService, IPriceService priceService, IShopService shopService, IMapper mapper)
+        public ProductController(
+            IUserService userService,
+            IProductService productService,
+            IPriceService priceService, 
+            IShopService shopService,
+            IProductGroupService productGroupService,
+            ICommentProductService commentProductService,
+            IMapper mapper)
         {
+            _userService = userService;
+            _productGroupService = productGroupService;
+            _commentProductService = commentProductService;
             _productService = productService;
             _shopService = shopService;
             _priceService = priceService;
@@ -36,15 +44,20 @@ namespace Marketplace.Web.Controllers
         public async Task<IActionResult> GetAllProductPriceShop()
         {
             var products = await _productService.GetAllAsync();
+            var users = await _userService.GetAllAsync();
             var shops = await _shopService.GetAllAsync();
             var prices = await _priceService.GetAllAsync();
+            var productGroups = await _productGroupService.GetAllAsync();
+            var commentProducts = await _commentProductService.GetAllAsync();
 
             var productsResult = _mapper.Map<List<ProductVM>>(products);
             var shopsResult = _mapper.Map<List<ShopVM>>(shops);
             var pricesResult = _mapper.Map<List<PriceVM>>(prices);
-            var t = new { productsResult, shopsResult, pricesResult };
-            //IActionResult result = products == null ? NotFound() : Ok();
-            IActionResult result = Ok(t);
+            var productGroupsResult = _mapper.Map<List<ProductGroupVM>>(productGroups);
+            var commentProductsResult = _mapper.Map<List<CommentProductVM>>(commentProducts);
+            var usersResult = _mapper.Map<List<UserVM>>(users);
+            var time = new { productsResult, shopsResult, pricesResult, productGroupsResult, commentProductsResult, usersResult };
+            IActionResult result = products == null ? NotFound() : Ok(time);
 
             return result;
         }
@@ -93,6 +106,5 @@ namespace Marketplace.Web.Controllers
             return Ok(true);
         }
         
-
     }
 }

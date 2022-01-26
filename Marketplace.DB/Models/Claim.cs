@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Marketplace.DB.Models
 {
     //public class Claim : System.Security.Claims.Claim, IBaseEntity<Guid>
+    //public class Claim : BaseEntity<Guid>
     public class Claim : BaseEntity<Guid>
     {
         [Column(TypeName = "varchar(30)")]

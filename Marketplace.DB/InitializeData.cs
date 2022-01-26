@@ -18,6 +18,8 @@ namespace Marketplace.DB
 
             var bdContext = scopeServiceProvider.GetRequiredService<ConfigurationDbContext>();
 
+            //var i = bdContext.Clients.ToList();
+
             if (!bdContext.Clients.Any())
             {
                 foreach (var client in IdentityServerConfiguration.GetClients())

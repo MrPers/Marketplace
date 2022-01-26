@@ -16,7 +16,7 @@ namespace Marketplace.Web.Infrastructure
             CreateMap<Cart, CartDto>().ReverseMap();
             //CreateMap<CartVM, CartDto>().ReverseMap();
 
-            //CreateMap<CommentProductVM, CommentProductDto>().ReverseMap();
+            CreateMap<CommentProductVM, CommentProductDto>().ReverseMap();
             CreateMap<CommentProduct, CommentProductDto>().ReverseMap();
 
             //CreateMap<ClaimVM, ClaimDto>().ReverseMap();
@@ -28,7 +28,7 @@ namespace Marketplace.Web.Infrastructure
             CreateMap<ProductVM, ProductDto>().ReverseMap();
             CreateMap<Product, ProductDto>().ReverseMap();
 
-            //CreateMap<ProductGroupVM, ProductGroupDto>().ReverseMap();
+            CreateMap<ProductGroupVM, ProductGroupDto>().ReverseMap();
             CreateMap<ProductGroup, ProductGroupDto>().ReverseMap();
 
             CreateMap<RoleVM, RoleDto>().ReverseMap();
