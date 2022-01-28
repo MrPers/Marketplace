@@ -171,7 +171,7 @@ namespace Marketplace.DB
                      new Cart{User= users[0], NumberProduct = 1, Product = products[3] },
                 };
 
-                cart[0].StatusCarts.Add(statusCart[0]); //вот так надо обядинять многие через многие
+                cart[0].StatusCarts.Add(statusCart[0]); //вот так надо объединять многие через многие
                 cart[1].StatusCarts.Add(statusCart[1]);
                 cart[2].StatusCarts.Add(statusCart[2]);
                 cart[3].StatusCarts.Add(statusCart[0]);
@@ -183,8 +183,10 @@ namespace Marketplace.DB
 
                 CommentProduct[] commentProduct = new CommentProduct[]{
                      new CommentProduct{UserId = usersDb[1].Id, Product = products[0], DepartureDate = DateTime.Now, Text="CommentProduct good"},
-                     new CommentProduct{UserId = usersDb[0].Id, Product = products[2], DepartureDate = DateTime.Now, Text="CommentProduct bad"},
-                     new CommentProduct{UserId = usersDb[0].Id, Product = products[3], DepartureDate = DateTime.Now, Text="CommentProduct liked"},
+                     new CommentProduct{UserId = usersDb[0].Id, Product = products[1], DepartureDate = DateTime.Now, Text="CommentProduct bad"},
+                     new CommentProduct{UserId = usersDb[3].Id, Product = products[1], DepartureDate = DateTime.Now, Text="CommentProduct liked"},
+                     new CommentProduct{UserId = usersDb[2].Id, Product = products[2], DepartureDate = DateTime.Now, Text="CommentProduct bad"},
+                     new CommentProduct{UserId = usersDb[2].Id, Product = products[3], DepartureDate = DateTime.Now, Text="CommentProduct liked"},
                 };
 
                 dataContext.CommentProducts.AddRange(commentProduct);

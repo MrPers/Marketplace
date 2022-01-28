@@ -2,6 +2,7 @@
 using Marketplace.Contracts.Services;
 using Marketplace.DTO.Models;
 using Marketplace.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace Marketplace.Web.Controllers
             return result;
         }
 
-
+        //[Authorize]
         [HttpGet("get-product-all")]
         public async Task<IActionResult> GetProductsAll()
         {

@@ -23,7 +23,7 @@ namespace Marketplace.Web.Controllers
         private readonly IIdentityServerInteractionService _interactionService;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly SignInManager<User> _signInManager;
-        //private readonly UserManager<User> _userManager;
+        private readonly UserManager<User> _userManager;
         //private readonly RoleManager<Role> _roleManager;
         //private readonly DataContext _context;
 
@@ -32,10 +32,10 @@ namespace Marketplace.Web.Controllers
             IMapper mapper,
             IIdentityServerInteractionService interactionService,
             IHttpClientFactory httpClientFactory,
-            SignInManager<User> signInManager)
+            UserManager<User> userManager,
             //DataContext context,
-            //UserManager<User> userManager,
             //RoleManager<Role> roleManager)
+            SignInManager<User> signInManager)
         {
             _userService = userService;
             _mapper = mapper;
@@ -44,47 +44,40 @@ namespace Marketplace.Web.Controllers
             _interactionService = interactionService;
             _signInManager = signInManager;
             //_roleManager = roleManager;
-            //_userManager = userManager;
+            _userManager = userManager;
         }
 
         [HttpGet("[action]")]
         public async Task<IActionResult> Login(string returnUrl)
         {
-            var uiRezult = _httpClientFactory.CreateClient();
+            //var uiRezult = _httpClientFactory.CreateClient();
 
-            var response = await uiRezult.GetAsync("http://localhost:4200/auth/login");
-
-            //var signinResult = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-            //if (signinResult.Succeeded)
-            //{
-            //    return Redirect(returnUrl);
-            //}
+            //var response = await uiRezult.GetAsync("http://localhost:4200/auth/login");
 
             return Ok(returnUrl);
-
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login([FromBody] UserVM model)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(model);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-            //var user = await _userManager.FindByNameAsync(model.UserName);
-            //if (user == null)
-            //{
-            //    ModelState.AddModelError("UserName", "User not found");
-            //    return View(model);
-            //}
+            var user = await _userManager.FindByNameAsync(model.UserName);
+            if (user == null)
+            {
+                ModelState.AddModelError("UserName", "User not found");
+                return View(model);
+            }
 
-            //var signinResult = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-            //if (signinResult.Succeeded)
-            //{
-            //    return Redirect(model.ReturnUrl);
-            //}
-            //ModelState.AddModelError("UserName", "Something went wrong");
+            var signinResult = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
+            if (signinResult.Succeeded)
+            {
+                return Ok();
+            }
+            ModelState.AddModelError("UserName", "Something went wrong");
             return View(model);
         }
 

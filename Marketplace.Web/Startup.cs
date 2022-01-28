@@ -1,4 +1,5 @@
-﻿using IdentityServer4.EntityFramework.DbContexts;
+﻿using IdentityServer4.AccessTokenValidation;
+using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.Services;
 using Marketplace.Contracts.Repository;
 using Marketplace.Contracts.Services;

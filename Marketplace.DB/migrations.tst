@@ -13,27 +13,17 @@ Drop-Database -Context DataContext
 
 //Test1@gmail.com
 //12qw!Q
-
-{
-  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "userName": "Test1",
-  "password": "12qw!Q",
-  "email": "Test@ukr.net"
-}
+Успех:
+return Ok() ← Код статуса HTTP 200
+return Created() ← Код статуса HTTP 201
+return NoContent(); ← Код статуса HTTP 204
+Ошибка клиента:
+return BadRequest(); ← Код статуса HTTP 400
+return Unauthorized(); ← Код статуса HTTP 401
+return NotFound(); ← Код статуса HTTP 404
 
 Add-Migration PersistedGrantDbMigration -StartupProject Marketplace.Web -Context PersistedGrantDbContext -OutputDir Marketplace.DB/Data/PersistedGrantDb
 
 dotnet ef --project Marketplace.DB --startup-project Marketplace.Web migrations add PersistedGrantDbMigration -c PersistedGrantDbContext
 
 dotnet ef -r Marketplace.DB --startup-project Marketplace.Web migrations add PersistedGrantDbMigration -c PersistedGrantDbContext
-
-Успех:
-
-return Ok() ← Код статуса HTTP 200
-return Created() ← Код статуса HTTP 201
-return NoContent(); ← Код статуса HTTP 204
-Ошибка клиента:
-
-return BadRequest(); ← Код статуса HTTP 400
-return Unauthorized(); ← Код статуса HTTP 401
-return NotFound(); ← Код статуса HTTP 404
