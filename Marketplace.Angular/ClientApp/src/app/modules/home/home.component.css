@@ -1,0 +1,317 @@
+
+.header-picture{
+  overflow:hidden;
+  height: 400px;
+  /* width: auto; */
+}
+.text-header-picture{
+  width:auto;
+  max-width:100%;
+  padding: 1rem 1rem;
+  background-color: #dc3545 !important;
+  border: 1px solid black;
+  margin: 30px;
+}
+.mini-menu{
+  margin: auto;
+}
+.container-mini-menu{
+  margin-bottom: 2.5rem;
+  justify-content: center !important;
+}
+.parallax-img{
+  /* background-image: url(https://demo.htmlhunters.com/shopy/assets/images/demo/background-1.jpg) ; */
+  position: absolute;
+  width: 100%;
+  height: auto;
+  /* z-index: -351; */
+  /* outline: 2px solid #000; */
+  /* border: 3px solid #fff; */
+}
+
+a.a-underline, a.a-grup-mini-menu{
+	position: relative;
+	color: #4d4646; /*задаём цвет ссылки*/
+	cursor: pointer;
+	line-height: 1; /*задаём высоту строки*/
+	text-decoration: none; /*убираем подчёркивание*/
+}
+a.a-underline:after {
+	display: block;
+	position: absolute;
+	left: 0; /*изменить на right:0;, чтобы изменить направление подчёркивания */
+	width: 100%;/*задаём длинну линии до наведения курсора*/
+	height: 2px; /*задаём ширину линии*/
+	background-color: #4d4646; /*задаём цвет линии*/
+	content: "";
+	transition: width 0.3s ease-out; /*задаём время анимации*/
+}
+a.a-underline:hover:after,
+a.a-underline:focus:after {
+	width: 0; /*устанавливаем значение 100% чтобы ссылка подчёркивалась полностью*/
+}
+
+a.a-product-mini-menu{
+	position: relative;
+	text-decoration: none; /*убираем подчёркивание*/
+}
+.text-product-mini{
+  color: black; /*задаём цвет ссылки*/
+  display: block;/*тип отображения*/
+  width: 100%;
+  padding: 0.9375rem 1.875rem;/*внутренние отступы/поля*/
+  background: #ECE8E5;
+  text-align: center;
+}
+.product-mini-container:hover + p, .text-product-mini:hover{
+color: white;
+display: block;
+width: 100%;
+padding: 0.9375rem 1.875rem;
+background: black;
+text-align: center;
+}
+.header-text{
+  margin-top: 10px;
+  font-size: 4px;
+}
+.header-a{
+  position: relative;
+	color: black; /*задаём цвет ссылки*/
+	cursor: pointer;
+	text-decoration: none; /*убираем подчёркивание*/
+}
+.container-header{
+  margin: 10px;
+}
+li.a-grup-header-picture,li.a-container-header{
+  margin: auto;
+}
+ul.grup-mini-menu, ul.grup-header-picture, ul.container-header{
+  display: flex;
+  /* padding-inline-start: 0px; */
+}
+.grup-mini-menu li{
+  position: relative;
+  padding: 1em 2em;
+  font-size: 24px;
+  list-style: none;
+  white-space:nowrap;
+  /* margin: auto; */
+}
+.grup-mini-menu li::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: #000;
+  transition: .5s all linear;
+}
+.grup-mini-menu li:hover::after{
+  width: 100%;
+}
+.grup-mini-menu li::after{
+  left: 100%;     /*Направление, в котором отводится последнее подчеркивание выбранного элемента, слева направо*/
+}
+.grup-mini-menu li:hover::after{
+  left: 0;      /*Направление подчеркивания выбранного элемента слева направо*/
+}
+.grup-mini-menu li:hover ~ li::after {
+  left: 0;    /*Направление, в котором следующее подчеркивание выходит за пределы выбранного элемента, слева направо*/
+}
+
+.container{
+  margin-bottom: 20px;
+  /* margin: 20px; */
+}
+
+.my-text-right{
+  text-align: right;
+}
+
+.text-footer-header{
+  margin-left: 20%; /*отступ*/
+  margin-top: 20%;
+  color: #777777 !important;/* !important - повысить приоритет стиля */
+  font-size: 100%;    /* размер шрифта*/
+}
+
+.footer{
+  background-color: black; /* Цвет фона */
+}
+
+.text-footer{
+  margin-left: 20%;
+  color: aliceblue;
+
+}
+
+.badge-success {
+  color: #fff;
+  background-color: #28a745;
+  position: absolute;
+  bottom: 0.625rem;
+  left: 0.625rem;
+}
+
+button {  /*кнопке как текст выглядит*/
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
+  cursor: pointer;
+}
+
+button:hover {
+  color: #777777;
+}
+
+.carousel-control-next{
+  color: black;
+}
+
+li {
+  list-style-type: none; /* Убираем маркеры (кружочки)*/
+}
+
+ul.footer-left {
+margin-left: 0; /* Отступ слева в браузере IE и Opera */
+padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+}
+
+.eyebrow{
+  font-size: 0.75rem;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: #777777; /* межбуквенное расстояние*/
+}
+
+select {
+  color: white;
+  background-color: black;
+  /* background:none;
+  border:none; */
+  outline:none; /*убирает обводку при нажатии */
+  -webkit-appearance: none;/*убрать стрелку из select */
+  -moz-appearance: none;/* убрать стрелку из select */
+  /*appearance: none;*//* убрать стрелку из select */
+  padding: 10px; /* Поля */
+
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 4px;
+  display: inline-block;
+  font: inherit;
+  line-height: 1.5em;
+  padding: 0.5em 3.5em 0.5em 1em;
+}
+select option:not(:checked) {
+  color: black;
+  background-color: white;
+}
+select.minimal {
+  background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient( #ccc, transparent 0%);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;
+}
+select.minimal:focus {
+  background-image:
+    linear-gradient(45deg, gray 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, gray 50%),
+    linear-gradient(#ccc, transparent 0%);
+  background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;
+  /* border-color: green; */
+  outline: 0;
+}
+
+.product-photo, .photo-product-mini{
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* должно заполнять контейнер относительно его высоты и ширины */
+}
+
+.product-container{
+  margin-top: 10px;
+}
+
+.product-photo-container, .product-mini-container{
+  height: 100%;
+  width: 100%;
+  position:relative;  /* позиционируется в соответствии с нормальным потоком документа */
+}
+.raz {
+  position: absolute; /*  удаляется из обычного потока документов */
+  /* border: 1px red solid; */
+}
+.dva {
+  position: relative;/* позиционируется в соответствии с нормальным потоком документа */
+  /* border: 1px green solid; */
+}
+img.dva:hover {    /* при новедении миняться картинка */
+  /*filter: alpha (Opacity=0);*//* прозрачность для IE */
+  opacity: 0;/* прозрачность для других браузеров */
+}
+
+:host ::ng-deep .carousel-inner{
+  justify-content: center !important;
+}
+:host ::ng-deep .multilist-margin{
+  margin: 20px;
+  width: auto !important;
+  margin-right: 20px !important;
+}
+.carousel-cell{
+  max-width: 150px !important;
+  height: auto !important;
+}
+:host ::ng-deep .icon-next, :host ::ng-deep .icon-prev{
+  outline: 2px solid rgb(156, 156, 156);
+  border: 3px solid rgba(255, 255, 255, 0);
+  padding: 10px; /* Поля вокруг текста */
+  background-repeat: no-repeat;
+  /* background: black; */
+}
+:host ::ng-deep .icon-prev{
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAdVBMVEX///8AAAB2dnb29vb7+/uhoaHq6urIyMhXV1fExMSvr68tLS27u7vR0dHi4uJAQEDx8fEoKCgaGhpkZGTd3d2UlJSqqqpMTEwzMzMiIiLW1tZpaWmLi4uFhYUNDQ3e3t6RkZFGRkZPT096enoXFxddXV2cnJxt7RYeAAAEnElEQVR4nO2dgU4iQRBEd1hABUUEFAFFUM7//8RTcirKTpFc2nT29dQXVIXsblFd01NVLUA9mC7SZN4beRP5LfTSBzpdby6/glX6wn3fm4096m06xLD2JmSN8U36jpU3I2OMFuknZt6cTLFcHwlMD96kLHF2rC+ltTcrQ1w2CUzJm5Yd7poFJszbdJMRiPkNOzmBN97MjLDKCUy33tRM0D3PCkwI31bf5wUiPof9n07tAOfe5Cwwm+QFzgmfimVeH+MXvBACO97kLDAQAjfe5CzwKgT2vMlZ4FEIHHiTs0DWqb3hwpucAbpTIfDKm50Butu8vjUhuhgP8wJvCF50JIzMNd3IPBOC7ishEBGQZiKnPR69yVmgJwRuvMlZ4FYIxDu1S29yFshHTimdeZOzwLMQuPQmZ4D6Oq9vR5hpq8hpOPZmZ4BZw+zsA4jISRmZKcGpqcgJ4dRU5IR3aq/e5CzwIASWyKkNELMzRORUC6e2Q0ROwqlNEJHTLi8QHzmdE4xMY8vpHxBGRkVOiOFgruX0jo03OQuoyOnOm5wFXoRAROSkZmeEyEm1nNaEyGk8zwucECKnoz76ARjDQfEIbglGRkVOf7zJWaBETm2HajnhIyeEU1ORE96p0SOn9ZM3OwOMRR99QTAyfdFyuicMB2XLyZucBVTkNPUmZwEVOb14k7OAipwQh15Ct5zKcLAFUJET4qS5ajkhIqe+cGqInRYNKxA+gRgOqsipHKxrA/CRk2o5IU6YZ1cgJEjkFHo4SIicusLIMA7WCYFDglMbiZODiMjpSTyC+OFgiZzagBI5tR0lcmo76H10WdcmGBkVOQ0RkVPpo7ccJXJqO/CRE76Prp5BRORUiQ4JoY8u3zKEPnolzOiOYGTekROIiJz2yAh8Jji1PepmgROMwOxveM6RmHsOrzHPYfZduqBIFN9DwgjmHXhPE8CXyv8WiJA0wOKVAP/xA+Q0OmtDnCgMkJeeqFky7I2aWywIc4tKz54giYaaH0IcHH65aoB0OMDGmQB9mgDLxk/02rzJ2UB1EyEBlbI3iIMyJzrCEAdH73lXuquPaIDp8xYloGoLSkBFAH7llT5Dug0QUDHsjTrLDQmo5Hl8wmKhqgRU3uRsgD9oUgIqb3I2wK8mD3A1c4B9bXrnHmJ58Im9iQwHFyGgwu8vDXDtUYDb0nVAhTjuXQIqb3I2UHv154QDmSfuRoA4OPr9Fjqg2kEaVPR7ZqoA68DCN6gQZ6QD3LtWAiqGvQnQgZcFcX5AhbhLtuLvX6pCjBgDBFSlQUVA8IBqyrA3s3Ve4pxhb/oioIKMGFWDascIqCo1YoQEVCvxvoE4uNKgIgC/xE8HVBAHF+CIX4SASjSoKAGVOMUIaVB1t3mJiGtA3iQGb1BBjvjhF/WHb1BtvMnZIEBAFaAgPhP2JkBABfkVa9GBhxQ2VYOK4VFVQAX51y8c3I03MzNklzR4E7NDrkHF+GDskQmovGlZorFBtfZmZYplw/wN8kH8QMOSBkag8YWjDjwkPj1Avf0mcAh6k37i0N5Admv8xNfkpsOIv49RD6aLNJn3/mvu/RdtizzIPC6ErAAAAABJRU5ErkJggg==)!important;
+}
+:host ::ng-deep .icon-next{
+  background-image: url(https://flyclipart.com/thumb2/right-arrow-arrow-right-arrows-icon-with-png-and-vector-format-241719.png)!important;
+}
+:host ::ng-deep .icon-next:hover, :host ::ng-deep .icon-prev:hover{
+  outline: 1px solid #000; /* Чёрная рамка */
+}
+:host ::ng-deep .item{
+  border: 1px solid rgb(139, 139, 139);
+}
+:host ::ng-deep .item:hover{
+  border: 1px solid #000;
+}
+
+.above-footer{
+  margin: 5%;
+  /* background-color: #28a745; */
+  /*padding-top: 36px; /* опустим текст*/
+}

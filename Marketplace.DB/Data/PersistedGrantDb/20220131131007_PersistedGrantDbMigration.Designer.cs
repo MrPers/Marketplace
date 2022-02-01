@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marketplace.DB.Data.PersistedGrantDb
 {
     [DbContext(typeof(PersistedGrantDbContext))]
-    [Migration("20220125105148_PersistedGrantDbMigration")]
+    [Migration("20220131131007_PersistedGrantDbMigration")]
     partial class PersistedGrantDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

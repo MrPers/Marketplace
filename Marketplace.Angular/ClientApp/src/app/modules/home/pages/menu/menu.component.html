@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row">
+    <ng-template ngFor let-item [ngForOf]="menuProducts" >
+      <div class="col-3 product-container">
+        <div class="product-photo-container">
+          <a href="product/{{item.productId}}">
+            <img class="product-photo raz" src="{{item.photo}}"/>
+            <img class="product-photo dva" src="https://demo.htmlhunters.com/shopy/assets/images/demo/product-3-2.jpg" />
+            <p class="product-name">{{item.productName}}</p>
+          </a>
+        </div>
+        <div *ngIf="item.pricesBoolean">
+          <p class="product-price">
+            Average price: {{item.price}}
+          </p>
+        </div>
+        <div *ngIf="!item.pricesBoolean">
+          <p class="product-price">
+            Price: {{item.price}}
+          </p>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

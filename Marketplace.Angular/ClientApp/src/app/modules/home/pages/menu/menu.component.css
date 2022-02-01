@@ -1,0 +1,27 @@
+
+.product-photo, .photo-product-mini{
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* должно заполнять контейнер относительно его высоты и ширины */
+}
+.product-container{
+  margin-top: 10px;
+}
+.product-photo-container, .product-mini-container{
+  position:relative;  /* позиционируется в соответствии с нормальным потоком документа */
+}
+.raz {
+  position: absolute; /*  удаляется из обычного потока документов */
+  /* border: 1px red solid; */
+}
+.dva {
+  position: relative;/* позиционируется в соответствии с нормальным потоком документа */
+  /* border: 1px green solid; */
+}
+img.dva:hover {    /* при новедении миняться картинка */
+  filter: alpha (Opacity=0);/* прозрачность для IE */
+  opacity: 0;/* прозрачность для других браузеров */
+}
+p{
+  margin: 0;
+}

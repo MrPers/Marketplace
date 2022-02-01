@@ -11,7 +11,8 @@ Update-Database -Context ConfigurationDbContext
 
 Drop-Database -Context DataContext
 
-//Test1@gmail.com
+//AdministratorAll
+//AdmShop2
 //12qw!Q
 Успех:
 return Ok() ← Код статуса HTTP 200
