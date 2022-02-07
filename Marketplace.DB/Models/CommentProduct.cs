@@ -6,7 +6,7 @@ namespace Marketplace.DB.Models
 {
     public class CommentProduct : BaseEntity<Guid>
     {
-        [Column(TypeName = "varchar(20)")]
+        [Column(TypeName = "varchar(200)")]
         [Required]
         public string Text { get; set; }
         public Guid ProductId { get; set; }

@@ -134,10 +134,10 @@ namespace Marketplace.DB
                 dataContext.ProductGroups.AddRange(productGroups);
 
                 Product[] products = new Product[] {
-                     new Product{ Name = "Child", Photo = "child.jpg", ProductGroup = productGroups[0]},
-                     new Product{ Name = "Sock", Photo = "potato.jpg", ProductGroup = productGroups[1]},
-                     new Product{ Name = "Potato", Photo = "sock.jpg", ProductGroup = productGroups[0]},
-                     new Product{ Name = "Cement", Photo = "tsement.jpg", ProductGroup = productGroups[1] },
+                     new Product{ Name = "Child", Photo = "child.jpg", ProductGroup = productGroups[0], Description = "#slavery - live"},
+                     new Product{ Name = "Sock", Photo = "potato.jpg", ProductGroup = productGroups[1], Description = "Оплата при получении товара, Картой онлайн, Google Pay, -5% скидки от ПриватБанк и Mastercard от 500 грн, Безналичными для юридических лиц, Безналичными для физических лиц, PrivatPay, Apple Pay, Кредит, Оплата картой в отделении, Оплата частями"},
+                     new Product{ Name = "Potato", Photo = "sock.jpg", ProductGroup = productGroups[0], Description = "#Belarus - free"},
+                     new Product{ Name = "Cement", Photo = "tsement.jpg", ProductGroup = productGroups[1], Description = " искусственное неорганическое гидравлическое вяжущее вещество"},
                 };
 
                 dataContext.Products.AddRange(products);
@@ -154,9 +154,9 @@ namespace Marketplace.DB
                 dataContext.Prices.AddRange(prices);
 
                 StatusCart[] statusCart = new StatusCart[]{
-                     new StatusCart{ Name = "added"},
-                     new StatusCart{ Name = "ordered"},
-                     new StatusCart{ Name = "deleted"},
+                    new StatusCart{ Name = "added"},
+                    new StatusCart{ Name = "ordered"},
+                    new StatusCart{ Name = "deleted"},
                 };
 
                 dataContext.StatusCarts.AddRange(statusCart);   //обрати внимание на коскадное удалиние при удалении юзера

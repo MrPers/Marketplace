@@ -20,6 +20,10 @@ using Marketplace.Service;
 using Marketplace.DB;
 using Marketplace.DB.Models;
 using Marketplace.Angular.Infrastructure;
+using Microsoft.OpenApi.Models;
+using System.Collections.Generic;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Identity;
 
 namespace Marketplace.Angular
 {
@@ -35,43 +39,6 @@ namespace Marketplace.Angular
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped(typeof(ICartRepository), typeof(CartRepository));
-            services.AddScoped(typeof(IClaimRepository), typeof(ClaimRepository));
-            services.AddScoped(typeof(ICommentProductRepository), typeof(CommentProductRepository));
-            services.AddScoped(typeof(IPriceRepository), typeof(PriceRepository));
-            services.AddScoped(typeof(IProductGroupRepository), typeof(ProductGroupRepository));
-            services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
-            services.AddScoped(typeof(IRoleRepository), typeof(RoleRepository));
-            services.AddScoped(typeof(IShopRepository), typeof(ShopRepository));
-            services.AddScoped(typeof(IStatusCartRepository), typeof(StatusCartRepository));
-            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
-
-            services.AddAutoMapper(typeof(Mapper));
-
-            //services.AddScoped<ICartService, CartService>();
-            //services.AddScoped<IClaimService, ClaimService>();
-            services.AddScoped<ICommentProductService, CommentProductService>();
-            services.AddScoped<IPriceService, PriceService>();
-            services.AddScoped<IProductGroupService, ProductGroupService>();
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IRoleService, RoleService>();
-            services.AddScoped<IShopService, ShopService>();
-            //services.AddScoped<IStatusCartService, StatusCartService>();
-            services.AddScoped<IUserService, UserService>();
-
-            services.AddControllersWithViews(); // для работы контроллеров MVC
-            services.AddControllers(); // используем контроллеры без представлений
-            services.AddHttpClient();
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "Test API",
-                    Description = "ASP.NET Core Web API"
-                });
-            });
 
             services
             .AddDbContext<PersistedGrantDbContext>(options =>
@@ -94,26 +61,31 @@ namespace Marketplace.Angular
                 config.Password.RequireUppercase = false;
                 config.Password.RequiredLength = 6;
             })
-            .AddEntityFrameworkStores<DataContext>();
+            .AddEntityFrameworkStores<DataContext>()
+            .AddDefaultTokenProviders();
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddIdentityServer()
-            .AddAspNetIdentity<User>()
-            .AddConfigurationStore(options =>
-            {
-                options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString(nameof(DataContext)),
-                    sql => sql.MigrationsAssembly(migrationsAssembly));
-            })
-            .AddOperationalStore(options =>
-            {
-                options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString(nameof(DataContext)),
-                    sql => sql.MigrationsAssembly(migrationsAssembly));
-            })
-            .AddProfileService<ProfileService>()
-            .AddDeveloperSigningCredential();
+                .AddDeveloperSigningCredential()
+                .AddInMemoryPersistedGrants()
+                //.AddInMemoryIdentityResources(IdentityServerConfig.GetIdentityResources())
+                //.AddInMemoryApiScopes(IdentityServerConfig.GetApiScopes())
+                //.AddInMemoryApiResources(IdentityServerConfig.GetApiResources())
+                //.AddInMemoryClients(IdentityServerConfig.GetClients())
+                .AddAspNetIdentity<User>()
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString(nameof(DataContext)),
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
+                })
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString(nameof(DataContext)),
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
+                })
+                .AddProfileService<ProfileService>();
 
-            services.AddCors();     // Add cors
             services.AddSingleton<ICorsPolicyService>((container) =>        //CORS от IS4
             {
                 var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
@@ -123,23 +95,86 @@ namespace Marketplace.Angular
                 };
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, config =>
+
+
+
+
+
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, config =>
+            //    {
+            //        config.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ClockSkew = TimeSpan.FromSeconds(5)
+            //        };
+            //        config.Authority = "https://localhost:5001";
+            //        config.Audience = "Order";
+            //    });
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options =>
                 {
-                    config.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ClockSkew = TimeSpan.FromSeconds(5)
-                    };
-                    config.Authority = "https://localhost:5001";
-                    config.Audience = "Order";
+                    options.Authority = Configuration["ApplicationUrl"].TrimEnd('/');
+                    options.SupportedTokens = SupportedTokens.Jwt;
+                    options.RequireHttpsMetadata = false; // Note: Set to true in production
+                    options.ApiName = IdentityServerConfiguration.ApiName;
                 });
 
             services.AddAuthorization();
+
+            services.AddCors();     // Add cors
+
+            services.AddControllersWithViews(); // для работы контроллеров MVC
 
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = IdentityServerConfiguration.ApiName, Version = "v1" });
+                c.OperationFilter<AuthorizeCheckOperationFilter>();
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        Password = new OpenApiOAuthFlow
+                        {
+                            TokenUrl = new Uri("/connect/token", UriKind.Relative),
+                            Scopes = new Dictionary<string, string>()
+                            {
+                                { IdentityServerConfiguration.ApiName, IdentityServerConfiguration.ApiName }    // ApiFriendlyName
+                            }
+                        }
+                    }
+                });
+
+            });
+
+            services.AddAutoMapper(typeof(Mapper));
+
+            services.AddScoped(typeof(ICartRepository), typeof(CartRepository));
+            services.AddScoped(typeof(IClaimRepository), typeof(ClaimRepository));
+            services.AddScoped(typeof(ICommentProductRepository), typeof(CommentProductRepository));
+            services.AddScoped(typeof(IPriceRepository), typeof(PriceRepository));
+            services.AddScoped(typeof(IProductGroupRepository), typeof(ProductGroupRepository));
+            services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
+            services.AddScoped(typeof(IRoleRepository), typeof(RoleRepository));
+            services.AddScoped(typeof(IShopRepository), typeof(ShopRepository));
+            services.AddScoped(typeof(IStatusCartRepository), typeof(StatusCartRepository));
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+
+            //services.AddScoped<ICartService, CartService>();
+            //services.AddScoped<IClaimService, ClaimService>();
+            services.AddScoped<ICommentProductService, CommentProductService>();
+            services.AddScoped<IPriceService, PriceService>();
+            services.AddScoped<IProductGroupService, ProductGroupService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IShopService, ShopService>();
+            //services.AddScoped<IStatusCartService, StatusCartService>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -152,7 +187,6 @@ namespace Marketplace.Angular
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -164,35 +198,42 @@ namespace Marketplace.Angular
             }
 
             app.UseRouting();
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
 
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
-            });
-
-            app.UseIdentityServer();        //добавить IdentityServer в конвейер
-            app.UseRouting();
-
-            app.UseAuthentication();
+            app.UseIdentityServer();
+            //app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test API V1");
+                c.DocumentTitle = "Swagger UI - ExampleApi";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{IdentityServerConfiguration.ApiName} V1");
+                c.OAuthClientId(IdentityServerConfiguration.SwaggerClientID);
+                c.OAuthClientSecret("no_password"); //Оставить поле пустым не работает
             });
 
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+            });
 
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                    spa.Options.StartupTimeout = TimeSpan.FromSeconds(280); //Увеличиваем время ожидания, если приложение angular загружается дольше
+                }
+            });
+
         }
     }
 }

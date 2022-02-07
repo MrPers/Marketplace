@@ -295,7 +295,7 @@ namespace Marketplace.DB.Data.DataDb
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Text = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Text = table.Column<string>(type: "varchar(200)", nullable: false),
                     DepartureDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>

@@ -7,10 +7,10 @@ namespace Marketplace.Contracts.Services
 {
     public interface IProductService
     {
-        Task<ICollection<ProductDto>> GetAllAsync();
-        Task<ProductDto> GetByIdAsync(Guid id);
-        Task AddAsync(ProductDto product);
-        Task UpdateAsync(ProductDto product);
+        Task<ICollection<BriefProductDto>> GetAllAsync();
+        Task<BriefProductDto> GetByIdAsync(Guid id);
+        Task UpdateAsync(FullProductDto product);
         Task DeleteAsync(Guid id);
+        Task AddAsync(FullProductDto fullProductDto);
     }
 }

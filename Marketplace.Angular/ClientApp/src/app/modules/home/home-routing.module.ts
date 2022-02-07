@@ -3,11 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { MenuComponent } from './pages/menu/menu.component';
 import { HomeComponent } from './home.component';
 import { ProductComponent } from './pages/product/product.component';
+import { ShopComponent } from './pages/shop/shop.component';
+import { CabinetComponent } from './pages/cabinet/cabinet.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
   {path:'menu', component: MenuComponent},
-  {path:'product/:productId', component: ProductComponent},
+  {path:'product/:Id', component: ProductComponent},
+  {path:'shop/:Id', component: ShopComponent},
+  {path:'cabinet/:Id', component: CabinetComponent},
   // canActivate: [AuthGuardService]
 ];
 

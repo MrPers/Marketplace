@@ -13,52 +13,15 @@ namespace Marketplace.Angular.Controllers
     [ApiController]
     public class ProductController : Controller
     {
-        private readonly IUserService _userService;
-        private readonly IShopService _shopService;
-        private readonly IPriceService _priceService;
         private readonly IProductService _productService;
-        private readonly IProductGroupService _productGroupService;
-        private readonly ICommentProductService _commentProductService;
         private readonly IMapper _mapper;
 
         public ProductController(
-            IUserService userService,
             IProductService productService,
-            IPriceService priceService, 
-            IShopService shopService,
-            IProductGroupService productGroupService,
-            ICommentProductService commentProductService,
             IMapper mapper)
         {
-            _userService = userService;
-            _productGroupService = productGroupService;
-            _commentProductService = commentProductService;
             _productService = productService;
-            _shopService = shopService;
-            _priceService = priceService;
             _mapper = mapper;
-        }
-
-        [HttpGet("get-all-product-price-shop")]
-        public async Task<IActionResult> GetAllProductPriceShop()
-        {
-            var products = await _productService.GetAllAsync();
-            var users = await _userService.GetAllAsync();
-            var shops = await _shopService.GetAllAsync();
-            var prices = await _priceService.GetAllAsync();
-            var productGroups = await _productGroupService.GetAllAsync();
-            var commentProducts = await _commentProductService.GetAllAsync();
-
-            var productsResult = _mapper.Map<List<ProductVM>>(products);
-            var shopsResult = _mapper.Map<List<ShopVM>>(shops);
-            var pricesResult = _mapper.Map<List<PriceVM>>(prices);
-            var productGroupsResult = _mapper.Map<List<ProductGroupVM>>(productGroups);
-            var commentProductsResult = _mapper.Map<List<CommentProductVM>>(commentProducts);
-            var usersResult = _mapper.Map<List<UserVM>>(users);
-            var time = new { productsResult, shopsResult, pricesResult, productGroupsResult, commentProductsResult, usersResult };
-            IActionResult result = products == null ? NotFound() : Ok(time);
-
-            return result;
         }
 
         //[Authorize]
@@ -66,7 +29,7 @@ namespace Marketplace.Angular.Controllers
         public async Task<IActionResult> GetProductsAll()
         {
             var products = await _productService.GetAllAsync();
-            IActionResult result = products == null ? NotFound() : Ok(_mapper.Map<List<ProductVM>>(products));
+            IActionResult result = products == null ? NotFound() : Ok(_mapper.Map<List<BriefProductVM>>(products));
 
             return result;
         }
@@ -75,24 +38,24 @@ namespace Marketplace.Angular.Controllers
         public async Task<IActionResult> GetProductById(Guid id)
         {
             var products = await _productService.GetByIdAsync(id);
-            var productsResult = _mapper.Map<ProductVM>(products);
+            var productsResult = _mapper.Map<FullProductVM>(products);
             IActionResult result = products == null ? NotFound() : Ok(productsResult);
 
             return result;
         }
 
         [HttpPost("add-product")]
-        public async Task<IActionResult> AddAsync(ProductVM product)
+        public async Task<IActionResult> AddAsync(FullProductVM product)
         {
-            await _productService.AddAsync(_mapper.Map<ProductDto>(product));
+            await _productService.AddAsync(_mapper.Map<FullProductDto>(product));
 
             return Ok(true);
         }
 
         [HttpPut("update-product")]
-        public async Task<IActionResult> UpdateAsync(ProductVM product)
+        public async Task<IActionResult> UpdateAsync(FullProductVM product)
         {
-            await _productService.UpdateAsync(_mapper.Map<ProductDto>(product));
+            await _productService.UpdateAsync(_mapper.Map<FullProductDto>(product));
 
             return Ok(true);
         }

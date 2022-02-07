@@ -10,12 +10,16 @@ import { MenuComponent } from './pages/menu/menu.component';
 import { ConstantsService } from '../../services/constants.service';
 import { CurrencyService } from '../../services/currency.service';
 import { ProductComponent } from './pages/product/product.component';
+import { ShopComponent } from './pages/shop/shop.component';
+import { CabinetComponent } from './pages/cabinet/cabinet.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     MenuComponent,
     ProductComponent,
+    ShopComponent,
+    CabinetComponent,
   ],
   imports: [
     TooltipModule,

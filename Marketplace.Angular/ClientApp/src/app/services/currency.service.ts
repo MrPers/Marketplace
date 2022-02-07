@@ -18,26 +18,8 @@ export class CurrencyService {
     return this.http.get(URLpath + 'get-all-product-price-shop');
   };
 
-  register(userRegistration: User) {
-    return this.http.post(URLpath + 'account/register', userRegistration);
-  }
-
-  //authentication(userRegistration: User) {
-  //  return this.http.post(URLpath + 'account/login', userRegistration);
-  //}
-
-
-  // getHistoryLette(user: User){
-  //   return this.http.get(URLpath + 'get-history-lette/' + user.id, { headers: this.authService.getAuthorizationHeaderValue()});
-  // };
-
-  // updateUser(user: User){
-  //   let formData = new FormData();
-  //   formData.append("Id", user.id.toString());
-  //   formData.append("Name", user.name);
-  //   formData.append("Surname", user.surname);
-  //   formData.append("Email", user.email);
-  //   return this.http.post(URLpath + "update-user", formData, { headers: this.authService.getAuthorizationHeaderValue()});
-  // };
+  getProductAll(){
+    return this.http.get(URLpath + 'get-product-all');
+  };
 
 }

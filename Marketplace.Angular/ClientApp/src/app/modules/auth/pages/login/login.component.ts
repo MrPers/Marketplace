@@ -36,16 +36,16 @@ export class LoginComponent implements OnInit {
     });
   }
   onRegistrationSubmit() {
-    this.currencyService.register(this.userRegistration)
-      .subscribe(
-        result => {
-          this.visibility = true;
-        },
-        error => {
-          if(error['status'] == 400) {
-            this.error = true;
-          }
-        });
+    // this.currencyService.register(this.userRegistration)
+    //   .subscribe(
+    //     result => {
+    //       this.visibility = true;
+    //     },
+    //     error => {
+    //       if(error['status'] == 400) {
+    //         this.error = true;
+    //       }
+    //     });
   }
 
 }

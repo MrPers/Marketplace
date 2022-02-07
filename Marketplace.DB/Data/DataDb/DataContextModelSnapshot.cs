@@ -89,7 +89,7 @@ namespace Marketplace.DB.Data.DataDb
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar(200)");
 
                     b.HasKey("Id", "ProductId", "UserId");
 
