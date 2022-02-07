@@ -1,24 +1,57 @@
-<p>product works!</p>
 <div class="container">
-  <div class="row">
-      <!-- <div class="col-3 product-container">
-        <div class="product-photo-container">
-          <a href="{{item.productId}}">
-            <img class="product-photo raz" src="{{item.photo}}"/>
-            <img class="product-photo dva" src="https://demo.htmlhunters.com/shopy/assets/images/demo/product-3-2.jpg" />
-            <p class="product-name">{{item.productName}}</p>
-          </a>
+  <!--<div class="row">
+    <div class="col-6 product-container">
+      <div class="product-item">
+        <img src="{{product.photo}}">
+        <div class="product-list">
+          <h3>{{product.productName}}</h3>
+          <span class="price">{{product.price}}</span>
+          <a href="" class="button">In garbage</a>
         </div>
-        <div *ngIf="item.pricesBoolean">
-          <p class="product-price">
-            Average price: {{item.price}}
-          </p>
-        </div>
-        <div *ngIf="!item.pricesBoolean">
-          <p class="product-price">
-            Price: {{item.price}}
-          </p>
-        </div>
-      </div> -->
-  </div>
+      </div>
+    </div>
+    <div class="col-6 product-container">
+      <ng-template ngFor let-item [ngForOf]="listShopProduct">
+        <table align="center" style="width: 100%;" border="1">
+          <tr>
+            <td>
+              <a class="btn" href="https://disqus.com/by/igorreutovinrussia/" style="color:chocolate;">{{item.shopName}}</a>
+            </td>
+            <td>
+              <p>{{item.price}}</p>
+            </td>
+          </tr>
+        </table>
+      </ng-template>
+    </div>
+    <div class="col-12 product-container">
+      <label for="msg">Comments:</label>
+      <ng-template ngFor let-item [ngForOf]="listCommentProduct">
+        <table align="center" style="width: 100%;" border="1">
+          <tr>
+            <td>
+              <a class="btn" href="https://disqus.com/by/igorreutovinrussia/" style="color:brown;">{{item.userName}}</a>
+            </td>
+            <td>
+              <p>{{item.departureDate}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>{{item.text}}</p>
+            </td>
+          </tr>
+        </table>
+      </ng-template>
+      <div>
+        <label for="msg">Your comments:</label>
+      </div>
+      <div>
+        <textarea style="width: 100%; height: 200px;"></textarea>
+      </div>
+      <div>
+        <button href="" class="btn" (click)="addComment()">Add Comment</button>
+      </div>
+    </div>
+  </div>-->
 </div>

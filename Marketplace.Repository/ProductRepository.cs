@@ -16,12 +16,12 @@ namespace Marketplace.Repository
         public ProductRepository(DataContext context, IMapper mapper) : base(context, mapper)
         {}
 
-        public new async Task<ICollection<BriefProductDto>> GetAllAsync()
+        public override async Task<ICollection<FullProductDto>> GetAllAsync()
         {
             var productsDto = await _context.Products.Join(_context.Prices,
              p => p.Id,
              t => t.ProductId,
-             (p, t) => new BriefProductDto
+             (p, t) => new FullProductDto
              {
                  Name = p.Name,
                  Id = p.Id,

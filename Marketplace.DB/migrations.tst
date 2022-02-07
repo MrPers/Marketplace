@@ -23,8 +23,4 @@ return BadRequest(); ← Код статуса HTTP 400
 return Unauthorized(); ← Код статуса HTTP 401
 return NotFound(); ← Код статуса HTTP 404
 
-Add-Migration PersistedGrantDbMigration -StartupProject Marketplace.Web -Context PersistedGrantDbContext -OutputDir Marketplace.DB/Data/PersistedGrantDb
-
-dotnet ef --project Marketplace.DB --startup-project Marketplace.Web migrations add PersistedGrantDbMigration -c PersistedGrantDbContext
-
-dotnet ef -r Marketplace.DB --startup-project Marketplace.Web migrations add PersistedGrantDbMigration -c PersistedGrantDbContext
+    "DataContext": "Server=.\\SQLEXPRESS;Database = MarketplaceDb;Trusted_Connection=True;MultipleActiveResultSets=true;"

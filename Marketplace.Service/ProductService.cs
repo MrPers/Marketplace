@@ -18,21 +18,21 @@ namespace Marketplace.Service
             _productRepository = productRepository;
         }
 
-        public async Task<ICollection<BriefProductDto>> GetAllAsync()
+        public async Task<ICollection<FullProductDto>> GetAllAsync()
         {
             var products = await _productRepository.GetAllAsync();
 
             return products;
         }
 
-        public async Task<BriefProductDto> GetByIdAsync(Guid id)
+        public async Task<FullProductDto> GetByIdAsync(Guid id)
         {
             var product = await _productRepository.GetByIdAsync(id);
 
             return product;
         }
 
-        public async Task AddAsync(BriefProductDto product)
+        public async Task AddAsync(FullProductDto product)
         {
             if (product == null)
             {
@@ -47,10 +47,9 @@ namespace Marketplace.Service
             await _productRepository.DeleteAsync(id);
         }
 
-        public async Task UpdateAsync(BriefProductDto product)
+        public async Task UpdateAsync(FullProductDto product)
         {
             await _productRepository.UpdateAsync(product.Id, product);
         }
-
     }
 }

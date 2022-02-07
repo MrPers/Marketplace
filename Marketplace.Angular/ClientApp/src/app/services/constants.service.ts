@@ -51,16 +51,10 @@ export class User{
   email:string = "";
 }
 export class Product{
+  id:any;
   name:string = "";
-  iD:any;
-  productGroupId:any;
-  priceId:any;
-  shopID:any;
-  productGroupName:string = "";
   netPrice:number = 0;
-  numberProduct:number = 0;
   photo:string = "";
-  description:string = "";
 }
 
 // export class PageCommentProduct{
@@ -130,32 +124,7 @@ export class Product{
       //     var prices:number[] = [];
       //     var pricesBoolean:boolean = false;
 
-      //     for (let i = 0; i < this.prices .length; i++) {
-      //       if(this.products [index].id ==this.prices [i].productId){
-      //         var sum:number = 0;
-      //         prices.push(this.prices [i].netPrice);
-      //         if(prices.length !== 1){
-      //           for (let t = 0; t < prices.length; t++) {
-      //             sum = prices[t] + sum;
-      //           }
-      //           price = sum/prices.length;
-      //           pricesBoolean = true;
-      //         }
-      //         else{
-      //           price =prices[0];
-      //         }
-      //       }
-      //     }
-
-      //     this.pageMenuProducts.push({
-      //       productId : this.products [index].id,
-      //       price : price,
-      //       pricesBoolean : pricesBoolean,
-      //       productGroupID : this.products [index].productGroupID,
-      //       productName : this.products [index].name,
-      //       photo : "../../../../../assets/images/" + this.products [index].photo,
-      //     });
-      //   }
+ 
 
       //   for (let index = 0; index < this.commentProducts.length; index++) {
       //     var userName: string = "";
