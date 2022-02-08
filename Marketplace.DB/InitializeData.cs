@@ -134,10 +134,10 @@ namespace Marketplace.DB
                 dataContext.ProductGroups.AddRange(productGroups);
 
                 Product[] products = new Product[] {
-                     new Product{ Name = "Child", Photo = "child.jpg", ProductGroup = productGroups[0], Description = "#slavery - live"},
-                     new Product{ Name = "Sock", Photo = "potato.jpg", ProductGroup = productGroups[1], Description = "Оплата при получении товара, Картой онлайн, Google Pay, -5% скидки от ПриватБанк и Mastercard от 500 грн, Безналичными для юридических лиц, Безналичными для физических лиц, PrivatPay, Apple Pay, Кредит, Оплата картой в отделении, Оплата частями"},
-                     new Product{ Name = "Potato", Photo = "sock.jpg", ProductGroup = productGroups[0], Description = "#Belarus - free"},
-                     new Product{ Name = "Cement", Photo = "tsement.jpg", ProductGroup = productGroups[1], Description = " искусственное неорганическое гидравлическое вяжущее вещество"},
+                     new Product{ Name = "Child", Photo = "../../../../../assets/images/child.jpg", ProductGroup = productGroups[0], Description = "#slavery - live"},
+                     new Product{ Name = "Sock", Photo = "../../../../../assets/images/potato.jpg", ProductGroup = productGroups[1], Description = "Оплата при получении товара, Картой онлайн, Google Pay, -5% скидки от ПриватБанк и Mastercard от 500 грн, Безналичными для юридических лиц, Безналичными для физических лиц, PrivatPay, Apple Pay, Кредит, Оплата картой в отделении, Оплата частями"},
+                     new Product{ Name = "Potato", Photo = "../../../../../assets/images/sock.jpg", ProductGroup = productGroups[0], Description = "#Belarus - free"},
+                     new Product{ Name = "Cement", Photo = "../../../../../assets/images/tsement.jpg", ProductGroup = productGroups[1], Description = " искусственное неорганическое гидравлическое вяжущее вещество"},
                 };
 
                 dataContext.Products.AddRange(products);

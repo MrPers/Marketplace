@@ -13,13 +13,19 @@ namespace Marketplace.Angular.Controllers
     [ApiController]
     public class ProductController : Controller
     {
+        private readonly ICommentProductService _commentService;
         private readonly IProductService _productService;
+        private readonly IPriceService _priceService;
         private readonly IMapper _mapper;
 
         public ProductController(
+            ICommentProductService commentService,
             IProductService productService,
+            IPriceService priceService,
             IMapper mapper)
         {
+            _priceService = priceService;
+            _commentService = commentService;
             _productService = productService;
             _mapper = mapper;
         }
@@ -37,9 +43,13 @@ namespace Marketplace.Angular.Controllers
         [HttpGet("get-product-by-id/{id}")]
         public async Task<IActionResult> GetProductById(Guid id)
         {
+            var comments = await _commentService.GetByProductIdAsync(id);
+            var prices = await _priceService.GetByProductIdAsync(id);
             var products = await _productService.GetByIdAsync(id);
             var productsResult = _mapper.Map<FullProductVM>(products);
-            IActionResult result = products == null ? NotFound() : Ok(productsResult);
+            var priceResult = _mapper.Map<List<PriceVM>>(prices);
+            var commentsResult = _mapper.Map<List<CommentProductVM>>(comments);
+            IActionResult result = products == null ? NotFound() : Ok(new { productsResult, commentsResult, priceResult});
 
             return result;
         }
@@ -67,6 +77,6 @@ namespace Marketplace.Angular.Controllers
 
             return Ok(true);
         }
-        
+
     }
 }

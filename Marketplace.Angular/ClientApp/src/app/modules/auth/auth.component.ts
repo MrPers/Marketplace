@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-// import { AuthService } from '../../services/auth.service';
-// import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -10,10 +7,10 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AuthComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.authService.startAuthentication();
+
   }
 
 }

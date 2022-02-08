@@ -8,6 +8,7 @@ namespace Marketplace.Contracts.Services
     public interface IPriceService
     {
         Task<ICollection<PriceDto>> GetAllAsync();
+        Task<ICollection<PriceDto>> GetByProductIdAsync(Guid id);
         Task<PriceDto> GetByIdAsync(Guid id);
         Task AddAsync(PriceDto price);
         Task UpdateAsync(PriceDto price);

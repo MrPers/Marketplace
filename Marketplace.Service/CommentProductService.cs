@@ -42,14 +42,21 @@ namespace Marketplace.Service
             await _commentProductRepository.AddAsync(commentProduct);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<ICollection<CommentProductDto>> GetByProductIdAsync(Guid id)
         {
-            await _commentProductRepository.DeleteAsync(id);
+            var commentsProduct = await _commentProductRepository.GetByProductIdAsync(id);
+
+            return commentsProduct;
         }
 
         public async Task UpdateAsync(CommentProductDto commentProduct)
         {
             await _commentProductRepository.UpdateAsync(commentProduct.Id, commentProduct);
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            await _commentProductRepository.DeleteAsync(id);
         }
     }
 }

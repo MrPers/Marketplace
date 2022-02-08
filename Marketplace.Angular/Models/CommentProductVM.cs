@@ -12,5 +12,6 @@ namespace Marketplace.Angular.Models
         public Guid ProductId { get; set; }
         public Guid UserId { get; set; }
         public DateTime DepartureDate { get; set; }
+        public string UserName { get; set; }
     }
 }

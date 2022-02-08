@@ -22,6 +22,8 @@ namespace Marketplace.Service
         {
             var products = await _productRepository.GetAllAsync();
 
+            products = AveragePriceOutputProducts(products);
+
             return products;
         }
 
@@ -51,5 +53,29 @@ namespace Marketplace.Service
         {
             await _productRepository.UpdateAsync(product.Id, product);
         }
+
+        private static ICollection<FullProductDto> AveragePriceOutputProducts(ICollection<FullProductDto> products)
+        {
+            var duplicates = products   //повторяющееся значение по группам повторения
+              .GroupBy(r => r.Id)
+              .Where(g => g.Count() > 1)
+              .ToList();
+
+            foreach (var duplicate in duplicates)
+            {
+                var product = duplicate.Last(); //берем продукт который будем добавлять
+
+                product.NetPrice = duplicate.Average(r => r.NetPrice);  //среднея цена этих товаров
+
+                product.PricesAverage = true;  //указываем, что среднея цена указана
+
+                products = products.Except(duplicate).ToList(); //удалить повторяющееся значение
+
+                products.Add(product);
+            }
+
+            return products;
+        }
+
     }
 }

@@ -9,8 +9,7 @@ namespace Marketplace.Angular.Models
     {
         public Guid Id { get; set; }
         public decimal NetPrice { get; set; }
+        public string ShopName { get; set; }
         public int NumberProduct { get; set; }
-        public Guid ProductId { get; set; }
-        public Guid ShopId { get; set; }
     }
 }

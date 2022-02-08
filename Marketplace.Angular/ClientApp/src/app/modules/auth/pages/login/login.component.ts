@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../../services/auth.service';
 import {User } from '../../../../services/constants.service';
 import { CurrencyService } from '../../../../services/currency.service';
 
@@ -16,7 +15,7 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   visibility: boolean = true;
 
-  constructor(private currencyService: CurrencyService,private authService: AuthService) { }
+  constructor(private currencyService: CurrencyService) { }
 
   ngOnInit(): void {
   }
@@ -29,11 +28,7 @@ export class LoginComponent implements OnInit {
     this.visibility=false;
   }
   onAuthenticationSubmit() {
-    this.authService.startAuthentication()
-    .then((data: any) =>
-    {
-      debugger;
-    });
+
   }
   onRegistrationSubmit() {
     // this.currencyService.register(this.userRegistration)

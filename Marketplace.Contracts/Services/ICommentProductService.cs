@@ -9,6 +9,7 @@ namespace Marketplace.Contracts.Services
     {
         Task<ICollection<CommentProductDto>> GetAllAsync();
         Task<CommentProductDto> GetByIdAsync(Guid id);
+        Task<ICollection<CommentProductDto>> GetByProductIdAsync(Guid id);
         Task AddAsync(CommentProductDto commentProduct);
         Task UpdateAsync(CommentProductDto commentProduct);
         Task DeleteAsync(Guid id);

@@ -1,4 +1,3 @@
-import { AuthGuardService } from './services/auth-guard.service';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,7 +11,6 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { FooterComponent } from './pages/footer/footer.component';
 import { HeaderComponent } from './pages/header/header.component';
-import { AuthService } from './services/auth.service';
 import { ConstantsService } from './services/constants.service';
 import { CurrencyService } from './services/currency.service';
 import { AuthModule } from './modules/auth/auth.module';
@@ -54,29 +52,12 @@ import { AuthInterceptor, LogLevel, OidcConfigService } from 'angular-auth-oidc-
     //CarouselModule,    //add carusel
     ScrollToModule.forRoot(), //add scrol, ндо чтобы была в App
     HttpClientModule,  //add работа с Http
-
-    // HttpClientModule,
-    // ReactiveFormsModule,
-    // Directive
   ],
   providers: [
     CurrencyService,
     ConstantsService,
-    AuthGuardService,
-    AuthService,
     // CookieManagerService,
     // OidcConfigService,
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: configureAuth,
-    //   deps: [OidcConfigService],
-    //   multi: true,
-    // },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthInterceptor,
-    //   multi: true,
-    // },
   ],
   bootstrap: [AppComponent]
 })

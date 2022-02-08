@@ -4,21 +4,20 @@
       <div class="col-3 product-container">
         <div class="product-photo-container">
           <a href="product/{{item.id}}">
-            <img class="product-photo raz" src="https://demo.htmlhunters.com/shopy/assets/images/demo/product-3-2.jpg" />
-            <img class="product-photo dva" src="{{item.photo}}" />
+            <img class="product-photo" src="{{item.photo}}" />
             <p class="product-name">{{item.name}}</p>
           </a>
         </div>
-        <!-- <div *ngIf="item.pricesBoolean">
+        <div *ngIf="item.pricesAverage">
           <p class="product-price">
-            Average price: {{item.price}}
+            Average price: {{item.netPrice}}
           </p>
         </div>
-        <div *ngIf="!item.pricesBoolean">
+        <div *ngIf="!item.pricesAverage">
           <p class="product-price">
-            Price: {{item.price}}
+            Price: {{item.netPrice}}
           </p>
-        </div> -->
+        </div>
       </div>
     </ng-template>
   </div>

@@ -1,6 +1,8 @@
+import { CommentProduct, PagePriceProduct, PageProduct } from './../../../../services/constants.service';
 import { Component, OnInit } from '@angular/core';
 import { ConstantsService} from '../../../../services/constants.service';
 import { ActivatedRoute } from '@angular/router';
+import { CurrencyService } from '../../../../services/currency.service';
 
 
 @Component({
@@ -10,36 +12,36 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
 
-  // product: PageMenuProduct = new PageMenuProduct();
-  // pageCommentProduct: PageCommentProduct[]=[];
+  product: PageProduct = new PageProduct();
+  pageCommentProduct: CommentProduct[]=[];
+  pagePriceProduct: PagePriceProduct[]=[];
 
-  constructor(private constantsService: ConstantsService, private route: ActivatedRoute) { }
+  constructor(private constantsService: ConstantsService, private route: ActivatedRoute, private currencyService:CurrencyService) { }
+
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
     const productIdFromRoute = String(routeParams.get('Id'));
-    // this.constantsService.definitelyThereProducts.then((t:any) =>
-    // {
-    //   for (let index = 0; index < this.constantsService.pageMenuProducts.length; index++) {
-    //     if(this.constantsService.pageMenuProducts[index].productId == productIdFromRoute){
-    //       this.product = this.constantsService.pageMenuProducts[index];
-    //       break;
-    //     }
-    //   }
+    this.currencyService.getProductById(productIdFromRoute)
+      .subscribe((data: any) =>
+      {
+        this.pagePriceProduct =data["priceResult"];
+        // this.pageCommentProduct =data["commentsResult"];
+        this.product = data["productsResult"];
 
-    //   for (let index = 0; index < this.constantsService.pageCommentProduct.length; index++) {
-    //     if(this.constantsService.pageCommentProduct[index].productId == productIdFromRoute){
-    //       this.pageCommentProduct.push({
-    //         productId:this.constantsService.pageCommentProduct[index].productId,
-    //         commentId:this.constantsService.pageCommentProduct[index].commentId,
-    //         departureDate: this.constantsService.pageCommentProduct[index].departureDate,
-    //         userId:this.constantsService.pageCommentProduct[index].userId,
-    //         userName:this.constantsService.pageCommentProduct[index].userName,
-    //         text:this.constantsService.pageCommentProduct[index].text,
-    //       });
-    //     }
-    //   }
-    //   debugger;
-    // });
+        for (let i = 0; i < data["commentsResult"].length; i++) {
+          this.pageCommentProduct.push({
+            id: data["commentsResult"][i].id,
+            productId: data["commentsResult"][i].productId,
+            departureDate: data["commentsResult"][i].departureDate.split('T')[0]+ ' ' + data["commentsResult"][i].departureDate.split('T')[1],
+            userId: data["commentsResult"][i].userId,
+            userName: data["commentsResult"][i].userName,
+            text: data["commentsResult"][i].text,
+          });
+        }
+      });
+  }
+
+  addComment(){
 
   }
 }

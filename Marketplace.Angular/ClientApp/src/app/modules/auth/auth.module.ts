@@ -10,8 +10,6 @@ import { AuthComponent } from './auth.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LogoutComponent } from './pages/logout/logout.component';
 
-
-
 @NgModule({
   declarations: [
     LoginComponent,

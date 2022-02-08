@@ -1,24 +1,32 @@
 <div class="container">
-  <!--<div class="row">
+  <div class="row">
     <div class="col-6 product-container">
       <div class="product-item">
         <img src="{{product.photo}}">
         <div class="product-list">
-          <h3>{{product.productName}}</h3>
-          <span class="price">{{product.price}}</span>
+          <h3>{{product.name}}</h3>
           <a href="" class="button">In garbage</a>
         </div>
       </div>
     </div>
     <div class="col-6 product-container">
-      <ng-template ngFor let-item [ngForOf]="listShopProduct">
-        <table align="center" style="width: 100%;" border="1">
-          <tr>
+      <div>
+        <p>
+          <a href="/{{product.productGroupId}}" class="price">Group: {{product.productGroupName}}</a>
+        </p>
+        <p>Description: {{product.description}}</p>
+      </div>
+      <ng-template ngFor let-item [ngForOf]="pagePriceProduct">
+        <table style="width: 100%;" >
+          <tr style="border: 1px solid #000000;">
             <td>
-              <a class="btn" href="https://disqus.com/by/igorreutovinrussia/" style="color:chocolate;">{{item.shopName}}</a>
+              <a class="btn" href="shop/{{item.id}}" style="color:chocolate;">{{item.shopName}}</a>
             </td>
             <td>
-              <p>{{item.price}}</p>
+              <p>Quantity in stock: {{item.numberProduct}}</p>
+            </td>
+            <td>
+              <p class="price">{{item.netPrice}}</p>
             </td>
           </tr>
         </table>
@@ -26,8 +34,8 @@
     </div>
     <div class="col-12 product-container">
       <label for="msg">Comments:</label>
-      <ng-template ngFor let-item [ngForOf]="listCommentProduct">
-        <table align="center" style="width: 100%;" border="1">
+      <ng-template ngFor let-item [ngForOf]="pageCommentProduct">
+        <table style="width: 100%; border: 1px solid #000000;" >
           <tr>
             <td>
               <a class="btn" href="https://disqus.com/by/igorreutovinrussia/" style="color:brown;">{{item.userName}}</a>
@@ -53,5 +61,5 @@
         <button href="" class="btn" (click)="addComment()">Add Comment</button>
       </div>
     </div>
-  </div>-->
+  </div>
 </div>
