@@ -16,31 +16,17 @@ import { CurrencyService } from './services/currency.service';
 import { AuthModule } from './modules/auth/auth.module';
 // import { CookieManagerService } from './services/cookie-manager.service';
 import { AuthInterceptor, LogLevel, OidcConfigService } from 'angular-auth-oidc-client';
-
-// let t: string[]=[];
-// t.push("https://localhost:5001");
-// export function configureAuth(oidcConfigService: OidcConfigService) {
-//   return () =>
-//     oidcConfigService.withConfigs({
-//       authority:'http://localhost:4200/auth-callback' ,//
-//       redirectUrl: 'http://localhost:4200/auth-callback',//
-//       postLogoutRedirectUri: 'http://localhost:4200/',//
-//       clientId: 'client_angular_id',//
-//       scope: "openid profile",//
-//       responseType: 'code',//
-//       silentRenew: true,//
-//       useRefreshToken: true,//.
-//       renewTimeBeforeTokenExpiresInSeconds: 10,//.
-//       logLevel: LogLevel.Debug,//.
-//     });
-// }
+import { AuthCallbackComponent } from './pages/auth-callback/auth-callback.component';
+import { RefreshComponent } from './pages/refresh/refresh.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ErrorComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    AuthCallbackComponent,
+    RefreshComponent,
   ],
   imports: [
     FormsModule,

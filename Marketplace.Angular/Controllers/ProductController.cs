@@ -2,6 +2,7 @@
 using Marketplace.Angular.Models;
 using Marketplace.Contracts.Services;
 using Marketplace.DTO.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace Marketplace.Angular.Controllers
             _mapper = mapper;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("get-product-all")]
         public async Task<IActionResult> GetProductsAll()
         {

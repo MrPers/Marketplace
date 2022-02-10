@@ -13,13 +13,14 @@ import { LogoutComponent } from './pages/logout/logout.component';
 @NgModule({
   declarations: [
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
   ],
   imports: [
     TooltipModule,    //add bootstrap
     CommonModule,     // надо для Router
     AuthRoutingModule,  // надо для Router локального(в этом модуле)
     FormsModule,    //add [(ngModel)]
+    // AuthModule
   ],
   providers: [
     CurrencyService,

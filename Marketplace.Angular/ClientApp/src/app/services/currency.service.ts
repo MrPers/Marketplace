@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { URLpath } from './constants.service';
+import { URLpath, User} from './constants.service';
 // import { CSVRecord } from '../modules/admin/pages/add-data/add-data.component';
 
 @Injectable({
@@ -21,4 +21,21 @@ export class CurrencyService {
     return this.http.get(URLpath + 'get-product-all');
   };
 
+  authCallback(path:string){
+    return this.http.get(URLpath + path);
+  };
+
+  getShopProducts(shopId:string){
+    return this.http.get(URLpath + "Account/register" + shopId);
+  };
+
+  addUser(user: User){
+    return this.http.post(URLpath + "Account/register", user);
+  };
+
+  userAuthentication(user: User){
+    return this.http.post(URLpath + "Account/authentication", user);
+  };
+
 }
+

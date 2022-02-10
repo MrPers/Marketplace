@@ -24,7 +24,6 @@ namespace Marketplace.Angular.Controllers
             _mapper = mapper;
         }
 
-        //[Authorize]
         [HttpGet("get-comment-all")]
         public async Task<IActionResult> GetCommentsAll()
         {

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -21,63 +22,58 @@ namespace Marketplace.Angular.Controllers
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
         private readonly IIdentityServerInteractionService _interactionService;
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        //private readonly RoleManager<Role> _roleManager;
-        //private readonly DataContext _context;
 
         public AccountController(
             IUserService userService,
             IMapper mapper,
             IIdentityServerInteractionService interactionService,
-            IHttpClientFactory httpClientFactory,
             UserManager<User> userManager,
-            //DataContext context,
-            //RoleManager<Role> roleManager)
             SignInManager<User> signInManager)
         {
             _userService = userService;
             _mapper = mapper;
-            _httpClientFactory = httpClientFactory;
-            //_context = context;
             _interactionService = interactionService;
             _signInManager = signInManager;
-            //_roleManager = roleManager;
             _userManager = userManager;
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> Login(string returnUrl)
+        public IActionResult Login(string returnUrl)
         {
-            //var uiRezult = _httpClientFactory.CreateClient();
-
-            //var response = await uiRezult.GetAsync("http://localhost:4200/auth/login");
-
-            return Ok(returnUrl);
+            //var externalProviders = await _signInManager.GetExternalAuthenticationSchemesAsync();
+            var returnUrlRemove = this.Request.QueryString.Value.Remove(0, 11);
+            return Redirect("https://localhost:5001/auth/login/:" + returnUrlRemove);
+            //return View(new UserVM
+            //{
+            //    ReturnUrl = returnUrl,
+            //    ExternalProviders = externalProviders
+            //});
         }
 
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Login([FromBody] UserVM model)
+        [HttpPost("authentication")]
+        public async Task<IActionResult> Authentication([FromBody] UserVM model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var user = await _userManager.FindByNameAsync(model.UserName);
+            var user = await _userManager.FindByNameAsync(model.UserName);//надо заменить
+
             if (user == null)
             {
-                ModelState.AddModelError("UserName", "User not found");
                 return View(model);
             }
-
+            //"https://localhost:5001/" + model.ReturnUrl.Remove(0, 2)
             var signinResult = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
+
             if (signinResult.Succeeded)
             {
-                return Ok();
+                return Ok(true);
             }
-            ModelState.AddModelError("UserName", "Something went wrong");
+
             return View(model);
         }
 
@@ -90,7 +86,7 @@ namespace Marketplace.Angular.Controllers
             return Redirect(result.PostLogoutRedirectUri);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] UserVM user)
         {
             if (!ModelState.IsValid)
