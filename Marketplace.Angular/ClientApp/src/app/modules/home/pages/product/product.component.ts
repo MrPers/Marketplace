@@ -1,7 +1,7 @@
 import { CommentProduct, PagePriceProduct, PageProduct } from './../../../../services/constants.service';
 import { Component, OnInit } from '@angular/core';
 import { ConstantsService} from '../../../../services/constants.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CurrencyService } from '../../../../services/currency.service';
 
 
@@ -16,7 +16,7 @@ export class ProductComponent implements OnInit {
   pageCommentProduct: CommentProduct[]=[];
   pagePriceProduct: PagePriceProduct[]=[];
 
-  constructor(private constantsService: ConstantsService, private route: ActivatedRoute, private currencyService:CurrencyService) { }
+  constructor(private constantsService: ConstantsService, private route: ActivatedRoute, private currencyService:CurrencyService, private router: Router) { }
 
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
@@ -44,4 +44,10 @@ export class ProductComponent implements OnInit {
   addComment(){
 
   }
+
+  routeGroup(id: string){
+    let  urlId = btoa(id);
+    this.router.navigate(['/menu'], { queryParams: { id: urlId } });
+  }
+
 }

@@ -15,28 +15,34 @@ namespace Marketplace.Angular.Controllers
     public class ProductController : Controller
     {
         private readonly ICommentProductService _commentService;
+        private readonly IProductGroupService _productGroupService;
         private readonly IProductService _productService;
         private readonly IPriceService _priceService;
         private readonly IMapper _mapper;
 
         public ProductController(
+            IProductGroupService productGroupService,
             ICommentProductService commentService,
             IProductService productService,
             IPriceService priceService,
             IMapper mapper)
         {
+            _productGroupService = productGroupService;
             _priceService = priceService;
             _commentService = commentService;
             _productService = productService;
             _mapper = mapper;
         }
 
-        [Authorize]
         [HttpGet("get-product-all")]
         public async Task<IActionResult> GetProductsAll()
         {
             var products = await _productService.GetAllAsync();
-            IActionResult result = products == null ? NotFound() : Ok(_mapper.Map<List<BriefProductVM>>(products));
+            var productGroups = await _productGroupService.GetAllAsync();
+            var productsResult = _mapper.Map<List<BriefProductVM>>(products);
+            var productGroupResult = _mapper.Map<List<ProductGroupVM>>(productGroups);
+
+            IActionResult result = productGroups == null ? NotFound() : Ok(new { productsResult, productGroupResult });
 
             return result;
         }
@@ -58,7 +64,7 @@ namespace Marketplace.Angular.Controllers
         [HttpPost("add-product")]
         public async Task<IActionResult> AddAsync(FullProductVM product)
         {
-            await _productService.AddAsync(_mapper.Map<FullProductDto>(product));
+            await _productService.AddAsync(_mapper.Map<ProductDto>(product));
 
             return Ok(true);
         }
@@ -66,7 +72,7 @@ namespace Marketplace.Angular.Controllers
         [HttpPut("update-product")]
         public async Task<IActionResult> UpdateAsync(FullProductVM product)
         {
-            await _productService.UpdateAsync(_mapper.Map<FullProductDto>(product));
+            await _productService.UpdateAsync(_mapper.Map<ProductDto>(product));
 
             return Ok(true);
         }

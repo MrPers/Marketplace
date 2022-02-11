@@ -1,24 +1,44 @@
 <div class="container">
-  <div class="row">
-    <ng-template ngFor let-item [ngForOf]="menuProducts">
-      <div class="col-3 product-container">
-        <div class="product-photo-container">
-          <a href="product/{{item.id}}">
-            <img class="product-photo" src="{{item.photo}}" />
-            <p class="product-name">{{item.name}}</p>
-          </a>
+  <table>
+    <tr>
+      <th>
+        <div class="table-scroll">
+          <table>
+            <tr *ngFor="let group of this.groups">
+              <td>
+                <div>
+                  <input type="checkbox" (click)="displayProductGroups(group.id)" [(ngModel)]="group.isChecked"/>
+                  <label for="horns">{{group.name}}</label>
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
-        <div *ngIf="item.pricesAverage">
-          <p class="product-price">
-            Average price: {{item.netPrice}}
-          </p>
+      </th>
+      <th>
+        <div class="row">
+          <ng-template ngFor let-item [ngForOf]="products">
+            <div class="col-3 product-container">
+              <div class="product-photo-container">
+                <a href="product/{{item.id}}">
+                  <img class="product-photo" src="{{item.photo}}" />
+                  <p class="product-name">{{item.name}}</p>
+                </a>
+              </div>
+              <div *ngIf="item.pricesAverage">
+                <p class="product-price">
+                  Average price: {{item.netPrice}}
+                </p>
+              </div>
+              <div *ngIf="!item.pricesAverage">
+                <p class="product-price">
+                  Price: {{item.netPrice}}
+                </p>
+              </div>
+            </div>
+          </ng-template>
         </div>
-        <div *ngIf="!item.pricesAverage">
-          <p class="product-price">
-            Price: {{item.netPrice}}
-          </p>
-        </div>
-      </div>
-    </ng-template>
-  </div>
+      </th>
+    </tr>
+  </table>
 </div>

@@ -12,7 +12,7 @@
     <div class="col-6 product-container">
       <div>
         <p>
-          <a href="/{{product.productGroupId}}" class="price">Group: {{product.productGroupName}}</a>
+          <a class="btn" (click)="routeGroup(product.productGroupId)" class="price">Group: {{product.productGroupName}}</a>
         </p>
         <p>Description: {{product.description}}</p>
       </div>

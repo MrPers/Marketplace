@@ -18,7 +18,7 @@ namespace Marketplace.Service
             _productRepository = productRepository;
         }
 
-        public async Task<ICollection<FullProductDto>> GetAllAsync()
+        public async Task<ICollection<ProductDto>> GetAllAsync()
         {
             var products = await _productRepository.GetAllAsync();
 
@@ -27,14 +27,14 @@ namespace Marketplace.Service
             return products;
         }
 
-        public async Task<FullProductDto> GetByIdAsync(Guid id)
+        public async Task<ProductDto> GetByIdAsync(Guid id)
         {
             var product = await _productRepository.GetByIdAsync(id);
 
             return product;
         }
 
-        public async Task AddAsync(FullProductDto product)
+        public async Task AddAsync(ProductDto product)
         {
             if (product == null)
             {
@@ -49,12 +49,12 @@ namespace Marketplace.Service
             await _productRepository.DeleteAsync(id);
         }
 
-        public async Task UpdateAsync(FullProductDto product)
+        public async Task UpdateAsync(ProductDto product)
         {
             await _productRepository.UpdateAsync(product.Id, product);
         }
 
-        private static ICollection<FullProductDto> AveragePriceOutputProducts(ICollection<FullProductDto> products)
+        private static ICollection<ProductDto> AveragePriceOutputProducts(ICollection<ProductDto> products)
         {
             var duplicates = products   //повторяющееся значение по группам повторения
               .GroupBy(r => r.Id)

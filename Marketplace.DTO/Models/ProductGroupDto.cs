@@ -6,6 +6,6 @@ namespace Marketplace.DTO.Models
     public class ProductGroupDto : BaseEntityDto<Guid>
     {
         public string Name { get; set; }
-        public ICollection<FullProductDto> Products { get; set; }
+        public ICollection<ProductDto> Products { get; set; }
     }
 }

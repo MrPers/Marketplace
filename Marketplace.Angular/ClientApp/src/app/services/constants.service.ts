@@ -56,6 +56,7 @@ export class Product{
   name:string = "";
   netPrice:number = 0;
   photo:string = "";
+  productGroupId:any;
   pricesAverage:boolean = false;
 }
 export class PageProduct{
@@ -80,6 +81,11 @@ export class CommentProduct{
   userName:string = "";
   text:string = "";
 }
+export class ProductGroup {
+  id:any;
+  name:string = "";
+  isChecked: boolean = false;
+}
 // export class PageMenuProduct{
 //   productId:string = "";
 //   price:number = 0;
@@ -87,10 +93,6 @@ export class CommentProduct{
 //   productGroupID:number = 0;
 //   productName:string = "";
 //   photo:string = "";
-// }
-// export class ProductGroup {
-//   Id:number = 0;
-//   name:string = "";
 // }
 // export class CommentProduct {
 //   id:any;
@@ -142,34 +144,6 @@ export class CommentProduct{
 
       //   for (let index = 0; index < this.commentProducts.length; index++) {
       //     var userName: string = "";
-
-
-
-
-
-      //   for (let index = 0; index < this.shops.length; index++) {
-      //     var listShopProducts:ListShopProduct []=[];
-
-      //     for (let i = 0; i < this.prices.length; i++) {
-      //       if(this.shops[index].id == this.prices[i].shopId){
-      //         for (let ind = 0; ind < this.products.length; ind++) {
-      //           if(this.prices[i].productId == this.products[ind].id){
-      //             for (let ind = 0; ind < this.products.length; ind++) {
-      //               if(this.prices[i].productId == this.products[ind].id){
-      //                 this.listShopProducts.push({
-      //                   productId: this.products[ind].id,
-      //                   productName: this.products[ind].name,
-      //                   price: this.prices[i].netPrice,
-      //                   photo: this.products[ind].photo,
-      //                   productGroupID: this.products[ind].productGroupID,
-      //                   productGroupName: this.commentProducts[index].text,
-      //                 });
-      //               }
-      //             }
-      //           }
-      //         }
-      //       }
-      //     }
 
       //     this.pageShopProducts.push({
       //       shopId: this.shops[index].id,

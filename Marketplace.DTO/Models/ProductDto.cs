@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Marketplace.DTO.Models
 {
-    public class FullProductDto
+    public class ProductDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

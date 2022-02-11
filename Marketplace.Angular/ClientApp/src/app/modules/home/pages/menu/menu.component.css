@@ -1,22 +1,41 @@
 
+.table-scroll {
+  height:150px;
+  overflow:auto;
+  min-width: 150px;
+}
+
+p,
+label {
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input {
+    margin: .4rem;
+}
+
 .product-photo, .photo-product-mini{
   width: 100%;
   height: auto;
   object-fit: contain; /* должно заполнять контейнер относительно его высоты и ширины */
 }
+
 .product-container{
   margin-top: 10px;
 }
+
 .product-photo-container, .product-mini-container{
   position:relative;  /* позиционируется в соответствии с нормальным потоком документа */
   /* width: 22%; Ширина */
   float: left; /* Выстраиваем элементы по горизонтали */
   border-radius: 5px; /* Радиус скругления */
 }
+
 .product-photo{
   width: 100%;
   height: 200px;
 }
+
 p{
   margin: 0;
 }

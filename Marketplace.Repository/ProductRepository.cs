@@ -11,34 +11,35 @@ using System.Threading.Tasks;
 
 namespace Marketplace.Repository
 {
-    public class ProductRepository : BaseRepository<Product, FullProductDto, Guid>, IProductRepository
+    public class ProductRepository : BaseRepository<Product, ProductDto, Guid>, IProductRepository
     {
         public ProductRepository(DataContext context, IMapper mapper) : base(context, mapper)
         {}
 
-        public override async Task<ICollection<FullProductDto>> GetAllAsync()
+        public override async Task<ICollection<ProductDto>> GetAllAsync()
         {
             var productsDto = await _context.Products.Join(_context.Prices,
              p => p.Id,
              t => t.ProductId,
-             (p, t) => new FullProductDto
+             (p, t) => new ProductDto
              {
                  Name = p.Name,
                  Id = p.Id,
                  Photo = p.Photo,
                  NetPrice = t.NetPrice,
+                 ProductGroupId = p.ProductGroupId,
              }).ToListAsync();
 
             return productsDto;
         }
 
-        public override async Task<FullProductDto> GetByIdAsync(Guid id)
+        public override async Task<ProductDto> GetByIdAsync(Guid id)
         {
             var productsDto = await _context.Products                
                 .Join(_context.ProductGroups,
                  p => p.ProductGroupId,
                  t => t.Id,
-                 (p, t) => new FullProductDto
+                 (p, t) => new ProductDto
                  {
                      Name = p.Name,
                      Id = p.Id,

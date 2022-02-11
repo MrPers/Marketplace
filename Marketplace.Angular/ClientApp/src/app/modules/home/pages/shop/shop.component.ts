@@ -9,20 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopComponent implements OnInit {
 
-  // pageShopProduct: PageShopProduct = new PageShopProduct();
-  // product: PageMenuProduct = new PageMenuProduct();
-  // pageCommentProduct: PageCommentProduct[]=[];
-
   constructor(private constantsService: ConstantsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    const routeParams = this.route.snapshot.paramMap;
-    const shopId = String(routeParams.get('Id'));
-    this.currencyService.getShopProducts(shopId)
-      .subscribe((data: any) =>
-      {
-        this.menuProducts = data;
-      });
+    // const routeParams = this.route.snapshot.paramMap;
+    // const shopId = String(routeParams.get('Id'));
+
+    // this.currencyService.getShopProducts(shopId)
+    //   .subscribe((data: any) =>
+    //   {
+    //     this.menuProducts = data;
+    //   });
+
     // this.constantsService.shopProducts.then((t:any) =>
     // {
     //   for (let index = 0; index < this.constantsService.pageMenuProducts.length; index++) {

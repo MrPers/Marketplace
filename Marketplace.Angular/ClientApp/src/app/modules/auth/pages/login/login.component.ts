@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
   userAuthentication: User = new User();
   submitted: boolean = false;
   visibility: boolean = true;
-  t = "";
 
   constructor(private constantsService: ConstantsService, private route: ActivatedRoute, private currencyService: CurrencyService, private router: Router, private authService: AuthService) { }
 

@@ -25,9 +25,9 @@ namespace Marketplace.Angular.Infrastructure
             CreateMap<PriceVM, PriceDto>().ReverseMap();
             CreateMap<Price, PriceDto>().ReverseMap();
 
-            CreateMap<Product, FullProductDto>().ReverseMap();
-            CreateMap<FullProductDto, FullProductVM> ().ReverseMap();
-            CreateMap<FullProductDto, BriefProductVM>();
+            CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<ProductDto, FullProductVM> ().ReverseMap();
+            CreateMap<ProductDto, BriefProductVM>();
             //CreateMap<BriefProductDto, BriefProductVM>();
 
             CreateMap<ProductGroupVM, ProductGroupDto>().ReverseMap();
