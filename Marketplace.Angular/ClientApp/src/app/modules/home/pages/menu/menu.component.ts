@@ -29,12 +29,10 @@ export class MenuComponent implements OnInit {
       }
     }
   );
-  debugger;
 
     this.currencyService.getProductAll()
       .subscribe((data: any) =>
       {
-        debugger;
         this.products = data['productsResult'];
         // this.groups = data['productGroupResult'];
         let groups = data['productGroupResult'];
@@ -57,7 +55,6 @@ export class MenuComponent implements OnInit {
   }
 
   displayProductGroups(id:string) {
-    debugger;
     if (this.filters.indexOf(id) == -1) {
       this.filters.push(id);
     }
