@@ -17,6 +17,7 @@ namespace Marketplace.Angular.Controllers
         private readonly ICommentProductService _commentService;
         private readonly IProductGroupService _productGroupService;
         private readonly IProductService _productService;
+        private readonly IShopService _shopService;
         private readonly IPriceService _priceService;
         private readonly IMapper _mapper;
 
@@ -24,10 +25,12 @@ namespace Marketplace.Angular.Controllers
             IProductGroupService productGroupService,
             ICommentProductService commentService,
             IProductService productService,
+            IShopService shopService,
             IPriceService priceService,
             IMapper mapper)
         {
             _productGroupService = productGroupService;
+            _shopService = shopService;
             _priceService = priceService;
             _commentService = commentService;
             _productService = productService;
@@ -43,6 +46,21 @@ namespace Marketplace.Angular.Controllers
             var productGroupResult = _mapper.Map<List<ProductGroupVM>>(productGroups);
 
             IActionResult result = productGroups == null ? NotFound() : Ok(new { productsResult, productGroupResult });
+
+            return result;
+        }
+
+        [HttpGet("get-product-by-shop-id/{id}")]
+        public async Task<IActionResult> GetProductByShopId(Guid id)
+        {
+            var products = await _productService.GetProductByShopId(id);
+            var productGroups = await _productGroupService.GetAllAsync(); 
+            var shop = await _shopService.GetByIdAsync(id);
+            var shopsResult = _mapper.Map<ShopVM>(shop);
+            var productsResult = _mapper.Map<List<BriefProductVM>>(products);
+            var productGroupResult = _mapper.Map<List<ProductGroupVM>>(productGroups);
+
+            IActionResult result = productGroups == null ? NotFound() : Ok(new { productsResult, productGroupResult, shopsResult});
 
             return result;
         }

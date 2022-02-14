@@ -12,6 +12,7 @@ import { CurrencyService } from '../../services/currency.service';
 import { ProductComponent } from './pages/product/product.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { CabinetComponent } from './pages/cabinet/cabinet.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { CabinetComponent } from './pages/cabinet/cabinet.component';
     ProductComponent,
     ShopComponent,
     CabinetComponent,
+    CartComponent,
   ],
   imports: [
     TooltipModule,

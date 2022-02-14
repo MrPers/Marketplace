@@ -18,17 +18,19 @@ namespace Marketplace.Repository
 
         public override async Task<ICollection<ProductDto>> GetAllAsync()
         {
-            var productsDto = await _context.Products.Join(_context.Prices,
-             p => p.Id,
-             t => t.ProductId,
-             (p, t) => new ProductDto
-             {
-                 Name = p.Name,
-                 Id = p.Id,
-                 Photo = p.Photo,
-                 NetPrice = t.NetPrice,
-                 ProductGroupId = p.ProductGroupId,
-             }).ToListAsync();
+            var productsDto = await _context.Products
+                .Join(_context.Prices,
+                 p => p.Id,
+                 t => t.ProductId,
+                 (p, t) => new ProductDto
+                 {
+                     Name = p.Name,
+                     Id = p.Id,
+                     Photo = p.Photo,
+                     NetPrice = t.NetPrice,
+                     ProductGroupId = p.ProductGroupId,
+                 })
+                .ToListAsync();
 
             return productsDto;
         }
@@ -53,5 +55,26 @@ namespace Marketplace.Repository
 
             return productsDto;
         }
+
+        public async Task<ICollection<ProductDto>> GetProductByShopId(Guid id)
+        {
+            var productsDto = await _context.Prices
+                .Where(p => p.ShopId == id)
+                .Join(_context.Products,
+                 t => t.ProductId,
+                 p => p.Id,
+                 (t, p) => new ProductDto
+                 {
+                     Name = p.Name,
+                     Id = p.Id,
+                     Photo = p.Photo,
+                     NetPrice = t.NetPrice,
+                     ProductGroupId = p.ProductGroupId,
+                 })
+                .ToListAsync();
+
+            return productsDto;
+        }
+
     }
 }

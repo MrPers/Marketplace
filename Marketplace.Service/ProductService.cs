@@ -26,7 +26,15 @@ namespace Marketplace.Service
 
             return products;
         }
+        public async Task<ICollection<ProductDto>> GetProductByShopId(Guid id)
+        {
+            var products = await _productRepository.GetProductByShopId(id);
 
+            products = AveragePriceOutputProducts(products);
+
+            return products;
+        }
+    
         public async Task<ProductDto> GetByIdAsync(Guid id)
         {
             var product = await _productRepository.GetByIdAsync(id);

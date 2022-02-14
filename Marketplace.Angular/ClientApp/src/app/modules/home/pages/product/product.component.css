@@ -39,6 +39,8 @@
   color: #fc5a5a;
   display: block;
   margin-bottom: 12px;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .button {

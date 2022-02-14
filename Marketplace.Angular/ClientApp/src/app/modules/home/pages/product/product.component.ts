@@ -50,4 +50,9 @@ export class ProductComponent implements OnInit {
     this.router.navigate(['/menu'], { queryParams: { id: urlId } });
   }
 
+  routeShop(id: string){
+    let  urlId = btoa(id);
+    this.router.navigate(['/shop/' + urlId]);
+  }
+
 }

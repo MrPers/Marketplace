@@ -1,3 +1,45 @@
-<div>
-  Heading Title
+<div class="container">
+  <div class="d-flex justify-content-center" >
+    <h1>{{shop.name}}</h1>
+  </div>
+  <div class="row">
+    <div class="col-3 product-container">
+      <div class="table-scroll">
+        <table>
+          <tr *ngFor="let group of this.groups">
+            <td>
+              <div>
+                <input type="checkbox" (click)="displayProductGroups(group.id)" [(ngModel)]="group.isChecked"/>
+                <label for="horns">{{group.name}}</label>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="col-9 product-container">
+      <div class="row">
+        <ng-template ngFor let-item [ngForOf]="products">
+          <div class="col-3 product-container">
+            <div class="product-photo-container">
+              <a href="product/{{item.id}}">
+                <img class="product-photo" src="{{item.photo}}" />
+                <p class="product-name">{{item.name}}</p>
+              </a>
+            </div>
+            <div *ngIf="item.pricesAverage">
+              <p class="product-price">
+                Average price: {{item.netPrice}}
+              </p>
+            </div>
+            <div *ngIf="!item.pricesAverage">
+              <p class="product-price">
+                Price: {{item.netPrice}}
+              </p>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
 </div>

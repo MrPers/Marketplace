@@ -17,4 +17,9 @@ export class HeaderComponent implements OnInit {
     this.authService.startAuthentication();
   }
 
+  // shop(){
+  //   routerLink="/shop/:Id"
+  //   // this.authService.startAuthentication();
+  // }
+
 }

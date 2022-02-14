@@ -17,17 +17,16 @@ export class CurrencyService {
     return this.http.get(URLpath + 'get-product-by-id/' + id);
   };
 
+  getProductByShopId(id: string){
+    return this.http.get(URLpath + 'get-product-by-shop-id/' + id);
+  };
+
   getProductAll(){
-    debugger;
     return this.http.get(URLpath + 'get-product-all');
   };
 
   authCallback(path:string){
     return this.http.get(URLpath + path);
-  };
-
-  getShopProducts(shopId:string){
-    return this.http.get(URLpath + "Account/register" + shopId);
   };
 
   addUser(user: User){

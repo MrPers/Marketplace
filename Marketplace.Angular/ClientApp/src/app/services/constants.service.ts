@@ -86,6 +86,10 @@ export class ProductGroup {
   name:string = "";
   isChecked: boolean = false;
 }
+export class Shop {
+  id:number = 0;
+  name:string = "";
+}
 // export class PageMenuProduct{
 //   productId:string = "";
 //   price:number = 0;
@@ -114,10 +118,7 @@ export class ProductGroup {
 //   photo:string = "";
 //   productGroupID:number = 0;
 // }
-// export class Shop {
-//   id:number = 0;
-//   name:string = "";
-// }
+
 // export class PageShopProduct{
 //   shopId:any;
 //   shopName:string = "";

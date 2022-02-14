@@ -11,22 +11,20 @@
     </div>
     <div class="col-6 product-container">
       <div>
-        <p>
-          <a class="btn" (click)="routeGroup(product.productGroupId)" class="price">Group: {{product.productGroupName}}</a>
-        </p>
+        <a (click)="routeGroup(product.productGroupId)" class="price">Group: {{product.productGroupName}}</a>
         <p>Description: {{product.description}}</p>
       </div>
       <ng-template ngFor let-item [ngForOf]="pagePriceProduct">
         <table style="width: 100%;" >
           <tr style="border: 1px solid #000000;">
             <td>
-              <a class="btn" href="shop/{{item.id}}" style="color:chocolate;">{{item.shopName}}</a>
+              <a class="price" (click)="routeShop(item.id)" style="color:chocolate;">{{item.shopName}}</a>
             </td>
             <td>
               <p>Quantity in stock: {{item.numberProduct}}</p>
             </td>
             <td>
-              <p class="price">{{item.netPrice}}</p>
+              <a class="price" (click)="routeShop(item.id)" >{{item.netPrice}}</a>
             </td>
           </tr>
         </table>
