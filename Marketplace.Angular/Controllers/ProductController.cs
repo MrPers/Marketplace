@@ -65,6 +65,7 @@ namespace Marketplace.Angular.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("get-product-by-id/{id}")]
         public async Task<IActionResult> GetProductById(Guid id)
         {

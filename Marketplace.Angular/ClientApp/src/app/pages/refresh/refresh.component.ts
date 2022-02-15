@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+// import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-refresh',
@@ -7,11 +7,13 @@ import { AuthService } from '../../services/auth.service';
   styles: []
 })
 export class RefreshComponent {
-  constructor(private _authService:AuthService) {
+  constructor(
+    // private _authService:AuthService
+    ) {
   }
 
   ngOnInit(): void {
-    this._authService.refreshCallBack();
+    // this._authService.refreshCallBack();
   }
 
 }

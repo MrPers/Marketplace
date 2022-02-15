@@ -11,9 +11,8 @@ Update-Database -Context ConfigurationDbContext
 
 Drop-Database -Context DataContext
 
-//AdministratorAll
-//AdmShop2
-//12qw!Q
+AdministratorAll
+12qw!Q
 Успех:
 return Ok() ← Код статуса HTTP 200
 return Created() ← Код статуса HTTP 201

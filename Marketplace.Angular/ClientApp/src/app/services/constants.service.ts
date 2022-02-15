@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserManagerSettings } from "oidc-client";
 import { CurrencyService } from "./currency.service";
 import * as Oidc from 'oidc-client';
+import { PermissionValues } from './permission.model';
 
 export const URLpath = "https://localhost:5001/";
 
@@ -89,6 +90,59 @@ export class ProductGroup {
 export class Shop {
   id:number = 0;
   name:string = "";
+}
+export interface LoginResponse {
+    access_token: string;
+    refresh_token: string;
+    expires_in: number;
+    token_type: string;
+}
+export class DBkeys {
+
+  public static readonly CURRENT_USER = 'current_user';
+  public static readonly USER_PERMISSIONS = 'user_permissions';
+  public static readonly ACCESS_TOKEN = 'access_token';
+  public static readonly REFRESH_TOKEN = 'refresh_token';
+  public static readonly TOKEN_EXPIRES_IN = 'expires_in';
+
+  public static readonly REMEMBER_ME = 'remember_me';
+
+  public static readonly LANGUAGE = 'language';
+  public static readonly HOME_URL = 'home_url';
+  public static readonly THEME_ID = 'themeId';
+  public static readonly SHOW_DASHBOARD_STATISTICS = 'show_dashboard_statistics';
+  public static readonly SHOW_DASHBOARD_NOTIFICATIONS = 'show_dashboard_notifications';
+  public static readonly SHOW_DASHBOARD_TODO = 'show_dashboard_todo';
+  public static readonly SHOW_DASHBOARD_BANNER = 'show_dashboard_banner';
+}
+export interface AccessToken {
+  nbf: number;
+  exp: number;
+  iss: string;
+  aud: string | string[];
+  client_id: string;
+  sub: string;
+  auth_time: number;
+  idp: string;
+  role: string | string[];
+  permission: PermissionValues | PermissionValues[];
+  name: string;
+  email: string;
+  phone_number: string;
+  fullname: string;
+  jobtitle: string;
+  configuration: string;
+  scope: string | string[];
+  amr: string[];
+}
+export interface AppTheme {
+    id: number;
+    name: string;
+    href: string;
+    isDefault?: boolean;
+    background: string;
+    color: string;
+    isDark?: boolean;
 }
 // export class PageMenuProduct{
 //   productId:string = "";

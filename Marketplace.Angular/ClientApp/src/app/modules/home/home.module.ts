@@ -13,6 +13,7 @@ import { ProductComponent } from './pages/product/product.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { CabinetComponent } from './pages/cabinet/cabinet.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { AddproductComponent } from '../auth/pages/addproduct/addproduct.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { CartComponent } from './pages/cart/cart.component';
     ConstantsService
   ],
   bootstrap: [
-    HomeComponent
+    HomeComponent,
   ]
 })
 export class HomeModule { }

@@ -2,6 +2,7 @@
 using Marketplace.Angular.Models;
 using Marketplace.Contracts.Services;
 using Marketplace.DTO.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace Marketplace.Angular.Controllers
             return result;
         }
 
+        //[Authorize]
         [HttpGet("get-comment-by-id/{id}")]
         public async Task<IActionResult> GetCommentById(Guid id)
         {

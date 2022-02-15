@@ -1,3 +1,4 @@
+// import { AlertService } from './services/alert.service';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -18,6 +19,11 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AuthInterceptor, LogLevel, OidcConfigService } from 'angular-auth-oidc-client';
 import { AuthCallbackComponent } from './pages/auth-callback/auth-callback.component';
 import { RefreshComponent } from './pages/refresh/refresh.component';
+import { OidcHelperService } from './services/oidc-helper.service';
+import { OAuthModule, OAuthService } from 'angular-oauth2-oidc';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { LocalStoreManager } from './services/local-store-manager.service';
+// import { ThemeManager } from './services/theme-manager';
 
 @NgModule({
   declarations: [
@@ -27,6 +33,7 @@ import { RefreshComponent } from './pages/refresh/refresh.component';
     HeaderComponent,
     AuthCallbackComponent,
     RefreshComponent,
+
   ],
   imports: [
     FormsModule,
@@ -38,12 +45,36 @@ import { RefreshComponent } from './pages/refresh/refresh.component';
     //CarouselModule,    //add carusel
     ScrollToModule.forRoot(), //add scrol, ндо чтобы была в App
     HttpClientModule,  //add работа с Http
+    OAuthModule.forRoot(),
+    // ToastaModule.forRoot(),
+    // NgSelectModule,
+    TooltipModule.forRoot(),
+    // PopoverModule.forRoot(),
+    // BsDropdownModule.forRoot(),
+    CarouselModule.forRoot(),
+    // ModalModule.forRoot(),
+    // ChartsModule
+    // TranslateModule.forRoot({
+    //   loader: {
+    //     provide: TranslateLoader,
+    //     useClass: TranslateLanguageLoader
+    //   }
+    // }),
   ],
   providers: [
     CurrencyService,
     ConstantsService,
-    // CookieManagerService,
-    // OidcConfigService,
+    // ThemeManager,
+    // AlertService,
+    // ConfigurationService,//
+    // AppTitleService,
+    // AppTranslationService,//
+    // NotificationService,
+    // NotificationEndpoint,
+    // AccountService,
+    // AccountEndpoint,
+    LocalStoreManager,
+    // OidcHelperService//
   ],
   bootstrap: [AppComponent]
 })

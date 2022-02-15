@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './pages/login/login.component';
@@ -9,10 +10,16 @@ import { CurrencyService } from '../../services/currency.service';
 import { AuthComponent } from './auth.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LogoutComponent } from './pages/logout/logout.component';
+import { ConfigurationService } from '../../services/configuration.service';
+// import { AppTranslationService } from '../../services/app-translation.service';
+import { OidcHelperService } from '../../services/oidc-helper.service';
+import { AuthService } from '../../services/auth.service';
+import { AddproductComponent } from './pages/addproduct/addproduct.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
+    AddproductComponent,
     LogoutComponent,
   ],
   imports: [
@@ -24,7 +31,12 @@ import { LogoutComponent } from './pages/logout/logout.component';
   ],
   providers: [
     CurrencyService,
-    ConstantsService
+    ConstantsService,
+    OidcHelperService,//
+    ConfigurationService,//
+    AuthService
+    // AppTranslationService,//
+    // TranslateService,//
   ],
   bootstrap: [
     AuthComponent

@@ -1,6 +1,6 @@
-import { AuthService } from '../../services/auth.service';
+// import { AuthService } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+// import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -11,15 +11,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AuthCallbackComponent implements OnInit {
 
   constructor(
-    private router: Router,
-    private authService: AuthService) { }
+    // private router: Router,
+    // private authService: AuthService
+    ) { }
 
   ngOnInit() {
     // debugger;
-    this.authService.completeAuthentication()
-    .then(() =>{
-      this.router.navigate(['']);
-    });
+    // this.authService.completeAuthentication()
+    // .then(() =>{
+    //   this.router.navigate(['']);
+    // });
   }
 
 }
