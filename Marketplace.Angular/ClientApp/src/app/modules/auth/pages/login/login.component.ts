@@ -63,7 +63,8 @@ export class LoginComponent implements OnInit {
   }
 
   async authenticationSubmit() {
-    this.authService.loginWithPassword(this.userAuthentication.userName, this.userAuthentication.password, false)
+    // this.authService.loginWithPassword(this.userAuthentication.userName, this.userAuthentication.password, false)
+    this.authService.loginWithPassword(this.userAuthentication.userName, this.userAuthentication.password)
       .subscribe(
         user => {
           debugger;
@@ -71,42 +72,6 @@ export class LoginComponent implements OnInit {
         error => {
           debugger;
         });
-
-
-    // const OAUTH_CLIENT = 'express-client';
-    // const OAUTH_SECRET = 'express-secret';
-    // const API_URL = 'http://localhost:5001/';
-    // const HTTP_OPTIONS = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/x-www-form-urlencoded',
-    //     Authorization: 'Basic ' + btoa(OAUTH_CLIENT + ':' + OAUTH_SECRET)
-    //   })
-    // };
-    //     this.tokenService.removeToken();
-    //     this.tokenService.removeRefreshToken();
-    //     const body = new HttpParams()
-    //       .set('username', this.userAuthentication.userName)
-    //       .set('password', this.userAuthentication.password)
-    //       .set('grant_type', 'password');
-
-    //     return this.http.post<any>(API_URL + 'oauth/token', body, HTTP_OPTIONS)
-    //       // .pipe(
-    //       //   tap(res => {
-    //       //     this.tokenService.saveToken(res.access_token);
-    //       //     this.tokenService.saveRefreshToken(res.refresh_token);
-    //       //   }),
-    //       //   catchError(AuthService.handleError)
-    //       // )
-    //       .subscribe(() => {
-    //         // this.isLoadingResults = false;
-    //         debugger;
-    //         this.router.navigate(['/secure']).then(_ => console.log('You are secure now!'));
-    //       }, (err: any) => {
-    //         debugger;
-    //         console.log(err);
-    //         // this.isLoadingResults = false;
-    //       });
-
 
     // this.currencyService.userAuthentication(this.userAuthentication)
     //   .subscribe((data: any) =>

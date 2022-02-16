@@ -8,9 +8,11 @@ namespace Marketplace.DB
     public static class IdentityServerConfiguration
     {
         public const string ApiName = "Order";
+        public const string ApiFriendlyName = "Order";
         public const string SmartAppClientID = "client_angular_id";
         public const string SwaggerClientID = "swaggerui";
-
+        public const string Roles = "roles";
+        public const string Permission = "permission";
         public static IEnumerable<Client> GetClients() =>
         new List<Client>
         {
@@ -28,7 +30,7 @@ namespace Marketplace.DB
                 PostLogoutRedirectUris = { "https://localhost:5001/" },
                 AllowedScopes =
                 {
-                    "Order",
+                    ApiName,
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile
                 },
@@ -56,11 +58,12 @@ namespace Marketplace.DB
                 AllowAccessTokensViaBrowser = true,
                 RequireClientSecret = false, // This client does not need a secret to request tokens from the token endpoint.                    
                 AllowedScopes = {
-                    IdentityServerConstants.StandardScopes.OpenId, // For UserInfo endpoint.
-                    IdentityServerConstants.StandardScopes.Profile,
-                    IdentityServerConstants.StandardScopes.Phone,
-                    IdentityServerConstants.StandardScopes.Email,
-                    ApiName
+                        IdentityServerConstants.StandardScopes.OpenId, // For UserInfo endpoint.
+                        IdentityServerConstants.StandardScopes.Profile,
+                        //IdentityServerConstants.StandardScopes.Phone,
+                        //IdentityServerConstants.StandardScopes.Email,
+                        //Roles,
+                        ApiName
                 },
                 AllowOfflineAccess = true, // For refresh token.
                 RefreshTokenExpiration = TokenExpiration.Sliding,
@@ -81,8 +84,29 @@ namespace Marketplace.DB
 
         //public static IEnumerable<ApiScope> GetApiScopes() =>
         //    new List<ApiScope> {
-        //        new ApiScope("Order")
+        //        new ApiScope(ApiName),
+        //        new ApiScope(JwtClaimTypes.Name),
+        //        new ApiScope(JwtClaimTypes.Email),
+        //        new ApiScope(JwtClaimTypes.PhoneNumber),
+        //        new ApiScope(JwtClaimTypes.Role),
+        //        new ApiScope(Permission),
         //    };
+
+        //public static IEnumerable<ApiScope> GetApiScopes()
+        //{
+        //    return new List<ApiScope>
+        //    {
+        //        new ApiScope(ApiName, ApiFriendlyName) {
+        //            UserClaims = {
+        //                JwtClaimTypes.Name,
+        //                JwtClaimTypes.Email,
+        //                JwtClaimTypes.PhoneNumber,
+        //                JwtClaimTypes.Role,
+        //                Permission
+        //            }
+        //        }
+        //    };
+        //}
     }
 
 }

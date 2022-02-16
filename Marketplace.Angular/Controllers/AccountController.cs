@@ -52,24 +52,23 @@ namespace Marketplace.Angular.Controllers
             //});
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserVM model)
         {
-            var context = await _interactionService.GetAuthorizationContextAsync(model.ReturnUrl);
+            //var context = await _interactionService.GetAuthorizationContextAsync(model.ReturnUrl);
 
             var user = await _userManager.FindByNameAsync(model.UserName);//надо заменить
 
             if (user == null)
             {
-                return View(model);
+                return Unauthorized();
             }
-            //"https://localhost:5001/" + model.ReturnUrl.Remove(0, 2)
+
             var signinResult = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
-            if (user != null && context != null)
+            if (user != null && signinResult != null)
             {
-                //await HttpContext.SignInAsync(user.SubjectId, user.Username);
-                return new JsonResult(new { RedirectUrl = model.ReturnUrl, IsOk = true });
+                return Ok();
             }
 
             return Unauthorized();
@@ -89,7 +88,7 @@ namespace Marketplace.Angular.Controllers
             {
                 return View(model);
             }
-            //"https://localhost:5001/" + model.ReturnUrl.Remove(0, 2)
+
             var signinResult = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
             if (signinResult.Succeeded)

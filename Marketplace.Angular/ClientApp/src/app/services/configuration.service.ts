@@ -2,11 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-// import { AppTranslationService } from './app-translation.service';
-// import { ThemeManager } from './theme-manager';
 import { LocalStoreManager } from './local-store-manager.service';
-// import { DBkeys } from './db-keys';
-// import { Utilities } from './utilities';
 import { environment } from '../../environments/environment';
 import { DBkeys } from './constants.service';
 import { Utilities } from './utilities';

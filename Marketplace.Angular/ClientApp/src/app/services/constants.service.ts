@@ -1,40 +1,6 @@
 import { Injectable } from '@angular/core';
-import { UserManagerSettings } from "oidc-client";
 import { CurrencyService } from "./currency.service";
-import * as Oidc from 'oidc-client';
 import { PermissionValues } from './permission.model';
-
-export const URLpath = "https://localhost:5001/";
-
-const Authority = "https://localhost:5001";//
-const Silent_redirect_uri = "https://localhost:5001/refresh";
-const Redirect_uri = 'https://localhost:5001/auth-callback';//
-const Post_logout_redirect_uri = 'https://localhost:5001/';//
-const Response_type = "code";//code id_token
-const AutomaticSilentRenew = true;//
-const LoadUserInfo = true;
-const Scope = "openid profile";//
-const Client_id = 'angular_id';//
-
-export function getClientSettings(): UserManagerSettings {
-  return {
-    userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }), //чтоб хронилась сесия localStore
-    authority: Authority,
-    silent_redirect_uri : Silent_redirect_uri,
-    redirect_uri: Redirect_uri,
-    post_logout_redirect_uri: Post_logout_redirect_uri,
-    response_type: Response_type,
-    automaticSilentRenew: AutomaticSilentRenew, //указывающий, должна ли быть автоматическая попытка обновить токен доступа до истечения срока его действия
-    scope: Scope,
-    client_id: Client_id,
-    loadUserInfo: LoadUserInfo, // загрузкой дополнительных идентификационных данных, чтобы заполнить пользователя profile
-    // mergeClaims: MergeClaims,
-    // filterProtocolClaims: FilterProtocolClaims, //следует ли удалять утверждения протокола OIDC из profile
-    // checkSessionInterval: 50000, //Интервал в мс для проверки сеанса пользователя
-    // silentRequestTimeout: 50000, //количество миллисекунд ожидания возврата беззвучного
-  };
-
-}
 
 @Injectable({
   providedIn: 'root'
@@ -47,10 +13,19 @@ export class ConstantsService {
 }
 
 export class User{
+
+  constructor(id?: string, userName?: string, email?: string, roles?: string[]) {
+    this.id = id;
+    this.userName = userName;
+    this.email = email;
+    this.roles = roles;
+  }
+
   id:any;
   userName:string = "";
   password:string = "";
   email:string = "";
+  roles:string[] = [];
 }
 export class Product{
   id:any;
@@ -98,6 +73,8 @@ export interface LoginResponse {
     token_type: string;
 }
 export class DBkeys {
+
+  public static readonly URLpath = "https://localhost:5001/";
 
   public static readonly CURRENT_USER = 'current_user';
   public static readonly USER_PERMISSIONS = 'user_permissions';

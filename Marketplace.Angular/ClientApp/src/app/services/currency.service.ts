@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { URLpath, User} from './constants.service';
+import { DBkeys, User} from './constants.service';
 // import { CSVRecord } from '../modules/admin/pages/add-data/add-data.component';
 
 @Injectable({
@@ -11,31 +11,31 @@ import { URLpath, User} from './constants.service';
 
 export class CurrencyService {
 
-  constructor(private http:HttpClient) {}
+  constructor(private http:HttpClient, private dBkeys: DBkeys) {}
 
   getProductById(id: string){
-    return this.http.get(URLpath + 'get-product-by-id/' + id);
+    return this.http.get(DBkeys.URLpath + 'get-product-by-id/' + id);
   };
 
   getProductByShopId(id: string){
-    return this.http.get(URLpath + 'get-product-by-shop-id/' + id);
+    return this.http.get(DBkeys.URLpath + 'get-product-by-shop-id/' + id);
   };
 
   getProductAll(){
-    return this.http.get(URLpath + 'get-product-all');
+    return this.http.get(DBkeys.URLpath + 'get-product-all');
   };
 
-  authCallback(path:string){
-    return this.http.get(URLpath + path);
+  authUser(user: User){
+    return this.http.post(DBkeys.URLpath + "Account/login", user);
   };
 
   addUser(user: User){
-    return this.http.post(URLpath + "Account/register", user);
+    return this.http.post(DBkeys.URLpath + "Account/register", user);
   };
 
-  userAuthentication(user: User){
-    return this.http.post(URLpath + "Account/authentication", user);
-  };
+  // userAuthentication(user: User){
+  //   return this.http.post(DBkeys.URLpath + "Account/authentication", user);
+  // };
 
 }
 

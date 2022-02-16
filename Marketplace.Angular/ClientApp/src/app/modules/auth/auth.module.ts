@@ -5,7 +5,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AuthRoutingModule } from './auth-routing.module';
-import { ConstantsService } from '../../services/constants.service';
+import { ConstantsService, DBkeys } from '../../services/constants.service';
 import { CurrencyService } from '../../services/currency.service';
 import { AuthComponent } from './auth.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -34,8 +34,8 @@ import { AddproductComponent } from './pages/addproduct/addproduct.component';
     ConstantsService,
     OidcHelperService,//
     ConfigurationService,//
-    AuthService
-    // AppTranslationService,//
+    AuthService,
+    DBkeys
     // TranslateService,//
   ],
   bootstrap: [

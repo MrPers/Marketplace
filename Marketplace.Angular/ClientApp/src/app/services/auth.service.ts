@@ -5,7 +5,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigurationService } from './configuration.service';
-import { DBkeys, LoginResponse, AccessToken } from './constants.service';
+import { DBkeys, LoginResponse, AccessToken, User } from './constants.service';
 import { JwtHelper } from './jwt-helper';
 
 import { LocalStoreManager } from './local-store-manager.service';
@@ -53,7 +53,7 @@ export class AuthService {
     //endpoint
     refreshLogin() {
       return this.oidcHelperService.refreshLogin()
-        .pipe(map((resp: any) => this.processLoginResponse(resp, this.rememberMe)));
+        .pipe(map((resp: any) => this.processLoginResponse(resp)));
     }
 
     get isSessionExpired(): boolean {
@@ -61,6 +61,7 @@ export class AuthService {
     }
 
     redirectLoginUser() {
+      debugger;
       // let user = this.currentUser as User;
       let redirect  = this.loginRedirectUrl && this.loginRedirectUrl !== '/' && this.loginRedirectUrl !== ConfigurationService.defaultHomeUrl ? this.loginRedirectUrl : null;
       // debugger;
@@ -98,13 +99,11 @@ export class AuthService {
     //   }
     // }
 
-    loginWithPassword(userName: string, password: string, rememberMe?: boolean) {
-      // if (this.isLoggedIn) {
-      //   this.logout();
-      // }
-
+    loginWithPassword(userName: string, password: string) {
       return this.oidcHelperService.loginWithPassword(userName, password)
-        .pipe(map((resp : any) => this.processLoginResponse(resp, rememberMe)));
+        .pipe(map(resp => {
+          this.processLoginResponse(resp);
+        }));
     }
 
     logout(): void {
@@ -147,15 +146,10 @@ export class AuthService {
       this.localStorage.savePermanentData(rememberMe, DBkeys.REMEMBER_ME);
     }
 
-    private processLoginResponse(response: LoginResponse, rememberMe?: boolean) {
+    private processLoginResponse(response: LoginResponse) {
+
       const accessToken = response.access_token;
-
-      if (accessToken == null) {
-        throw new Error('accessToken cannot be null');
-      }
-
-      rememberMe = rememberMe || this.rememberMe;
-
+      let rememberMe = this.rememberMe;
       const refreshToken = response.refresh_token || this.refreshToken;
       const expiresIn = response.expires_in;
       const tokenExpiryDate = new Date();
@@ -169,20 +163,20 @@ export class AuthService {
       if (!this.isLoggedIn) {
         this.configurations.import(decodedAccessToken.configuration);
       }
-debugger;
+
       const user = new User(
         decodedAccessToken.sub,
         decodedAccessToken.name,
-        decodedAccessToken.fullname,
         decodedAccessToken.email,
-        "",
-        decodedAccessToken.phone_number,
         Array.isArray(decodedAccessToken.role) ? decodedAccessToken.role : [decodedAccessToken.role]);
-      user.isEnabled = true;
+
+      debugger;
 
       this.saveUserDetails(user, permissions, accessToken, refreshToken, accessTokenExpiry, rememberMe);
 
       this.reevaluateLoginStatus(user);
+
+      debugger;
 
       return user;
     }
@@ -214,40 +208,4 @@ debugger;
       getLoginStatusEvent(): Observable<boolean> {
         return this.loginStatus.asObservable();
       }
-}
-
-export class User {
-  // Note: Using only optional constructor properties without backing store disables typescript's type checking for the type
-  constructor(id: string, userName: string, fullName: string, email: string, jobTitle: string, phoneNumber: string, roles: string[]) {
-
-      this.id = id;
-      this.userName = userName;
-      this.fullName = fullName;
-      this.email = email;
-      this.jobTitle = jobTitle;
-      this.phoneNumber = phoneNumber;
-      this.roles = roles;
-  }
-
-
-  get friendlyName(): string {
-      let name = this.fullName || this.userName;
-
-      if (this.jobTitle) {
-          name = this.jobTitle + ' ' + name;
-      }
-
-      return name;
-  }
-
-
-  public id: string ="";
-  public userName: string="";
-  public fullName: string="";
-  public email: string="";
-  public jobTitle: string="";
-  public phoneNumber: string="";
-  public isEnabled: boolean=false;
-  public isLockedOut: boolean=false;
-  public roles: string[] = [];
 }

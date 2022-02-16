@@ -69,11 +69,8 @@ namespace Marketplace.Angular
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
                 .AddInMemoryPersistedGrants()
-                //.AddInMemoryIdentityResources(IdentityServerConfig.GetIdentityResources())
-                //.AddInMemoryApiScopes(IdentityServerConfig.GetApiScopes())
-                //.AddInMemoryApiResources(IdentityServerConfig.GetApiResources())
-                //.AddInMemoryClients(IdentityServerConfig.GetClients())
                 .AddAspNetIdentity<User>()
+                //.AddInMemoryApiScopes(IdentityServerConfiguration.GetApiScopes())
                 .AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString(nameof(DataContext)),
@@ -95,21 +92,6 @@ namespace Marketplace.Angular
                 };
             });
 
-
-
-
-
-
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, config =>
-            //    {
-            //        config.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ClockSkew = TimeSpan.FromSeconds(5)
-            //        };
-            //        config.Authority = "https://localhost:5001";
-            //        config.Audience = "Order";
-            //    });
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {

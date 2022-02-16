@@ -14,7 +14,9 @@ export class OidcHelperService {
 
   private get baseUrl() { return this.configurations.baseUrl; }
   private clientId = 'client_angular_id';
-  private scope = 'openid email phone profile Order';
+  // private scope = 'openid email phone profile offline_access roles Order';
+  // private scope = 'openid profile Order';
+  private scope = 'openid profile';
 
   constructor(
     private http: HttpClient,
@@ -48,21 +50,20 @@ export class OidcHelperService {
   }
 
   loginWithPassword(userName: string, password: string) {
-    const header = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    const header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const params = new HttpParams()
-      .append('username', userName)
-      .append('password', password)
-      .append('client_id', this.clientId)
-      .append('grant_type', 'code id_token')
-      .append('scope', this.scope);
+        .append('username', userName)
+        .append('password', password)
+        .append('client_id', this.clientId)
+        .append('grant_type', 'password')//code id_token
+        .append('scope', this.scope);
     this.oauthService.issuer = this.baseUrl;
 
     return from(this.oauthService.loadDiscoveryDocument())
-        .pipe(mergeMap(() => {
-          let t = this.oauthService.tokenEndpoint as string;
-          debugger;
-            // return this.http.post<LoginResponse>(t, params);
-            return this.http.post<LoginResponse>(t, {params: params}, { headers: header });
+      .pipe(mergeMap(() => {
+        let t = this.oauthService.tokenEndpoint;
+            return this.http.post<LoginResponse>(this.oauthService.tokenEndpoint, params, { headers: header });
         }));
   }
 

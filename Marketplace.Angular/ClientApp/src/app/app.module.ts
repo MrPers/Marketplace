@@ -46,35 +46,13 @@ import { LocalStoreManager } from './services/local-store-manager.service';
     ScrollToModule.forRoot(), //add scrol, ндо чтобы была в App
     HttpClientModule,  //add работа с Http
     OAuthModule.forRoot(),
-    // ToastaModule.forRoot(),
-    // NgSelectModule,
     TooltipModule.forRoot(),
-    // PopoverModule.forRoot(),
-    // BsDropdownModule.forRoot(),
     CarouselModule.forRoot(),
-    // ModalModule.forRoot(),
-    // ChartsModule
-    // TranslateModule.forRoot({
-    //   loader: {
-    //     provide: TranslateLoader,
-    //     useClass: TranslateLanguageLoader
-    //   }
-    // }),
   ],
   providers: [
     CurrencyService,
     ConstantsService,
-    // ThemeManager,
-    // AlertService,
-    // ConfigurationService,//
-    // AppTitleService,
-    // AppTranslationService,//
-    // NotificationService,
-    // NotificationEndpoint,
-    // AccountService,
-    // AccountEndpoint,
     LocalStoreManager,
-    // OidcHelperService//
   ],
   bootstrap: [AppComponent]
 })
