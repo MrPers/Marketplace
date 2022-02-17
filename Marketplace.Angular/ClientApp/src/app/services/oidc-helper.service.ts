@@ -59,10 +59,8 @@ export class OidcHelperService {
         .append('grant_type', 'password')//code id_token
         .append('scope', this.scope);
     this.oauthService.issuer = this.baseUrl;
-
     return from(this.oauthService.loadDiscoveryDocument())
       .pipe(mergeMap(() => {
-        let t = this.oauthService.tokenEndpoint;
             return this.http.post<LoginResponse>(this.oauthService.tokenEndpoint, params, { headers: header });
         }));
   }

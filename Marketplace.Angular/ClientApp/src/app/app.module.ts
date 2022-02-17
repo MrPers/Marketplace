@@ -46,6 +46,8 @@ import { LocalStoreManager } from './services/local-store-manager.service';
     ScrollToModule.forRoot(), //add scrol, ндо чтобы была в App
     HttpClientModule,  //add работа с Http
     OAuthModule.forRoot(),
+    // ToastaModule.forRoot(),
+    // NgSelectModule,
     TooltipModule.forRoot(),
     CarouselModule.forRoot(),
   ],

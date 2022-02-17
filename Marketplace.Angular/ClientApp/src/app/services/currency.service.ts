@@ -11,7 +11,7 @@ import { DBkeys, User} from './constants.service';
 
 export class CurrencyService {
 
-  constructor(private http:HttpClient, private dBkeys: DBkeys) {}
+  constructor(private http:HttpClient) {}
 
   getProductById(id: string){
     return this.http.get(DBkeys.URLpath + 'get-product-by-id/' + id);
@@ -27,6 +27,10 @@ export class CurrencyService {
 
   authUser(user: User){
     return this.http.post(DBkeys.URLpath + "Account/login", user);
+  };
+
+  logout(){
+    return this.http.get(DBkeys.URLpath + "Account/logout");
   };
 
   addUser(user: User){

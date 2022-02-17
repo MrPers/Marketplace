@@ -10,6 +10,7 @@ using IdentityServer4.Services;
 using Marketplace.DB;
 using Marketplace.DB.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.Angular.Infrastructure
 {
@@ -30,54 +31,58 @@ namespace Marketplace.Angular.Infrastructure
         {
             var user = await _userManager.GetUserAsync(context.Subject);
 
-            //1)
             var claims = new List<System.Security.Claims.Claim>
             {
               new System.Security.Claims.Claim("name", user.UserName),
             };
-            //        //2)
-            //        var claims = context.Subject.FindAll(JwtClaimTypes.Name);
-            //        //3)
 
-            //var time = await _context.Roles
-            //    .Join(_context.UserRoles,
-            //     p => p.Id,
-            //     t => t.RoleId,
-            //     (p, t) => new
-            //     {
-            //         Name = p.Name,
-            //         Id = p.Id,
-            //         UserId = t.UserId,
-            //     })
-            //    .Join(_context.UserRoleShops,
-            //     p => p.Id,
-            //     t => t.RoleId,
-            //     (p, t) => new
-            //     {
-            //         Name = p.Name,
-            //         Id = t.UserId,
-            //     })
-            //    .Join(_context.Users,
-            //     p => p.Id,
-            //     t => t.Id,
-            //     (p, t) => new
-            //     {
-            //         Name = p.Name,
-            //         Id = t.Id,
-            //     })
-            //    .Where(x => x.Id == context.Subject.Identity.Name).ToList()[0].UserName;
+            var time = await _context.Roles
+                .Join(_context.UserRoleShops,
+                 p => p.Id,
+                 t => t.RoleId,
+                 (p, t) => new
+                 {
+                     Name = p.Name,
+                     Id = p.Id,
+                 })
+                .Join(_context.Users,
+                 p => p.Id,
+                 t => t.Id,
+                 (p, t) => new
+                 {
+                     Name = p.Name,
+                     Id = t.Id,
+                 })
+                .Where(x => x.Id == user.Id)
+                .Select(x => x.Name)
+                .ToListAsync();
 
-            //        //4)
-            //        context.Subject.Identity.Name
+            if(time.Count == 0)
+            {
+                time = await _context.Roles
+                    .Join(_context.UserRoles,
+                     p => p.Id,
+                     t => t.RoleId,
+                     (p, t) => new
+                     {
+                         Name = p.Name,
+                         Id = p.Id,
+                     })
+                    .Join(_context.Users,
+                     p => p.Id,
+                     t => t.Id,
+                     (p, t) => new
+                     {
+                         Name = p.Name,
+                         Id = t.Id,
+                     })
+                    .Where(x => x.Id == user.Id).Select(x => x.Name).ToListAsync();
+            }
 
-            //var claims = new List<System.Security.Claims.Claim>();
-            //var scops = context.Subject.FindAll(JwtClaimTypes.Scope).ToList();
-            //foreach (var item in scops)
+            //foreach (var item in time)
             //{
-            //    claims.Add(new System.Security.Claims.Claim(item.Value, "True"));
+            claims.Add(new System.Security.Claims.Claim("role", time.ToString()));
             //}
-
-            //claims.Add(context.Subject.FindFirst(JwtClaimTypes.Role));
 
             context.IssuedClaims = claims;
 

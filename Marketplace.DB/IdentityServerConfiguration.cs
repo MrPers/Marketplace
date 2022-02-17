@@ -16,30 +16,30 @@ namespace Marketplace.DB
         public static IEnumerable<Client> GetClients() =>
         new List<Client>
         {
-            new Client
-            {
-                ClientId = "angular_id", //Идентификатор клиента, инициировавшего запрос.
-                RequireClientSecret = false, //Указывает, нужен ли этому клиенту секрет для запроса токенов из конечной точки токена
-                RequireConsent = false, //Указывает, требуется ли экран согласия
-                RequirePkce = true, //Указывает, нужен ли этому клиенту секрет для запроса токенов из конечной точки токена
-                AllowOfflineAccess = true,//Определяет, может ли этот клиент запрашивать токены обновления
-                AccessTokenLifetime = 300, //Время жизни токена доступа в секундах(по умолчанию 3600 секунд / 1 час)
-                AllowedGrantTypes =  GrantTypes.Code, //Задает типы грантов, которые разрешено использовать клиенту
-                AllowedCorsOrigins = { "https://localhost:5001" },
-                RedirectUris = { "https://localhost:5001/auth-callback", "https://localhost:5001/refresh" },
-                PostLogoutRedirectUris = { "https://localhost:5001/" },
-                AllowedScopes =
-                {
-                    ApiName,
-                    IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile
-                },
-                AllowAccessTokensViaBrowser = true, //Указывает, разрешено ли этому клиенту получать токены доступа через браузер
-                IdentityTokenLifetime = 3600, //через сколько секунд токен обновлен(по умолчанию 300 секунд / 5 минут)
-                AlwaysIncludeUserClaimsInIdToken = true, //При запросе токена идентификатора и токена доступа утверждения пользователя всегда должны добавляться к токену идентификатора вместо того, чтобы требовать от клиента использования конечной точки userinfo
-                RefreshTokenUsage = TokenUsage.OneTimeOnly, //дескриптор токена обновления будет обновляться при обновлении токенов. Это значение по умолчанию.
-                UpdateAccessTokenClaimsOnRefresh = true //Получает или задает значение, указывающее, следует ли обновлять маркер доступа (и его утверждения) при запросе маркера обновления.
-            },          
+            //new Client
+            //{
+            //    ClientId = "angular_id", //Идентификатор клиента, инициировавшего запрос.
+            //    RequireClientSecret = false, //Указывает, нужен ли этому клиенту секрет для запроса токенов из конечной точки токена
+            //    RequireConsent = false, //Указывает, требуется ли экран согласия
+            //    RequirePkce = true, //Указывает, нужен ли этому клиенту секрет для запроса токенов из конечной точки токена
+            //    AllowOfflineAccess = true,//Определяет, может ли этот клиент запрашивать токены обновления
+            //    AccessTokenLifetime = 300, //Время жизни токена доступа в секундах(по умолчанию 3600 секунд / 1 час)
+            //    AllowedGrantTypes =  GrantTypes.Code, //Задает типы грантов, которые разрешено использовать клиенту
+            //    AllowedCorsOrigins = { "https://localhost:5001" },
+            //    RedirectUris = { "https://localhost:5001/auth-callback", "https://localhost:5001/refresh" },
+            //    PostLogoutRedirectUris = { "https://localhost:5001/" },
+            //    AllowedScopes =
+            //    {
+            //        ApiName,
+            //        IdentityServerConstants.StandardScopes.OpenId,
+            //        IdentityServerConstants.StandardScopes.Profile
+            //    },
+            //    AllowAccessTokensViaBrowser = true, //Указывает, разрешено ли этому клиенту получать токены доступа через браузер
+            //    IdentityTokenLifetime = 3600, //через сколько секунд токен обновлен(по умолчанию 300 секунд / 5 минут)
+            //    AlwaysIncludeUserClaimsInIdToken = true, //При запросе токена идентификатора и токена доступа утверждения пользователя всегда должны добавляться к токену идентификатора вместо того, чтобы требовать от клиента использования конечной точки userinfo
+            //    RefreshTokenUsage = TokenUsage.OneTimeOnly, //дескриптор токена обновления будет обновляться при обновлении токенов. Это значение по умолчанию.
+            //    UpdateAccessTokenClaimsOnRefresh = true //Получает или задает значение, указывающее, следует ли обновлять маркер доступа (и его утверждения) при запросе маркера обновления.
+            //},          
             new Client
             {
                 ClientId = SwaggerClientID,
@@ -60,9 +60,6 @@ namespace Marketplace.DB
                 AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId, // For UserInfo endpoint.
                         IdentityServerConstants.StandardScopes.Profile,
-                        //IdentityServerConstants.StandardScopes.Phone,
-                        //IdentityServerConstants.StandardScopes.Email,
-                        //Roles,
                         ApiName
                 },
                 AllowOfflineAccess = true, // For refresh token.

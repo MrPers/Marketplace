@@ -9,7 +9,6 @@ import { ConstantsService, DBkeys } from '../../services/constants.service';
 import { CurrencyService } from '../../services/currency.service';
 import { AuthComponent } from './auth.component';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { LogoutComponent } from './pages/logout/logout.component';
 import { ConfigurationService } from '../../services/configuration.service';
 // import { AppTranslationService } from '../../services/app-translation.service';
 import { OidcHelperService } from '../../services/oidc-helper.service';
@@ -20,7 +19,6 @@ import { AddproductComponent } from './pages/addproduct/addproduct.component';
   declarations: [
     LoginComponent,
     AddproductComponent,
-    LogoutComponent,
   ],
   imports: [
     TooltipModule,    //add bootstrap

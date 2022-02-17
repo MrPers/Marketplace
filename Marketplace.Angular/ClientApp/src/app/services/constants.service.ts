@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CurrencyService } from "./currency.service";
-import { PermissionValues } from './permission.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,12 +65,6 @@ export class Shop {
   id:number = 0;
   name:string = "";
 }
-export interface LoginResponse {
-    access_token: string;
-    refresh_token: string;
-    expires_in: number;
-    token_type: string;
-}
 export class DBkeys {
 
   public static readonly URLpath = "https://localhost:5001/";
@@ -121,6 +114,16 @@ export interface AppTheme {
     color: string;
     isDark?: boolean;
 }
+export interface LoginResponse {
+    access_token: string;
+    refresh_token: string;
+    expires_in: number;
+    token_type: string;
+}
+export type PermissionValues =
+    'users.view' | 'users.manage' |
+    'roles.view' | 'roles.manage' | 'roles.assign';
+
 // export class PageMenuProduct{
 //   productId:string = "";
 //   price:number = 0;

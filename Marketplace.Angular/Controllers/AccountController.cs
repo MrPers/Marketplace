@@ -2,16 +2,12 @@
 using IdentityServer4.Services;
 using Marketplace.Angular.Models;
 using Marketplace.Contracts.Services;
-using Marketplace.DB;
 using Marketplace.DB.Models;
 using Marketplace.DTO.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Net.Http;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Marketplace.Angular.Controllers
@@ -39,23 +35,13 @@ namespace Marketplace.Angular.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet("[action]")]
-        public IActionResult Login(string returnUrl)
-        {
-            //var externalProviders = await _signInManager.GetExternalAuthenticationSchemesAsync();
-            var returnUrlRemove = this.Request.QueryString.Value.Remove(0, 11);
-            return Redirect("https://localhost:5001/auth/login/:" + returnUrlRemove);
-            //return View(new UserVM
-            //{
-            //    ReturnUrl = returnUrl,
-            //    ExternalProviders = externalProviders
-            //});
-        }
-
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserVM model)
         {
-            //var context = await _interactionService.GetAuthorizationContextAsync(model.ReturnUrl);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
             var user = await _userManager.FindByNameAsync(model.UserName);//надо заменить
 
@@ -74,38 +60,12 @@ namespace Marketplace.Angular.Controllers
             return Unauthorized();
         }
 
-        [HttpPost("authentication")]
-        public async Task<IActionResult> Authentication([FromBody] UserVM model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await _userManager.FindByNameAsync(model.UserName);//надо заменить
-
-            if (user == null)
-            {
-                return View(model);
-            }
-
-            var signinResult = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-
-            if (signinResult.Succeeded)
-            {
-                return Ok(true);
-            }
-
-            return View(model);
-        }
-
-        [HttpGet("[action]")]
-        public async Task<IActionResult> Logout(string logoutId)
+        [HttpGet("logout")]
+        public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            var result = await _interactionService.GetLogoutContextAsync(logoutId);
 
-            return Redirect(result.PostLogoutRedirectUri);
+            return Ok();
         }
 
         [HttpPost("register")]

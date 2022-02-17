@@ -1,4 +1,3 @@
-import { TokenService } from './../../../../services/token.service';
 import { OidcHelperService } from './../../../../services/oidc-helper.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import {ConstantsService, DBkeys, LoginResponse, User } from '../../../../services/constants.service';
 import { CurrencyService } from '../../../../services/currency.service';
-import { JwtHelper } from '../../../../services/jwt-helper';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -32,7 +30,6 @@ export class LoginComponent implements OnInit {
     private currencyService: CurrencyService,
     private oidcHelperService: OidcHelperService,
     private router: Router,
-    private tokenService: TokenService,
     // private alertService: AlertService,
     private authService: AuthService) { }
 
@@ -63,32 +60,21 @@ export class LoginComponent implements OnInit {
   }
 
   async authenticationSubmit() {
-    // this.authService.loginWithPassword(this.userAuthentication.userName, this.userAuthentication.password, false)
     this.authService.loginWithPassword(this.userAuthentication.userName, this.userAuthentication.password)
       .subscribe(
         user => {
-          debugger;
+          this.currencyService.authUser(this.userAuthentication)
+            .subscribe(
+             (data) =>{
+               this.router.navigate(['']);
+             },
+             (error) => {
+               // debugger;
+             });
         },
         error => {
           debugger;
         });
-
-    // this.currencyService.userAuthentication(this.userAuthentication)
-    //   .subscribe((data: any) =>
-    //   {
-    //     this.currencyService.authCallback(this.returnUrl)
-    //     .subscribe(
-    //       (data) =>{
-    //         // debugger;
-    //       },
-    //       (error) => {
-    //         // var y: string = error.url.split('https://localhost:5001/')[1];
-    //         this.authService.completeAuthentication();
-    //         // .then(() =>{
-    //         // });
-    //         this.router.navigate(['']);
-    //       });
-    //   });
   }
 
 }

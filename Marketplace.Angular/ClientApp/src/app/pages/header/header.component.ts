@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-// import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { CurrencyService } from '../../services/currency.service';
 
 @Component({
   selector: 'app-header',
@@ -9,14 +11,24 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   constructor(
-    // private authService: AuthService
+    private currencyService: CurrencyService,
+    private router: Router,
+    private authService: AuthService,
     ) { }
 
   ngOnInit(): void {
   }
 
-  login(){
-    // this.authService.startAuthentication();
+  logout(){
+    this.authService.logout();
+    this.currencyService.logout()
+    .subscribe(
+     (data) =>{
+      //  this.router.navigate(['']);
+     },
+     (error) => {
+       // debugger;
+     });
   }
 
   // shop(){

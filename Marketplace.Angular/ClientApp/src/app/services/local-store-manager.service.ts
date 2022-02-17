@@ -2,8 +2,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { Utilities } from './utilities';
-
 @Injectable()
 /**
  * Provides a wrapper for accessing the web storage API and synchronizing session storage across tabs/windows.
@@ -339,11 +337,11 @@ export class LocalStoreManager {
   }
 
   private localStorageGetItem(key: string) {
-    return Utilities.JsonTryParse(localStorage.getItem(key) as string);
+    return this.JsonTryParse(localStorage.getItem(key) as string);
   }
 
   private sessionStorageGetItem(key: string) {
-    return Utilities.JsonTryParse(sessionStorage.getItem(key) as string);
+    return this.JsonTryParse(sessionStorage.getItem(key) as string);
   }
 
   private onInit() {
@@ -351,5 +349,16 @@ export class LocalStoreManager {
       this.initEvent.next();
       this.initEvent.complete();
     });
+  }
+
+    public JsonTryParse(value: string) {
+    try {
+      return JSON.parse(value);
+    } catch (e) {
+      if (value === 'undefined') {
+        return void 0;
+      }
+      return value;
+    }
   }
 }
