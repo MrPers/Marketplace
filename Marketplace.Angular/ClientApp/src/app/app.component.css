@@ -1,6 +1,0 @@
-* {
-  margin: 0;
-}
-.content {
-  min-height: calc(81vh - 7px);/* надо подбирать */
-}
