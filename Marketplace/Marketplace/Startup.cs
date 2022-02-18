@@ -22,6 +22,8 @@ using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Marketplace
 {
@@ -66,12 +68,11 @@ namespace Marketplace
 
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
-                .AddInMemoryPersistedGrants()
                 .AddAspNetIdentity<User>()
                 //.AddInMemoryApiScopes(IdentityServerConfiguration.GetApiScopes())
                 .AddConfigurationStore(options =>
                 {
-                    options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString(nameof(DataContext)),
+                    options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString(nameof(DataContext)),//
                         sql => sql.MigrationsAssembly(migrationsAssembly));
                 })
                 .AddOperationalStore(options =>
@@ -155,6 +156,21 @@ namespace Marketplace
             services.AddScoped<IShopService, ShopService>();
             //services.AddScoped<IStatusCartService, StatusCartService>();
             services.AddScoped<IUserService, UserService>();
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.Events.OnRedirectToAccessDenied =
+            //        options.Events.OnRedirectToLogin = context =>
+            //        {
+            //            if (context.Request.Method != "GET")
+            //            {
+            //                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            //                return Task.FromResult<object>(null);
+            //            }
+            //            context.Response.Redirect(context.RedirectUri);
+            //            return Task.FromResult<object>(null);
+            //        };
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -184,7 +200,7 @@ namespace Marketplace
                 .AllowAnyMethod());
 
             app.UseIdentityServer();
-            //app.UseAuthentication();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSwagger();
@@ -198,21 +214,8 @@ namespace Marketplace
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapDefaultControllerRoute();
             });
-
-            //app.UseSpa(spa =>
-            //{
-            //    spa.Options.SourcePath = "ClientApp";
-
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseAngularCliServer(npmScript: "start");
-            //        spa.Options.StartupTimeout = TimeSpan.FromSeconds(280); //Увеличиваем время ожидания, если приложение angular загружается дольше
-            //    }
-            //});
 
         }
     }

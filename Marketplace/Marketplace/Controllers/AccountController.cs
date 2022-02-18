@@ -60,6 +60,7 @@ namespace Marketplace.Controllers
             return Unauthorized();
         }
 
+        [Authorize]
         [HttpGet("logout")]
         public async Task<IActionResult> Logout()
         {

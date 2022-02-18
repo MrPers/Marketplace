@@ -81,7 +81,7 @@ namespace Marketplace.Infrastructure
 
             //foreach (var item in time)
             //{
-            claims.Add(new System.Security.Claims.Claim("role", time.ToString()));
+            claims.Add(new System.Security.Claims.Claim("role", "Owner"));
             //}
 
             context.IssuedClaims = claims;
