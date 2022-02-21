@@ -50,6 +50,7 @@ namespace Marketplace.Controllers
             return result;
         }
 
+        //[HttpPost("get-product-by-shop-id")]
         [HttpGet("get-product-by-shop-id/{id}")]
         public async Task<IActionResult> GetProductByShopId(Guid id)
         {
