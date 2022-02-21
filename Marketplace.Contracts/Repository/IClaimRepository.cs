@@ -4,7 +4,7 @@ using System;
 
 namespace Marketplace.Contracts.Repository
 {
-    public interface IClaimRepository : IBaseRepository<Claim, ClaimDto, Guid>
+    public interface IClaimRepository : IBaseRepository<Claim, ClaimDto, int>
     {
         //Task<ICollection<Guid>> GetUsersIdOnGroupAsync(Guid groupId);
         //Task SubscriptionToGroupsAsync(Guid groupId, Guid userId);

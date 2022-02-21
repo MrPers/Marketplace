@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -75,18 +76,17 @@ namespace Marketplace.DB
                     new Shop {Name = "Shop1"},
                     new Shop {Name = "Shop2"},
                     new Shop {Name = "Shop3"},
+                    new Shop {Name = "AllShop"},
                 };
 
                 dataContext.Shops.AddRange(shops);
 
                 Claim[] claims = new Claim[] {
-                    new Claim{Name = "EditingAllUsers"},
-                    new Claim{Name = "EditingAllStores"},
-                    new Claim{Name = "EditingStore"},
-                    new Claim{Name = "DeletingStore"},
+                    new Claim{ ClaimType = JwtRegisteredClaimNames.Jti, ClaimValue = "EditingAllUsers" },
+                    new Claim{ ClaimType = JwtRegisteredClaimNames.Jti, ClaimValue = "EditingAllStores" },
+                    new Claim{ ClaimType = JwtRegisteredClaimNames.Jti, ClaimValue = "EditingStore" },
+                    new Claim{ ClaimType = JwtRegisteredClaimNames.Jti, ClaimValue = "DeletingStore" },
                 };
-
-                dataContext.Claims.AddRange(claims);
 
                 Role[] roles = new Role[] {
                     new Role("Owner"),
@@ -98,13 +98,11 @@ namespace Marketplace.DB
                 roleManager.CreateAsync(roles[1]).GetAwaiter().GetResult();
                 roleManager.CreateAsync(roles[2]).GetAwaiter().GetResult();
 
-                roles[0].Claims.Add(claims[2]);
-                roles[0].Claims.Add(claims[3]);
-                roles[1].Claims.Add(claims[2]);
-                roles[2].Claims.Add(claims[0]);
-                roles[2].Claims.Add(claims[1]);
-
-                var statusAddToRole = userManager.AddToRoleAsync(users[0], "PlatformAdministrator").GetAwaiter().GetResult();
+                await roleManager.AddClaimAsync(roles[0], claims[2].ToClaim());
+                await roleManager.AddClaimAsync(roles[0], claims[3].ToClaim());
+                await roleManager.AddClaimAsync(roles[1], claims[2].ToClaim());
+                await roleManager.AddClaimAsync(roles[2], claims[0].ToClaim());
+                await roleManager.AddClaimAsync(roles[2], claims[1].ToClaim());
 
                 var usersDb = await dataContext.Set<User>()
                 .ToListAsync();
@@ -113,16 +111,16 @@ namespace Marketplace.DB
                 .ToListAsync();
 
                 UserRoleShop[] userRoleShop = new UserRoleShop[] {
-                    //new UserRoleShop {UserId = usersDb[0].Id, RoleId = rolesDb[2].Id},
                     new UserRoleShop {UserId = usersDb[1].Id, RoleId = rolesDb[0].Id,Shop = shops[0]},
                     new UserRoleShop {UserId = usersDb[1].Id, RoleId = rolesDb[0].Id,Shop = shops[1]},
                     new UserRoleShop {UserId = usersDb[2].Id, RoleId = rolesDb[0].Id,Shop = shops[2]},
                     new UserRoleShop {UserId = usersDb[2].Id, RoleId = rolesDb[1].Id,Shop = shops[0]},
                     new UserRoleShop {UserId = usersDb[3].Id, RoleId = rolesDb[1].Id,Shop = shops[1]},
                     new UserRoleShop {UserId = usersDb[4].Id, RoleId = rolesDb[1].Id,Shop = shops[2]},
+                    new UserRoleShop {UserId = usersDb[0].Id, RoleId = rolesDb[2].Id,Shop = shops[3]},
                 };
 
-                dataContext.UserRoleShops.AddRange(userRoleShop);
+                dataContext.Set<UserRoleShop>().AddRange(userRoleShop);
 
                 //на этот мамент в бд есть пользователи, роли, магазины и отношения между ними
 

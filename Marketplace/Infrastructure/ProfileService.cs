@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4.Extensions;
@@ -25,87 +25,84 @@ namespace Marketplace.Infrastructure
             _userManager = userManager;
         }
 
-        //public Task GetProfileDataAsync(ProfileDataRequestContext context)
-        //public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             var user = await _userManager.GetUserAsync(context.Subject);
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var scops = context.Subject.FindAll(JwtClaimTypes.Scope).ToList();
 
             var claims = new List<System.Security.Claims.Claim>
             {
-              new System.Security.Claims.Claim("name", user.UserName),
+                new System.Security.Claims.Claim("name", user.UserName),
             };
 
-            var time = await _context.Roles
-                .Join(_context.UserRoleShops,
-                 p => p.Id,
-                 t => t.RoleId,
-                 (p, t) => new
-                 {
-                     Name = p.Name,
-                     Id = p.Id,
-                 })
-                .Join(_context.Users,
-                 p => p.Id,
-                 t => t.Id,
-                 (p, t) => new
-                 {
-                     Name = p.Name,
-                     Id = t.Id,
-                 })
-                .Where(x => x.Id == user.Id)
-                .Select(x => x.Name)
-                .ToListAsync();
-
-            if(time.Count == 0)
+            foreach (var item in scops)
             {
-                time = await _context.Roles
-                    .Join(_context.UserRoles,
-                     p => p.Id,
-                     t => t.RoleId,
-                     (p, t) => new
-                     {
-                         Name = p.Name,
-                         Id = p.Id,
-                     })
-                    .Join(_context.Users,
-                     p => p.Id,
-                     t => t.Id,
-                     (p, t) => new
-                     {
-                         Name = p.Name,
-                         Id = t.Id,
-                     })
-                    .Where(x => x.Id == user.Id).Select(x => x.Name).ToListAsync();
+                claims.Add(new System.Security.Claims.Claim(item.Value, "True"));
             }
 
-            //foreach (var item in time)
-            //{
-            claims.Add(new System.Security.Claims.Claim("role", "Owner"));
-            //}
+            foreach (var userRole in userRoles)
+            {
+                claims.Add(new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Role, userRole));
+            }
 
             context.IssuedClaims = claims;
 
 
 
+            //var time = await _context.Roles
+            //    .Join(_context.UserRoleShops,
+            //     p => p.Id,
+            //     t => t.RoleId,
+            //     (p, t) => new
+            //     {
+            //         Name = p.Name,
+            //         Id = p.Id,
+            //     })
+            //    .Join(_context.Users,
+            //     p => p.Id,
+            //     t => t.Id,
+            //     (p, t) => new
+            //     {
+            //         Name = p.Name,
+            //         Id = t.Id,
+            //     })
+            //    .Where(x => x.Id == user.Id)
+            //    .Select(x => x.Name)
+            //    .ToListAsync();
 
-            //var claims = _context.Claims.ToList();
-            //claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Name)).ToList();
+            //if(time.Count == 0)
+            //{
+            //    time = await _context.Roles
+            //        .Join(_context.UserRoles,
+            //         p => p.Id,
+            //         t => t.RoleId,
+            //         (p, t) => new
+            //         {
+            //             Name = p.Name,
+            //             Id = p.Id,
+            //         })
+            //        .Join(_context.Users,
+            //         p => p.Id,
+            //         t => t.Id,
+            //         (p, t) => new
+            //         {
+            //             Name = p.Name,
+            //             Id = t.Id,
+            //         })
+            //        .Where(x => x.Id == user.Id).Select(x => x.Name).ToListAsync();
+            //}
 
-            //if (user.JobTitle != null)
-            //    claims.Add(new System.Security.Claims.Claim(PropertyConstants.JobTitle, user.JobTitle));
+            //foreach (var item in time)
+            //{
+            //claims.Add((System.Security.Claims.Claim)context.Subject.FindFirst(JwtClaimTypes.Role));
+            //claims.Add((System.Security.Claims.Claim)context.Subject.FindFirst("Owner"));
 
-            //if (user.FullName != null)
-            //    claims.Add(new Claim(PropertyConstants.FullName, user.FullName));
+            //claims.Add(new System.Security.Claims.Claim("role", "Owner"));
+            //}
 
-            //if (user.Configuration != null)
-            //    claims.Add(new Claim(PropertyConstants.Configuration, user.Configuration));
-
-            //context.IssuedClaims = claims;
         }
 
-        // This method gets called whenever identity server needs to determine if the user is valid or active (e.g. if the user's account has been deactivated since they logged in).
-        //public Task IsActiveAsync(IsActiveContext context)
         public async Task IsActiveAsync(IsActiveContext context)
         {
 

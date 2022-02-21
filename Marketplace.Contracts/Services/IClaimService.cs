@@ -8,9 +8,9 @@ namespace Marketplace.Contracts.Services
     public interface IClaimService
     {
         Task<ICollection<ClaimDto>> GetAllAsync();
-        Task<ClaimDto> GetByIdAsync(Guid id);
+        Task<ClaimDto> GetByIdAsync(int id);
         Task AddAsync(ClaimDto claim);
         Task UpdateAsync(ClaimDto claim);
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(int id);
     }
 }

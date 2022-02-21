@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marketplace.DB.Data.ConfigurationDb
 {
     [DbContext(typeof(ConfigurationDbContext))]
-    [Migration("20220217152348_ConfigurationDbMigration")]
+    [Migration("20220221143728_ConfigurationDbMigration")]
     partial class ConfigurationDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -2,7 +2,6 @@
 using Marketplace.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,7 +9,6 @@ using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Reflection;
 using Marketplace.Contracts.Services;
@@ -20,10 +18,8 @@ using Marketplace.DB.Models;
 using Marketplace.Infrastructure;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
-using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Marketplace
 {
@@ -91,14 +87,22 @@ namespace Marketplace
                 };
             });
 
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, config =>
                 {
-                    options.Authority = Configuration["ApplicationUrl"].TrimEnd('/');
-                    options.SupportedTokens = SupportedTokens.Jwt;
-                    options.RequireHttpsMetadata = false; // Note: Set to true in production
-                    options.ApiName = IdentityServerConfiguration.ApiName;
+                    config.RequireHttpsMetadata = false;//Получает или задает, требуется ли HTTPS для адреса или центра метаданных.
+                    config.Authority = "https://localhost:5001";// базовый адрес вашего сервера идентификации
+                    config.Audience = IdentityServerConfiguration.ApiName;
                 });
+
+            //services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+            //    .AddIdentityServerAuthentication(options =>
+            //    {
+            //        options.Authority = Configuration["ApplicationUrl"].TrimEnd('/');
+            //        options.SupportedTokens = SupportedTokens.Jwt;
+            //        options.RequireHttpsMetadata = false; // Note: Set to true in production
+            //        options.ApiName = IdentityServerConfiguration.ApiName;
+            //    });
 
             services.AddAuthorization();
 
@@ -156,21 +160,6 @@ namespace Marketplace
             services.AddScoped<IShopService, ShopService>();
             //services.AddScoped<IStatusCartService, StatusCartService>();
             services.AddScoped<IUserService, UserService>();
-
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.Events.OnRedirectToAccessDenied =
-            //        options.Events.OnRedirectToLogin = context =>
-            //        {
-            //            if (context.Request.Method != "GET")
-            //            {
-            //                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            //                return Task.FromResult<object>(null);
-            //            }
-            //            context.Response.Redirect(context.RedirectUri);
-            //            return Task.FromResult<object>(null);
-            //        };
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -182,16 +171,13 @@ namespace Marketplace
             }
             else
             {
+                //app.UseSpaStaticFiles();
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //if (!env.IsDevelopment())
-            //{
-            //    app.UseSpaStaticFiles();
-            //}
 
             app.UseRouting();
             app.UseCors(builder => builder

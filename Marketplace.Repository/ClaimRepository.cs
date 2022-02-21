@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Marketplace.Repository
 {
-    public class ClaimRepository : BaseRepository<Claim, ClaimDto, Guid>, IClaimRepository
+    public class ClaimRepository : BaseRepository<Claim, ClaimDto, int>, IClaimRepository
     {
         public ClaimRepository(DataContext context, IMapper mapper) : base(context, mapper)
         {}

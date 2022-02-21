@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Marketplace.DB.Models
 {
-    public class UserRoleShop
+    public class UserRoleShop: IdentityUserRole<Guid>
     {
-        public Guid UserId { get; set; }
-        public Guid RoleId { get; set; }
+        //public Guid UserId { get; set; }
+        //public Guid RoleId { get; set; }
         public Guid ShopId { get; set; }
         public User User { get; set; }
         public Role Role { get; set; }

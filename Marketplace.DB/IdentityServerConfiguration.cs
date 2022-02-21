@@ -54,6 +54,7 @@ namespace Marketplace.DB
             new Client
             {
                 ClientId = SmartAppClientID,
+                //ClientSecrets = {new Secret("secret".Sha256())},
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword, // Resource Owner Password Credential grant.
                 AllowAccessTokensViaBrowser = true,
                 RequireClientSecret = false, // This client does not need a secret to request tokens from the token endpoint.                    
@@ -62,7 +63,7 @@ namespace Marketplace.DB
                         IdentityServerConstants.StandardScopes.Profile,
                         ApiName
                 },
-                AllowOfflineAccess = true, // For refresh token.
+                AllowOfflineAccess = true, // Определяет, может ли этот клиент запрашивать токены обновления
                 RefreshTokenExpiration = TokenExpiration.Sliding,
                 RefreshTokenUsage = TokenUsage.OneTimeOnly,
             },

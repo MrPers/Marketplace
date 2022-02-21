@@ -45,18 +45,6 @@ namespace Marketplace.DB.Data.DataDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Claims",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "varchar(30)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Claims", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ProductGroups",
                 columns: table => new
                 {
@@ -143,30 +131,6 @@ namespace Marketplace.DB.Data.DataDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
@@ -182,30 +146,6 @@ namespace Marketplace.DB.Data.DataDb
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ClaimRole",
-                columns: table => new
-                {
-                    ClaimsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RolesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClaimRole", x => new { x.ClaimsId, x.RolesId });
-                    table.ForeignKey(
-                        name: "FK_ClaimRole_AspNetRoles_RolesId",
-                        column: x => x.RolesId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClaimRole_Claims_ClaimsId",
-                        column: x => x.ClaimsId,
-                        principalTable: "Claims",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -232,7 +172,7 @@ namespace Marketplace.DB.Data.DataDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserRoleShops",
+                name: "AspNetUserRoles",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -241,21 +181,21 @@ namespace Marketplace.DB.Data.DataDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRoleShops", x => new { x.UserId, x.RoleId, x.ShopId });
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId, x.ShopId });
                     table.ForeignKey(
-                        name: "FK_UserRoleShops_AspNetRoles_RoleId",
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserRoleShops_AspNetUsers_UserId",
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserRoleShops_Shops_ShopId",
+                        name: "FK_AspNetUserRoles_Shops_ShopId",
                         column: x => x.ShopId,
                         principalTable: "Shops",
                         principalColumn: "Id",
@@ -391,6 +331,11 @@ namespace Marketplace.DB.Data.DataDb
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_ShopId",
+                table: "AspNetUserRoles",
+                column: "ShopId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -411,11 +356,6 @@ namespace Marketplace.DB.Data.DataDb
                 name: "IX_Carts_UserId",
                 table: "Carts",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ClaimRole_RolesId",
-                table: "ClaimRole",
-                column: "RolesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CommentProducts_ProductId",
@@ -446,16 +386,6 @@ namespace Marketplace.DB.Data.DataDb
                 name: "IX_StatusCarts_CartId_CartProductId_CartUserId",
                 table: "StatusCarts",
                 columns: new[] { "CartId", "CartProductId", "CartUserId" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRoleShops_RoleId",
-                table: "UserRoleShops",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRoleShops_ShopId",
-                table: "UserRoleShops",
-                column: "ShopId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -476,9 +406,6 @@ namespace Marketplace.DB.Data.DataDb
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ClaimRole");
-
-            migrationBuilder.DropTable(
                 name: "CommentProducts");
 
             migrationBuilder.DropTable(
@@ -488,19 +415,13 @@ namespace Marketplace.DB.Data.DataDb
                 name: "StatusCarts");
 
             migrationBuilder.DropTable(
-                name: "UserRoleShops");
-
-            migrationBuilder.DropTable(
-                name: "Claims");
-
-            migrationBuilder.DropTable(
-                name: "Carts");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Shops");
+
+            migrationBuilder.DropTable(
+                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

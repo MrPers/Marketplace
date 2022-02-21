@@ -17,7 +17,7 @@ namespace Marketplace.DB.Models
 
         [Column(TypeName = "varchar(30)")]
         public override string Name { get; set; }
-        public ICollection<Claim> Claims { get; set; } = new List<Claim>();
+        //public ICollection<Claim> Claims { get; set; } = new List<Claim>();
         public virtual ICollection<UserRoleShop> UserRoleShops { get; set; } = new List<UserRoleShop>();
     }
 }

@@ -12,21 +12,21 @@ namespace Marketplace.DB
     Role, // TRole
     Guid, // TKey
     IdentityUserClaim<Guid>, // TUserClaim
-    UserRolePlatform, // TUserRole,
+    UserRoleShop, // TUserRole,
     IdentityUserLogin<Guid>, // TUserLogin
-    IdentityRoleClaim<Guid>, // TRoleClaim
+    Claim, // TRoleClaim
     IdentityUserToken<Guid> // TUserToken
     >
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Cart> Carts { get; set; }
-        public DbSet<Claim> Claims { get; set; }
+        //public DbSet<Claim> Claims { get; set; }
         public DbSet<CommentProduct> CommentProducts { get; set; }
         public DbSet<Price> Prices { get; set; }
         public DbSet<ProductGroup> ProductGroups { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<StatusCart> StatusCarts { get; set; }
-        public DbSet<UserRoleShop> UserRoleShops { get; set; }
+        //public DbSet<UserRoleShop> UserRoleShops { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)

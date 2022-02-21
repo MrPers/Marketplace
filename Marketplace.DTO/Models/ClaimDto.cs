@@ -5,9 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Marketplace.DTO.Models
 {
     //public class Claim : System.Security.Claims.Claim, IBaseEntity<Guid>
-    public class ClaimDto : BaseEntityDto<Guid>
+    public class ClaimDto : BaseEntityDto<int>
     {
-        public string Name { get; set; }
-        public ICollection<RoleDto> Roles { get; set; }
+        public Guid RoleId { get; set; }
+        public string ClaimType { get; set; }
+        public string ClaimValue { get; set; }
+
     }
 }
