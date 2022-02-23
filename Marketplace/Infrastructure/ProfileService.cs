@@ -48,68 +48,67 @@ namespace Marketplace.Infrastructure
 
             context.IssuedClaims = claims;
 
-
-
-            //var time = await _context.Roles
-            //    .Join(_context.UserRoleShops,
-            //     p => p.Id,
-            //     t => t.RoleId,
-            //     (p, t) => new
-            //     {
-            //         Name = p.Name,
-            //         Id = p.Id,
-            //     })
-            //    .Join(_context.Users,
-            //     p => p.Id,
-            //     t => t.Id,
-            //     (p, t) => new
-            //     {
-            //         Name = p.Name,
-            //         Id = t.Id,
-            //     })
-            //    .Where(x => x.Id == user.Id)
-            //    .Select(x => x.Name)
-            //    .ToListAsync();
-
-            //if(time.Count == 0)
-            //{
-            //    time = await _context.Roles
-            //        .Join(_context.UserRoles,
-            //         p => p.Id,
-            //         t => t.RoleId,
-            //         (p, t) => new
-            //         {
-            //             Name = p.Name,
-            //             Id = p.Id,
-            //         })
-            //        .Join(_context.Users,
-            //         p => p.Id,
-            //         t => t.Id,
-            //         (p, t) => new
-            //         {
-            //             Name = p.Name,
-            //             Id = t.Id,
-            //         })
-            //        .Where(x => x.Id == user.Id).Select(x => x.Name).ToListAsync();
-            //}
-
-            //foreach (var item in time)
-            //{
-            //claims.Add((System.Security.Claims.Claim)context.Subject.FindFirst(JwtClaimTypes.Role));
-            //claims.Add((System.Security.Claims.Claim)context.Subject.FindFirst("Owner"));
-
-            //claims.Add(new System.Security.Claims.Claim("role", "Owner"));
-            //}
-
         }
 
         public async Task IsActiveAsync(IsActiveContext context)
         {
+            //var sub = context.Subject.GetSubjectId();
+            //var user = await _userManager.FindByIdAsync(sub);
 
-            var sub = context.Subject.GetSubjectId();
-            var user = await _userManager.FindByIdAsync(sub);
-
-            context.IsActive = (user != null);
+            //context.IsActive = (user != null);
         }
     }
 }
+
+
+//var time = await _context.Roles
+//    .Join(_context.UserRoleShops,
+//     p => p.Id,
+//     t => t.RoleId,
+//     (p, t) => new
+//     {
+//         Name = p.Name,
+//         Id = p.Id,
+//     })
+//    .Join(_context.Users,
+//     p => p.Id,
+//     t => t.Id,
+//     (p, t) => new
+//     {
+//         Name = p.Name,
+//         Id = t.Id,
+//     })
+//    .Where(x => x.Id == user.Id)
+//    .Select(x => x.Name)
+//    .ToListAsync();
+
+//if(time.Count == 0)
+//{
+//    time = await _context.Roles
+//        .Join(_context.UserRoles,
+//         p => p.Id,
+//         t => t.RoleId,
+//         (p, t) => new
+//         {
+//             Name = p.Name,
+//             Id = p.Id,
+//         })
+//        .Join(_context.Users,
+//         p => p.Id,
+//         t => t.Id,
+//         (p, t) => new
+//         {
+//             Name = p.Name,
+//             Id = t.Id,
+//         })
+//        .Where(x => x.Id == user.Id).Select(x => x.Name).ToListAsync();
+//}
+
+//foreach (var item in time)
+//{
+//claims.Add((System.Security.Claims.Claim)context.Subject.FindFirst(JwtClaimTypes.Role));
+//claims.Add((System.Security.Claims.Claim)context.Subject.FindFirst("Owner"));
+
+//claims.Add(new System.Security.Claims.Claim("role", "Owner"));
+//}
+

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -39,6 +40,7 @@ namespace Marketplace.Repository
 
             throw new Exception(result.Succeeded.ToString());
         }
+
 
         public async Task UpdatePasswordAsync(Guid id, string oldPassword, string newPassword)
         {

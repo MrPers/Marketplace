@@ -19,13 +19,13 @@ namespace Marketplace.DB
     >
     {
         public DbSet<Product> Products { get; set; }
-        public DbSet<Cart> Carts { get; set; }
+        public DbSet<UserChoice> UserChoices { get; set; }
         //public DbSet<Claim> Claims { get; set; }
         public DbSet<CommentProduct> CommentProducts { get; set; }
         public DbSet<Price> Prices { get; set; }
         public DbSet<ProductGroup> ProductGroups { get; set; }
         public DbSet<Shop> Shops { get; set; }
-        public DbSet<StatusCart> StatusCarts { get; set; }
+        public DbSet<StatusUserChoice> StatusUserChoices { get; set; }
         //public DbSet<UserRoleShop> UserRoleShops { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options)
@@ -59,21 +59,21 @@ namespace Marketplace.DB
                 .HasForeignKey(sc => sc.RoleId)
                 .HasPrincipalKey(sc => sc.Id);
 
-            modelBuilder.Entity<Cart>()
-                .HasKey(ur => new { ur.Id, ur.ProductId, ur.UserId });
+            modelBuilder.Entity<UserChoice>()
+                .HasKey(ur => new { ur.Id, ur.PriceId, ur.UserId });
             //.HasKey(ur => new {ur.ProductId, ur.UserId });
 
-            modelBuilder.Entity<Cart>()
+            modelBuilder.Entity<UserChoice>()
                 .HasOne(sc => sc.User)
-                .WithMany(s => s.Carts)
+                .WithMany(s => s.UserChoices)
                 .HasForeignKey(sc => sc.UserId)
                 .HasPrincipalKey(sc => sc.Id)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Cart>()
-                .HasOne(sc => sc.Product)
-                .WithMany(c => c.Carts)
-                .HasForeignKey(sc => sc.ProductId)
+            modelBuilder.Entity<UserChoice>()
+                .HasOne(sc => sc.Price)
+                .WithMany(c => c.UserChoices)
+                .HasForeignKey(sc => sc.PriceId)
                 .HasPrincipalKey(sc => sc.Id)
                 .OnDelete(DeleteBehavior.Cascade);
 

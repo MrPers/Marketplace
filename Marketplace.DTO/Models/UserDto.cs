@@ -14,7 +14,7 @@ namespace Marketplace.DTO.Models
         [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Invalid Email")]
         public string Email { get; set; }
         public string Password { get; set; }
-        public virtual ICollection<CartDto> Carts { get; set; }
+        public virtual ICollection<UserChoiceDto> UserChoices { get; set; }
         public virtual ICollection<CommentProductDto> CommentProducts { get; set; }
     }
 }

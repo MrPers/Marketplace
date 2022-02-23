@@ -30,6 +30,15 @@ namespace Marketplace.DB
                 bdContext.SaveChanges();
             }
 
+            if (!bdContext.ApiScopes.Any())
+            {
+                foreach (var resource in IdentityServerConfiguration.GetApiScopes())
+                {
+                    bdContext.ApiScopes.Add(resource.ToEntity());
+                }
+                bdContext.SaveChanges();
+            }
+
             if (!bdContext.Clients.Any())
             {
                 foreach (var client in IdentityServerConfiguration.GetClients())
@@ -61,9 +70,9 @@ namespace Marketplace.DB
                     new User("AdministratorAll"){Email = "AdmAll@ukr.net", },
                     new User("OwnerShop1Shop2"){Email = "Own1@ukr.net"},
                     new User("AdmShop1OwnerShop3"){Email = "Adm1@ukr.net"},
-                    new User("AdmShop2"){Email = "Adm2@ukr.net"},
-                    new User("AdmShop3"){Email = "Adm2@ukr.net"},
-                    new User("User"){Email = "User@ukr.net"},
+                    new User("AdmShop2AdmShop3"){Email = "Adm2@ukr.net"},
+                    new User("User1"){Email = "User1@ukr.net"},
+                    new User("User2"){Email = "User2@ukr.net"},
                 };
 
                 var statusUser = userManager.CreateAsync(users[0], "12qw!Q").GetAwaiter().GetResult();
@@ -71,6 +80,7 @@ namespace Marketplace.DB
                 statusUser = userManager.CreateAsync(users[2], "12qw!Q").GetAwaiter().GetResult();
                 statusUser = userManager.CreateAsync(users[3], "12qw!Q").GetAwaiter().GetResult();
                 statusUser = userManager.CreateAsync(users[4], "12qw!Q").GetAwaiter().GetResult();
+                statusUser = userManager.CreateAsync(users[5], "12qw!Q").GetAwaiter().GetResult();
 
                 Shop[] shops = new Shop[] {
                     new Shop {Name = "Shop1"},
@@ -116,7 +126,7 @@ namespace Marketplace.DB
                     new UserRoleShop {UserId = usersDb[2].Id, RoleId = rolesDb[0].Id,Shop = shops[2]},
                     new UserRoleShop {UserId = usersDb[2].Id, RoleId = rolesDb[1].Id,Shop = shops[0]},
                     new UserRoleShop {UserId = usersDb[3].Id, RoleId = rolesDb[1].Id,Shop = shops[1]},
-                    new UserRoleShop {UserId = usersDb[4].Id, RoleId = rolesDb[1].Id,Shop = shops[2]},
+                    new UserRoleShop {UserId = usersDb[3].Id, RoleId = rolesDb[1].Id,Shop = shops[2]},
                     new UserRoleShop {UserId = usersDb[0].Id, RoleId = rolesDb[2].Id,Shop = shops[3]},
                 };
 
@@ -151,37 +161,33 @@ namespace Marketplace.DB
 
                 dataContext.Prices.AddRange(prices);
 
-                StatusCart[] statusCart = new StatusCart[]{
-                    new StatusCart{ Name = "added"},
-                    new StatusCart{ Name = "ordered"},
-                    new StatusCart{ Name = "deleted"},
+                StatusUserChoice[] statusUserChoice = new StatusUserChoice[]{
+                    new StatusUserChoice{ Name = "paid"},
+                    new StatusUserChoice{ Name = "not paid"},
+                    new StatusUserChoice{ Name = "delivered"},
                 };
 
-                dataContext.StatusCarts.AddRange(statusCart);   //обрати внимание на коскадное удалиние при удалении юзера
+                dataContext.StatusUserChoices.AddRange(statusUserChoice);   //обрати внимание на коскадное удалиние при удалении юзера
 
-                Cart[] cart = new Cart[]{
-                     new Cart{User= users[1], NumberProduct = 1, Product = products[0] },
-                     new Cart{User= users[1], NumberProduct = 1, Product = products[1] },
-                     new Cart{User= users[1], NumberProduct = 1, Product = products[2] },
-                     new Cart{User= users[2], NumberProduct = 2, Product = products[3] },
-                     new Cart{User= users[2], NumberProduct = 1, Product = products[1] },
-                     new Cart{User= users[0], NumberProduct = 2, Product = products[2] },
-                     new Cart{User= users[0], NumberProduct = 1, Product = products[3] },
+                UserChoice[] userChoice = new UserChoice[]{
+                     new UserChoice{User= users[4], NumberProduct = 1, Price = prices[5], StatusUserChoice = statusUserChoice[0] },
+                     new UserChoice{User= users[5], NumberProduct = 2, Price = prices[1], StatusUserChoice = statusUserChoice[1] },
+                     new UserChoice{User= users[4], NumberProduct = 1, Price = prices[2], StatusUserChoice = statusUserChoice[2] },
+                     new UserChoice{User= users[5], NumberProduct = 2, Price = prices[3], StatusUserChoice = statusUserChoice[0] },
+                     new UserChoice{User= users[3], NumberProduct = 1, Price = prices[4], StatusUserChoice = statusUserChoice[0] },
+                     new UserChoice{User= users[2], NumberProduct = 2, Price = prices[3], StatusUserChoice = statusUserChoice[0] },
+                     new UserChoice{User= users[3], NumberProduct = 1, Price = prices[0], StatusUserChoice = statusUserChoice[0] },
+                     new UserChoice{User= users[2], NumberProduct = 2, Price = prices[5], StatusUserChoice = statusUserChoice[2] },
+                     new UserChoice{User= users[5], NumberProduct = 1, Price = prices[2], StatusUserChoice = statusUserChoice[0] },
+                     new UserChoice{User= users[3], NumberProduct = 2, Price = prices[1], StatusUserChoice = statusUserChoice[2] },
+                     new UserChoice{User= users[2], NumberProduct = 1, Price = prices[0], StatusUserChoice = statusUserChoice[0] },
                 };
 
-                cart[0].StatusCarts.Add(statusCart[0]); //вот так надо объединять многие через многие
-                cart[1].StatusCarts.Add(statusCart[1]);
-                cart[2].StatusCarts.Add(statusCart[2]);
-                cart[3].StatusCarts.Add(statusCart[0]);
-                cart[4].StatusCarts.Add(statusCart[1]);
-                cart[5].StatusCarts.Add(statusCart[0]);
-                cart[6].StatusCarts.Add(statusCart[1]);
-
-                dataContext.Carts.AddRange(cart);
+                dataContext.UserChoices.AddRange(userChoice);
 
                 CommentProduct[] commentProduct = new CommentProduct[]{
-                     new CommentProduct{UserId = usersDb[1].Id, Product = products[0], DepartureDate = DateTime.Now, Text="CommentProduct good"},
-                     new CommentProduct{UserId = usersDb[0].Id, Product = products[1], DepartureDate = DateTime.Now, Text="CommentProduct bad"},
+                     new CommentProduct{UserId = usersDb[5].Id, Product = products[0], DepartureDate = DateTime.Now, Text="CommentProduct good"},
+                     new CommentProduct{UserId = usersDb[4].Id, Product = products[1], DepartureDate = DateTime.Now, Text="CommentProduct bad"},
                      new CommentProduct{UserId = usersDb[3].Id, Product = products[1], DepartureDate = DateTime.Now, Text="CommentProduct liked"},
                      new CommentProduct{UserId = usersDb[2].Id, Product = products[2], DepartureDate = DateTime.Now, Text="CommentProduct bad"},
                      new CommentProduct{UserId = usersDb[2].Id, Product = products[3], DepartureDate = DateTime.Now, Text="CommentProduct liked"},

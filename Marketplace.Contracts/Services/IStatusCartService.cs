@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 
 namespace Marketplace.Contracts.Services
 {
-    public interface ICartService
+    public interface IUserChoiceService
     {
-        Task<ICollection<CartDto>> GetAllAsync();
-        Task<CartDto> GetByIdAsync(Guid id);
-        Task AddAsync(CartDto claim);
-        Task UpdateAsync(CartDto claim);
+        Task<ICollection<UserChoiceDto>> GetUsersChoiceByUserIdAsync(Guid Id);
+        Task<ICollection<UserChoiceDto>> GetAllAsync();
+        Task<UserChoiceDto> GetByIdAsync(Guid id);
+        Task AddAsync(UserChoiceDto claim);
+        Task UpdateAsync(UserChoiceDto claim);
         Task DeleteAsync(Guid id);
     }
 }

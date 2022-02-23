@@ -16,7 +16,6 @@ namespace Marketplace.DB.Models
         public ProductGroup ProductGroup { get; set; }
         public Guid ProductGroupId { get; set; }
         public ICollection<Price> Prices { get; set; } = new List<Price>();
-        public ICollection<Cart> Carts { get; set; } = new List<Cart>();
         public ICollection<CommentProduct> CommentProducts { get; set; } = new List<CommentProduct>();
     }
 }

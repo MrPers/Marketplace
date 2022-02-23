@@ -26,7 +26,7 @@ namespace Marketplace.DB.Models
         public override string PhoneNumber { get; set; }
         [NotMapped]
         public override bool PhoneNumberConfirmed { get; set; }
-        public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
+        public virtual ICollection<UserChoice> UserChoices { get; set; } = new List<UserChoice>();
         public virtual ICollection<UserRoleShop> UserRoleShops { get; set; } = new List<UserRoleShop>();
         public virtual ICollection<CommentProduct> CommentProducts { get; set; } = new List<CommentProduct>();
     }

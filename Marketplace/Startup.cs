@@ -20,6 +20,8 @@ using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using IdentityModel.AspNetCore.OAuth2Introspection;
+using IdentityServer4.AccessTokenValidation;
 
 namespace Marketplace
 {
@@ -63,9 +65,11 @@ namespace Marketplace
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
                 .AddAspNetIdentity<User>()
                 //.AddInMemoryApiScopes(IdentityServerConfiguration.GetApiScopes())
+                //.AddInMemoryIdentityResources(IdentityServerConfiguration.GetIdentityResources())
+                //.AddInMemoryApiResources(IdentityServerConfiguration.GetApiResources())
+                //.AddInMemoryClients(IdentityServerConfiguration.GetClients())
                 .AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString(nameof(DataContext)),//
@@ -76,7 +80,8 @@ namespace Marketplace
                     options.ConfigureDbContext = b => b.UseSqlServer(Configuration.GetConnectionString(nameof(DataContext)),
                         sql => sql.MigrationsAssembly(migrationsAssembly));
                 })
-                .AddProfileService<ProfileService>();
+                .AddProfileService<ProfileService>()
+                .AddDeveloperSigningCredential();
 
             services.AddSingleton<ICorsPolicyService>((container) =>        //CORS от IS4
             {
@@ -88,27 +93,29 @@ namespace Marketplace
             });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, config =>
+                //.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+                //{
+                //    options.Audience = "https://localhost:5001";
+                //    options.Authority = "https://localhost:5001";// базовый адрес вашего сервера идентификации
+                //    options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };//IdentityServer по умолчанию выдает заголовок типа, рекомендуется дополнительная проверка
+                //    options.RequireHttpsMetadata = false;//Получает или задает, требуется ли HTTPS для адреса или центра метаданных.
+                //});
+                .AddOAuth2Introspection(options =>
                 {
-                    config.RequireHttpsMetadata = false;//Получает или задает, требуется ли HTTPS для адреса или центра метаданных.
-                    config.Authority = "https://localhost:5001";// базовый адрес вашего сервера идентификации
-                    config.Audience = IdentityServerConfiguration.ApiName;
+                    options.Authority = "https://localhost:5001";
+                    options.ClientId = IdentityServerConfiguration.ApiName;
+                    //options.ClientSecret = "openid profile";
                 });
 
-            //services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-            //    .AddIdentityServerAuthentication(options =>
-            //    {
-            //        options.Authority = Configuration["ApplicationUrl"].TrimEnd('/');
-            //        options.SupportedTokens = SupportedTokens.Jwt;
-            //        options.RequireHttpsMetadata = false; // Note: Set to true in production
-            //        options.ApiName = IdentityServerConfiguration.ApiName;
-            //    });
-
             services.AddAuthorization();
+            //services.AddAuthorization(options =>
+            //{
+            //    //options.AddPolicy("PublicSecure", policy => policy.RequireClaim("client_id", "secret_client_id"));
+            //});
 
             services.AddCors();     // Add cors
 
-            services.AddControllersWithViews(); // для работы контроллеров MVC
+            services.AddControllers();
 
             //services.AddSpaStaticFiles(configuration =>
             //{
@@ -139,7 +146,7 @@ namespace Marketplace
 
             services.AddAutoMapper(typeof(Mapper));
 
-            services.AddScoped(typeof(ICartRepository), typeof(CartRepository));
+            services.AddScoped(typeof(IUserChoiceRepository), typeof(UserChoiceRepository));
             services.AddScoped(typeof(IClaimRepository), typeof(ClaimRepository));
             services.AddScoped(typeof(ICommentProductRepository), typeof(CommentProductRepository));
             services.AddScoped(typeof(IPriceRepository), typeof(PriceRepository));
@@ -147,10 +154,10 @@ namespace Marketplace
             services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
             services.AddScoped(typeof(IRoleRepository), typeof(RoleRepository));
             services.AddScoped(typeof(IShopRepository), typeof(ShopRepository));
-            services.AddScoped(typeof(IStatusCartRepository), typeof(StatusCartRepository));
+            services.AddScoped(typeof(IStatusUserChoiceRepository), typeof(StatusUserChoiceRepository));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 
-            //services.AddScoped<ICartService, CartService>();
+            services.AddScoped<IUserChoiceService, UserChoiceService>();
             //services.AddScoped<IClaimService, ClaimService>();
             services.AddScoped<ICommentProductService, CommentProductService>();
             services.AddScoped<IPriceService, PriceService>();
@@ -158,7 +165,7 @@ namespace Marketplace
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IShopService, ShopService>();
-            //services.AddScoped<IStatusCartService, StatusCartService>();
+            //services.AddScoped<IStatusUserChoiceService, StatusUserChoiceService>();
             services.AddScoped<IUserService, UserService>();
         }
 

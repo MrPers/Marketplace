@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Marketplace.Repository
 {
-    public class StatusCartRepository : BaseRepository<StatusCart, StatusCartDto, Guid>, IStatusCartRepository
+    public class StatusUserChoiceRepository : BaseRepository<StatusUserChoice, StatusUserChoiceDto, Guid>, IStatusUserChoiceRepository
     {
-        public StatusCartRepository(DataContext context, IMapper mapper) : base(context, mapper)
+        public StatusUserChoiceRepository(DataContext context, IMapper mapper) : base(context, mapper)
         { }
 
     }

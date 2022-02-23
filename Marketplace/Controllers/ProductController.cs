@@ -37,6 +37,7 @@ namespace Marketplace.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet("get-product-all")]
         public async Task<IActionResult> GetProductsAll()
         {
@@ -50,7 +51,7 @@ namespace Marketplace.Controllers
             return result;
         }
 
-        [Authorize]
+        //[Authorize]
         //[HttpPost("get-product-by-shop-id")]
         [HttpGet("get-product-by-shop-id/{id}")]
         public async Task<IActionResult> GetProductByShopId(Guid id)
@@ -67,7 +68,6 @@ namespace Marketplace.Controllers
             return result;
         }
 
-        [Authorize]
         [HttpGet("get-product-by-id/{id}")]
         public async Task<IActionResult> GetProductById(Guid id)
         {

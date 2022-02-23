@@ -4,7 +4,7 @@ using System;
 
 namespace Marketplace.Contracts.Repository
 {
-    public interface IStatusCartRepository : IBaseRepository<StatusCart, StatusCartDto, Guid>
+    public interface IStatusUserChoiceRepository : IBaseRepository<StatusUserChoice, StatusUserChoiceDto, Guid>
     {
         //Task<ICollection<Guid>> GetUsersIdOnGroupAsync(Guid groupId);
         //Task SubscriptionToGroupsAsync(Guid groupId, Guid userId);
