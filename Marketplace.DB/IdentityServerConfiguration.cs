@@ -18,29 +18,13 @@ namespace Marketplace.DB
             new Client
             {
                 ClientId = SwaggerClientID,
-                ClientName = "Swagger UI",
+                ClientName = SwaggerClientID,
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 AllowAccessTokensViaBrowser = true,
                 RequireClientSecret = false,
                 AllowedScopes = {
                     ApiName
                 }
-            },
-            new Client
-            {
-                ClientId = "angular_id",
-                ClientSecrets = {new Secret("secret".Sha256())},
-                AllowedGrantTypes = GrantTypes.ClientCredentials,
-                AllowAccessTokensViaBrowser = true,
-                RequireClientSecret = false, // This client does not need a secret to request tokens from the token endpoint.                    
-                AllowedScopes = {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        ApiName
-                },
-                AllowOfflineAccess = true, // Определяет, может ли этот клиент запрашивать токены обновления
-                RefreshTokenExpiration = TokenExpiration.Sliding,
-                RefreshTokenUsage = TokenUsage.OneTimeOnly,
             },
             new Client
             {
@@ -83,8 +67,20 @@ namespace Marketplace.DB
 
         public static IEnumerable<ApiScope> GetApiScopes()
         {
-            yield return new ApiScope(SwaggerClientID, SwaggerClientID);
-            yield return new ApiScope(ApiName, ApiName);
+            yield return new ApiScope(SwaggerClientID)
+            {
+                UserClaims =
+                {
+                    SwaggerClientID,
+                }
+            };
+            yield return new ApiScope(ApiName)
+            {
+                UserClaims =
+                {
+                    ApiName,
+                }
+            };
             //return new List<ApiScope>
             //{
             //    new ApiScope(ApiName, ApiFriendlyName) {

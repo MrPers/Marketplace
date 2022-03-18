@@ -100,11 +100,12 @@ namespace Marketplace
                 //    options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };//IdentityServer по умолчанию выдает заголовок типа, рекомендуется дополнительная проверка
                 //    options.RequireHttpsMetadata = false;//Получает или задает, требуется ли HTTPS для адреса или центра метаданных.
                 //});
-                .AddOAuth2Introspection(options =>
+                .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = "https://localhost:5001";
-                    options.ClientId = IdentityServerConfiguration.ApiName;
-                    //options.ClientSecret = "openid profile";
+                    options.SupportedTokens = SupportedTokens.Jwt;
+                    options.RequireHttpsMetadata = false; // Note: Set to true in production
+                    options.ApiName = IdentityServerConfiguration.ApiName;
                 });
 
             services.AddAuthorization();
